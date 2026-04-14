@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Beard Jungle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --yellow:  #FFD90F;
+      --ink:     #1a1008;
+      --red:     #8B1A0A;
+      --brown:   #3D1C07;
+      --mid:     #5c3317;
+      --rule:    rgba(26,16,8,0.12);
+      --card-bg: rgba(26,16,8,0.04);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--yellow);
+      color: var(--ink);
+      font-family: 'IM Fell English', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN ───────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 48px; height: 52px;
+      border-bottom: 3px solid var(--yellow);
+    }
+    .nav-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 900;
+      color: var(--yellow); text-decoration: none;
+    }
+    .nav-home span { color: var(--red); font-style: italic; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      color: rgba(255,217,15,0.55); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--yellow); }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      padding: 80px 48px 64px;
+      border-bottom: 2px solid var(--ink);
+      position: relative; overflow: hidden;
+    }
+    .hero-ghost {
+      position: absolute; right: -20px; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(120px, 18vw, 260px);
+      font-weight: 900; font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(26,16,8,0.07);
+      pointer-events: none; user-select: none;
+      white-space: nowrap;
+    }
+    .hero-kicker {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem; letter-spacing: 0.3em; color: var(--red);
+      margin-bottom: 20px;
+      animation: fadeUp 0.7s both;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 900; line-height: 0.95; color: var(--ink);
+      max-width: 800px;
+      animation: fadeUp 0.8s 0.08s both;
+    }
+    .hero h1 em { color: var(--red); font-style: italic; }
+    .hero-sub {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: rgba(26,16,8,0.6); max-width: 560px;
+      line-height: 1.75; margin-top: 28px;
+      animation: fadeUp 0.9s 0.16s both;
+    }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 40px;
+      animation: fadeUp 1s 0.24s both;
+    }
+    .filter-btn {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.66rem; letter-spacing: 0.16em;
+      color: var(--ink); background: transparent;
+      border: 1.5px solid rgba(26,16,8,0.3);
+      padding: 6px 16px; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--ink); color: var(--yellow);
+      border-color: var(--ink);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PAGE WRAP ───────────────────────────────────────── */
+    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── SECTION LABEL ───────────────────────────────────── */
+    .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem; letter-spacing: 0.3em; color: var(--red);
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 36px; padding-top: 64px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--rule);
+    }
+
+    /* ── PROJECT CARD ────────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1.5px solid rgba(26,16,8,0.12);
+      padding: 36px 32px;
+      position: relative;
+      cursor: default;
+      transition: background 0.2s;
+      display: flex; flex-direction: column;
+      gap: 14px;
+    }
+    .project-card:hover {
+      background: var(--ink);
+    }
+    .project-card:hover .pc-cat,
+    .project-card:hover .pc-title,
+    .project-card:hover .pc-desc,
+    .project-card:hover .pc-tag,
+    .project-card:hover .pc-difficulty,
+    .project-card:hover .pc-status { color: var(--yellow) !important; }
+    .project-card:hover .pc-tag { border-color: rgba(255,217,15,0.25); }
+    .project-card:hover .pc-bar-fill { background: var(--yellow); }
+    .project-card:hover .pc-bar-track { background: rgba(255,217,15,0.15); }
+
+    /* Featured card — spans 2 columns */
+    .project-card.featured {
+      grid-column: span 2;
+      flex-direction: row; gap: 48px; align-items: flex-start;
+    }
+    .project-card.featured .pc-body { flex: 1; }
+    .project-card.featured .pc-art {
+      width: 180px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .pc-cat {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.62rem; letter-spacing: 0.22em; color: var(--red);
+      text-transform: uppercase;
+    }
+    .pc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem; font-weight: 700; line-height: 1.2;
+      color: var(--ink);
+    }
+    .pc-title em { color: var(--red); font-style: italic; }
+    .pc-desc {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.92rem; line-height: 1.7;
+      color: rgba(26,16,8,0.72);
+    }
+
+    /* Tags row */
+    .pc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pc-tag {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem; letter-spacing: 0.14em;
+      color: rgba(26,16,8,0.5);
+      border: 1px solid rgba(26,16,8,0.15);
+      padding: 3px 9px;
+    }
+
+    /* Difficulty bar */
+    .pc-difficulty-wrap { display: flex; flex-direction: column; gap: 5px; }
+    .pc-difficulty {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem; letter-spacing: 0.16em;
+      color: rgba(26,16,8,0.45);
+    }
+    .pc-bar-track {
+      height: 3px; background: rgba(26,16,8,0.1); width: 100%;
+    }
+    .pc-bar-fill {
+      height: 100%; background: var(--ink);
+      transition: width 0.6s ease;
+    }
+
+    /* Status badge */
+    .pc-status {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem; letter-spacing: 0.16em;
+      color: rgba(26,16,8,0.4);
+      margin-top: auto;
+    }
+    .pc-status.wip   { color: var(--brown); }
+    .pc-status.live  { color: #2a5c1a; }
+    .pc-status.soon  { color: rgba(26,16,8,0.35); }
+
+    /* CSS beard art for featured card */
+    .beard-art {
+      width: 120px; height: 90px;
+      position: relative;
+    }
+    .beard-art .face {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    }
+    .beard-art .brd {
+      width: 70px; height: 40px;
+      background: var(--ink);
+      border-radius: 0 0 35px 35px;
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    }
+
+    /* ── CALLOUT STRIP ───────────────────────────────────── */
+    .callout {
+      background: var(--ink); color: var(--yellow);
+      padding: 48px;
+      margin: 64px 0 0;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 32px; flex-wrap: wrap;
+    }
+    .callout h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 900; line-height: 1.2;
+    }
+    .callout h3 em { color: var(--red); font-style: italic; }
+    .callout p {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.92rem; line-height: 1.65;
+      color: rgba(255,217,15,0.6); max-width: 480px;
+      margin-top: 10px;
+    }
+    .callout-btn {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      color: var(--ink); background: var(--yellow);
+      border: none; padding: 14px 32px;
+      cursor: pointer; white-space: nowrap;
+      text-decoration: none; display: inline-block;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .callout-btn:hover { background: var(--yellow-lt, #ffe84d); }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      margin-top: 80px; background: var(--ink);
+      padding: 44px 48px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    footer .f-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 900; color: var(--yellow);
+    }
+    footer .f-brand em { color: var(--red); font-style: italic; }
+    footer a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem; letter-spacing: 0.16em;
+      color: rgba(255,217,15,0.5); text-decoration: none;
+      border-bottom: 1px solid rgba(255,217,15,0.2);
+      padding-bottom: 2px; transition: color 0.2s;
+    }
+    footer a:hover { color: var(--yellow); }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s, transform 0.65s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 800px) {
+      nav { padding: 0 20px; }
+      .hero, .page-wrap { padding-left: 20px; padding-right: 20px; }
+      footer { padding: 32px 20px; }
+      .callout { padding: 32px 20px; }
+      .project-card.featured { grid-column: span 1; flex-direction: column; }
+      .project-card.featured .pc-art { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-home" href="index.html">Beard <span>Jungle</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-ghost">PROJECTS</div>
+    <p class="hero-kicker">The Beard Jungle Workshop</p>
+    <h1>Experiments in<br/><em>Applied Bristle</em></h1>
+    <p class="hero-sub">
+      Guides, experiments, field reports and frankly unhinged research into
+      the art, science and sport of beard ownership. Some useful. All earnest.
+    </p>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="grooming">Grooming</button>
+      <button class="filter-btn" data-filter="colour">Colour</button>
+      <button class="filter-btn" data-filter="shaping">Shaping</button>
+      <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
+      <button class="filter-btn" data-filter="science">Science</button>
+    </div>
+  </header>
+
+  <div class="page-wrap">
+
+    <!-- ══ SECTION: GROOMING ══════════════════════════════ -->
+    <p class="section-label reveal">Grooming &amp; Care</p>
+    <div class="projects-grid">
+
+      <!-- FEATURED -->
+      <div class="project-card featured reveal" data-cat="grooming">
+        <div class="pc-body">
+          <p class="pc-cat">Grooming — Featured Guide</p>
+          <h2 class="pc-title">The <em>30-Day</em> Conditioning Protocol</h2>
+          <p class="pc-desc">
+            A rigorous month-long experiment in daily beard oiling, temperature-controlled
+            washing, and silk pillowcase usage. We tracked softness, sheen, split ends,
+            and the reaction of people in lifts. Methodology: questionable. Results: undeniable.
+          </p>
+          <div class="pc-tags">
+            <span class="pc-tag">oil</span>
+            <span class="pc-tag">daily routine</span>
+            <span class="pc-tag">experiment</span>
+            <span class="pc-tag">silk pillowcase</span>
+          </div>
+          <div class="pc-difficulty-wrap">
+            <span class="pc-difficulty">COMMITMENT LEVEL</span>
+            <div class="pc-bar-track"><div class="pc-bar-fill" style="width:75%"></div></div>
+          </div>
+          <span class="pc-status wip">In Progress</span>
+        </div>
+        <div class="pc-art">
+          <div class="beard-art">
+            <div class="face"></div>
+            <div class="brd"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" data-cat="grooming">
+        <p class="pc-cat">Grooming</p>
+        <h2 class="pc-title">Beard Oil — <em>The Blind Tasting</em></h2>
+        <p class="pc-desc">
+          Fourteen beard oils, zero labels, one face. A systematic blind test ranking
+          oils by absorption speed, scent longevity, and whether they made the tester
+          smell "like a man" or "like a forest fire." Spoiler: the expensive one lost.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">oil</span>
+          <span class="pc-tag">product review</span>
+          <span class="pc-tag">blind test</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:30%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="grooming">
+        <p class="pc-cat">Grooming</p>
+        <h2 class="pc-title">The <em>Itch Phase</em> Survival Guide</h2>
+        <p class="pc-desc">
+          Weeks two through four of beard growth are a trial. This is an honest,
+          practical map through the valley of unbearable chin prickling — what helps,
+          what makes it worse, and why most beards die here.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">beginners</span>
+          <span class="pc-tag">itch</span>
+          <span class="pc-tag">moisturiser</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:20%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="grooming">
+        <p class="pc-cat">Grooming</p>
+        <h2 class="pc-title">Hot Towel Prep — <em>A Field Report</em></h2>
+        <p class="pc-desc">
+          The traditional barber hot-towel treatment, conducted at home with decreasing
+          levels of ambition. Testing whether the ritual improves trim quality, or
+          simply makes you feel like a Victorian gentleman for twelve pleasant minutes.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">ritual</span>
+          <span class="pc-tag">barber technique</span>
+          <span class="pc-tag">hot towel</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:40%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+    </div>
+
+    <!-- ══ SECTION: SHAPING ═══════════════════════════════ -->
+    <p class="section-label reveal">Shaping &amp; Form</p>
+    <div class="projects-grid">
+
+      <div class="project-card reveal" data-cat="shaping">
+        <p class="pc-cat">Shaping</p>
+        <h2 class="pc-title">Face Shape <em>vs.</em> Beard Shape</h2>
+        <p class="pc-desc">
+          A definitive visual guide to which beard shapes flatter which face geometries —
+          oval, square, round, oblong, diamond, heart — and more importantly, which
+          combinations have historically resulted in regret.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">face shape</span>
+          <span class="pc-tag">visual guide</span>
+          <span class="pc-tag">reference</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:15%"></div></div>
+        </div>
+        <span class="pc-status wip">In Progress</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="shaping">
+        <p class="pc-cat">Shaping</p>
+        <h2 class="pc-title">Training the <em>Neckline</em></h2>
+        <p class="pc-desc">
+          The neckline is where most beards fail publicly. This guide establishes the
+          two-finger rule, the chin-line fallacy, and a step-by-step approach to
+          maintaining a clean neckline that doesn't look like you asked a friend to do it.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">neckline</span>
+          <span class="pc-tag">trimming</span>
+          <span class="pc-tag">technique</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:35%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="shaping">
+        <p class="pc-cat">Shaping</p>
+        <h2 class="pc-title">Growing a <em>Ducktail</em> From Scratch</h2>
+        <p class="pc-desc">
+          A six-month documented journey from blank canvas to a properly tapered
+          ducktail beard. Monthly photographs, trimming logs, two accidental
+          symmetry disasters, and one very understanding barber.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">ducktail</span>
+          <span class="pc-tag">long-form</span>
+          <span class="pc-tag">documentation</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:85%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="shaping">
+        <p class="pc-cat">Shaping</p>
+        <h2 class="pc-title">Beard Wax — <em>Architecture</em> for Hair</h2>
+        <p class="pc-desc">
+          An investigation into beard wax strengths, hold durations, and
+          whether it is structurally possible to maintain a fully horizontal
+          moustache for more than four hours in South African weather.
+          (It is not. But we tried.)
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">wax</span>
+          <span class="pc-tag">hold</span>
+          <span class="pc-tag">moustache</span>
+          <span class="pc-tag">structural engineering</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:60%"></div></div>
+        </div>
+        <span class="pc-status wip">In Progress</span>
+      </div>
+
+    </div>
+
+    <!-- ══ SECTION: COLOUR ════════════════════════════════ -->
+    <p class="section-label reveal">Colour &amp; Dye</p>
+    <div class="projects-grid">
+
+      <div class="project-card reveal" data-cat="colour">
+        <p class="pc-cat">Colour</p>
+        <h2 class="pc-title">Going <em>Natural</em> — Henna &amp; Plant Dyes</h2>
+        <p class="pc-desc">
+          A complete guide to colouring your beard without chemicals. Henna,
+          indigo, cassia — how they work, how to mix them, how long they last,
+          and whether your beard will temporarily look like it belongs to
+          a 14th-century Persian poet. (Yes. Embrace it.)
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">henna</span>
+          <span class="pc-tag">natural dye</span>
+          <span class="pc-tag">chemical-free</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:50%"></div></div>
+        </div>
+        <span class="pc-status wip">In Progress</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="colour">
+        <p class="pc-cat">Colour</p>
+        <h2 class="pc-title">Embracing the <em>Silver</em></h2>
+        <p class="pc-desc">
+          A philosophical and practical guide to not fighting your grey. Includes
+          how to transition gracefully, how to tone silver beard hair for maximum
+          distinguished effect, and a reading list for men who've accepted
+          that they look better this way anyway.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">grey</span>
+          <span class="pc-tag">silver</span>
+          <span class="pc-tag">toning</span>
+          <span class="pc-tag">acceptance</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:10%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="colour">
+        <p class="pc-cat">Colour</p>
+        <h2 class="pc-title">The <em>Two-Tone</em> Experiment</h2>
+        <p class="pc-desc">
+          Deliberately bleaching the ends of a dark beard and toning to
+          amber — the ombre beard. A technical walkthrough with patch-test
+          warnings, developer strength charts, and a frank conversation
+          about when to stop before it becomes a statement.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">bleach</span>
+          <span class="pc-tag">ombre</span>
+          <span class="pc-tag">advanced</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:90%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+    </div>
+
+    <!-- ══ SECTION: LIFESTYLE ═════════════════════════════ -->
+    <p class="section-label reveal">Lifestyle &amp; Culture</p>
+    <div class="projects-grid">
+
+      <div class="project-card reveal" data-cat="lifestyle">
+        <p class="pc-cat">Lifestyle</p>
+        <h2 class="pc-title">Beard Day <em>Training Programme</em></h2>
+        <p class="pc-desc">
+          Exactly what it sounds like. A dedicated day in the week reserved entirely
+          for beard maintenance, reflection, and enhancement. We've structured it
+          like an athlete's training log: warm-up (hot towel), technique work (trim),
+          conditioning (oil + comb), cool-down (balm). Sunday recommended.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">routine</span>
+          <span class="pc-tag">ritual</span>
+          <span class="pc-tag">weekly</span>
+          <span class="pc-tag">training</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:55%"></div></div>
+        </div>
+        <span class="pc-status wip">In Progress</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="lifestyle">
+        <p class="pc-cat">Lifestyle</p>
+        <h2 class="pc-title">The <em>10 Commandments</em> of Fuzz</h2>
+        <p class="pc-desc">
+          A sacred text. Distilled from years of trial, error, stubble rash
+          and public feedback, these ten laws govern the ethical ownership
+          and maintenance of facial hair. Thou shalt not neglect the neckline.
+          Thou shalt condition.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">rules</span>
+          <span class="pc-tag">ethics</span>
+          <span class="pc-tag">manifesto</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:5%"></div></div>
+        </div>
+        <span class="pc-status wip">In Progress</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="lifestyle">
+        <p class="pc-cat">Lifestyle</p>
+        <h2 class="pc-title">Food &amp; The <em>Beard Trap</em></h2>
+        <p class="pc-desc">
+          An honest taxonomy of foods that are impossible to eat with a full beard
+          without incident — soup, burritos, soft-serve ice cream, spaghetti — and
+          techniques for managing them with your dignity largely intact.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">food</span>
+          <span class="pc-tag">practical</span>
+          <span class="pc-tag">dignity</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:20%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="lifestyle">
+        <p class="pc-cat">Lifestyle</p>
+        <h2 class="pc-title">The <em>Yeard Challenge</em> — Public Diary</h2>
+        <p class="pc-desc">
+          One full year. No trimming below the cheekline. Monthly dispatches from
+          inside the experiment: social reactions, airport security observations,
+          unsolicited opinions from strangers, and a final reckoning at month twelve.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">yeard</span>
+          <span class="pc-tag">long-form</span>
+          <span class="pc-tag">diary</span>
+          <span class="pc-tag">challenge</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:100%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+    </div>
+
+    <!-- ══ SECTION: SCIENCE ═══════════════════════════════ -->
+    <p class="section-label reveal">Science &amp; Research</p>
+    <div class="projects-grid">
+
+      <div class="project-card reveal" data-cat="science">
+        <p class="pc-cat">Science</p>
+        <h2 class="pc-title">Does a Beard Make You <em>Warmer?</em></h2>
+        <p class="pc-desc">
+          We attached a thermometer to a bearded face and a clean-shaved face
+          in identical conditions and measured ambient temperature retention
+          over 90 minutes. Science: conducted. Conclusions: gloriously pointless.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">temperature</span>
+          <span class="pc-tag">experiment</span>
+          <span class="pc-tag">data</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:45%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="science">
+        <p class="pc-cat">Science</p>
+        <h2 class="pc-title">Beard as <em>Air Filter</em> — The Victorian Theory</h2>
+        <p class="pc-desc">
+          Victorian coal miners reportedly grew beards specifically to filter
+          airborne particles. We examine the historical record, look at modern
+          filtration data on hair fibre density, and ultimately accept we
+          cannot make this into a public health recommendation.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">history</span>
+          <span class="pc-tag">filtration</span>
+          <span class="pc-tag">victorian</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:25%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+      <div class="project-card reveal" data-cat="science">
+        <p class="pc-cat">Science</p>
+        <h2 class="pc-title">The Stress–Beard <em>Correlation</em></h2>
+        <p class="pc-desc">
+          Anecdotal evidence suggests beards grow slower during high-stress periods.
+          Telogen effluvium (stress-related hair shedding) is a real phenomenon.
+          This project tracks daily growth against a stress journal over six weeks
+          and produces a graph that proves nothing conclusively.
+        </p>
+        <div class="pc-tags">
+          <span class="pc-tag">stress</span>
+          <span class="pc-tag">growth rate</span>
+          <span class="pc-tag">data tracking</span>
+        </div>
+        <div class="pc-difficulty-wrap">
+          <span class="pc-difficulty">COMMITMENT LEVEL</span>
+          <div class="pc-bar-track"><div class="pc-bar-fill" style="width:65%"></div></div>
+        </div>
+        <span class="pc-status soon">Planned</span>
+      </div>
+
+    </div>
+
+    <!-- CALLOUT -->
+    <div class="callout reveal">
+      <div>
+        <h3>Got a <em>Project Idea?</em></h3>
+        <p>If you have a beard-related experiment, guide or theory that deserves
+        proper documentation — send it through. The weirder the better.
+        We will consider everything except anything involving fire.</p>
+      </div>
+      <a href="#" class="callout-btn">Submit an Idea</a>
+    </div>
+
+  </div><!-- /page-wrap -->
+
+  <footer>
+    <div class="f-brand">Beard <em>Jungle</em></div>
+    <a href="index.html">Return to the Jungle</a>
+  </footer>
+
+  <script>
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ── FILTER BUTTONS ─────────────────────────────────── */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          const cat = card.dataset.cat;
+          if (filter === 'all' || cat === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        // Also show/hide section labels — hide if all cards in section hidden
+        document.querySelectorAll('.section-label').forEach(label => {
+          let next = label.nextElementSibling;
+          let hasVisible = false;
+          if (next && next.classList.contains('projects-grid')) {
+            next.querySelectorAll('.project-card').forEach(c => {
+              if (c.style.display !== 'none') hasVisible = true;
+            });
+          }
+          label.style.display = hasVisible ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
