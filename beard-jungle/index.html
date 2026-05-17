@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beard Jungle </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English+SC&family=Lora:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --yellow:    #FFD90F;
+      --yellow-dk: #e6c000;
+      --yellow-lt: #ffe84d;
+      --ink:       #1a1008;
+      --red-hair:  #8B1A0A;
+      --brn-hair:  #3D1C07;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--yellow); }
+
+    /*  LANDING  */
+    #landing {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--yellow);
+      transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    #landing.diving { opacity: 0; transform: scale(6); pointer-events: none; }
+
+    #landing-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      cursor: none;
+    }
+
+    .landing-card {
+      position: relative; z-index: 2;
+      max-width: 520px; width: 90%;
+      padding: 44px 48px;
+      background: rgba(255,217,15,0.18);
+      backdrop-filter: blur(4px);
+      border: 2px solid rgba(26,16,8,0.22);
+      text-align: center;
+      animation: cardIn 1.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .landing-card .eyebrow {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem; letter-spacing: 0.24em;
+      color: var(--ink); opacity: 0.55;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .landing-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+      font-weight: 700; line-height: 1.05;
+      color: var(--ink); margin-bottom: 6px;
+    }
+    .landing-card h1 em { font-style: italic; color: var(--red-hair); }
+    .landing-card .sub {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 0.96rem; color: rgba(26,16,8,0.65);
+      line-height: 1.75; margin: 20px 0 36px;
+    }
+    #enter-btn {
+      display: inline-block;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.88rem; letter-spacing: 0.2em;
+      color: var(--yellow); background: var(--ink);
+      border: none; cursor: pointer; padding: 14px 44px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    #enter-btn:hover { background: var(--red-hair); transform: translateY(-2px); }
+    #enter-btn:active { transform: translateY(0); }
+    .landing-card .hint {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 0.73rem; color: rgba(26,16,8,0.28);
+      margin-top: 20px;
+    }
+
+    /* Custom cursor */
+    #cursor-dot {
+      position: fixed; z-index: 9999;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--ink);
+      pointer-events: none;
+      transform: translate(-50%,-50%);
+    }
+
+    /*  JUNGLE PAGE  */
+    #jungle-page {
+      position: fixed; inset: 0;
+      overflow-y: auto; overflow-x: hidden;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.6s ease 0.5s;
+    }
+    #jungle-page.visible { opacity: 1; pointer-events: all; }
+
+    /* 
+      Site content sits below the canvas.
+      z-index: 1 so the canvas (z:50) covers it.
+      Text is dark on yellow — fully readable once canvas
+      is shaved away to reveal the live DOM beneath.
+    */
+    #site-content {
+      position: relative; z-index: 1;
+      min-height: 300vh;
+      background: var(--yellow);
+    }
+
+    /* Hair canvas covers everything */
+    #hair-canvas {
+      position: fixed; inset: 0; z-index: 50;
+      width: 100%; height: 100%;
+      pointer-events: none;   /* browse mode by default — SHAVE btn activates */
+      cursor: default;
+    }
+
+    /* Toolbar */
+    #shave-toolbar {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex; align-items: center; gap: 14px;
+      background: var(--ink); border: 2px solid var(--yellow);
+      padding: 11px 22px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease 1s;
+    }
+    #shave-toolbar.visible { opacity: 1; pointer-events: all; }
+    #shave-toolbar label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem; letter-spacing: 0.15em; color: var(--yellow);
+    }
+    #shave-size {
+      -webkit-appearance: none;
+      width: 90px; height: 3px;
+      background: #444; border-radius: 2px; cursor: pointer;
+    }
+    #shave-size::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 13px; height: 13px;
+      border-radius: 50%; background: var(--yellow); cursor: pointer;
+    }
+    #regrow-btn {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      color: var(--ink); background: var(--yellow);
+      border: none; padding: 7px 16px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    #regrow-btn:hover { background: var(--yellow-lt); }
+
+    /* Depth label */
+    #depth-label {
+      position: fixed; top: 20px; right: 20px; z-index: 200;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      color: var(--yellow); background: var(--ink);
+      padding: 5px 12px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease 1.2s;
+    }
+    #depth-label.visible { opacity: 1; }
+
+    /*  CONTENT SECTIONS  */
+    .content-section {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 80px 40px; text-align: center;
+    }
+    .content-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700; color: var(--ink);
+      margin-bottom: 20px; line-height: 1.1;
+    }
+    .content-section h2 em { color: var(--red-hair); font-style: italic; }
+    .content-section p {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 1.05rem; color: rgba(26,16,8,0.75);
+      max-width: 560px; line-height: 1.85; margin-bottom: 12px;
+    }
+    .content-section strong {
+      font-style: normal; color: var(--ink);
+    }
+    .content-section .links {
+      display: flex; gap: 24px; margin-top: 28px;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .content-section .links a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.82rem; letter-spacing: 0.18em;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 2px solid var(--red-hair);
+      padding-bottom: 2px; transition: color 0.2s;
+    }
+    .content-section .links a:hover { color: var(--red-hair); }
+
+    /*  SHAVE MODE TOGGLE BUTTON  */
+    #shave-btn {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      color: var(--ink); background: var(--yellow-lt);
+      border: 2px solid transparent;
+      padding: 7px 16px; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    #shave-btn.shaving {
+      background: var(--red-hair);
+      color: var(--yellow);
+      border-color: var(--yellow);
+      animation: shavePulse 1.4s ease-in-out infinite;
+    }
+    @keyframes shavePulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(139,26,10,0.4); }
+      50%       { box-shadow: 0 0 0 8px rgba(139,26,10,0.0); }
+    }
+
+    /*  SHAKE ON REVEAL  */
+    @keyframes hairShake {
+      0%   { transform: translate(0,0) rotate(0deg); }
+      15%  { transform: translate(-4px, 1px) rotate(-1.5deg); }
+      30%  { transform: translate(4px,-2px) rotate(1.5deg); }
+      45%  { transform: translate(-3px, 2px) rotate(-1deg); }
+      60%  { transform: translate(3px,-1px) rotate(0.8deg); }
+      78%  { transform: translate(-1px, 1px) rotate(-0.3deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
+    }
+    .shake-once {
+      animation: hairShake 0.5s cubic-bezier(0.36,0.07,0.19,0.97) both;
+    }
+    /* Revealed links pulse their underline so user knows they're live */
+    .revealed-link {
+      cursor: pointer !important;
+      position: relative;
+    }
+    .revealed-link::after {
+      content: '';
+      position: absolute; left: 0; bottom: -3px;
+      width: 100%; height: 2px;
+      background: var(--red-hair);
+      animation: linkGlow 1.8s ease-in-out infinite;
+    }
+    @keyframes linkGlow {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+    .shake-once {
+      animation: hairShake 0.45s cubic-bezier(0.36,0.07,0.19,0.97) both;
+    }
+    /* Scissor hint on hover once a link is revealed */
+    .content-section a.revealed-link::after {
+      content: '';
+      position: absolute; right: -20px; top: -2px;
+      font-size: 0.7rem; opacity: 0;
+      transition: opacity 0.2s; pointer-events: none;
+    }
+    .content-section a {
+      position: relative;
+    }
+    .content-section a.revealed-link:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+
+  <!--  LANDING  -->
+  <section id="landing">
+    <canvas id="landing-canvas"></canvas>
+    <div class="landing-card">
+      <p class="eyebrow">A hairy corner of the internet</p>
+      <h1>Beard<br/><em>Jungle</em></h1>
+      <p class="sub">
+        Dense. Unruly. Yours to explore.<br/>
+        Shave away the stubble — uncover what's underneath.<br/>
+        Page Not Optimise-prime-ed. Apologies.
+      </p>
+      <button id="enter-btn">ENTER THE JUNGLE</button>
+      <p class="hint">Move your cursor through the bristles above.</p>
+    </div>
+  </section>
+
+  <!--  JUNGLE  -->
+  <section id="jungle-page">
+
+    <!-- Canvas overlay — hair drawn here, shaved away to reveal DOM below -->
+    <canvas id="hair-canvas"></canvas>
+
+    <!-- The actual site content. Lives UNDER the canvas at z:1.
+         When canvas pixels are erased, this shows through sharp + clear. -->
+    <div id="site-content">
+
+      <div class="content-section">
+        <h2>The <em>Clearing</em></h2>
+        <p>You shaved your way in. Welcome to Beard Jungle!<br/>
+        A personal site full of links (none working right now), projects (empty, sorry)
+        and miscellaneous bristly business (I mean, you can shave?).</p>
+        <div class="links">
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h2>The <em>Manifesto</em></h2>
+        <p>A man without a beard is like a landscape without a forest.
+        We believe the beard is not a choice, but a geological event occurring on the chin.</p>
+        <div class="links">
+          <a href="wisdoms.html">The Wisdoms of The Fuzz</a>
+          <a href="projects.html">Wax Reviews</a>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h2>The <em>Thicket</em> of History</h2>
+        <p>From Egyptian Pharaohs with gold chin-straps to Victorian coal-miners
+        using their facial hair as air filters, the beard has always been
+        humanity's greatest multi-tool.</p>
+        <p><strong>Fact:</strong> The average beard grows 5.5 inches per year.
+        That's a lot of jungle to manage.</p>
+      </div>
+
+      <div class="content-section">
+        <h2>The <em>Root</em> of Competition</h2>
+        <p>The World Beard Championships: Where physics goes to die.
+        Whether it's a Freestyle Moustache shaped like a bicycle or a Garibaldi
+        that can hide a sandwich, we celebrate the extreme.</p>
+        <div class="links">
+          <a href="https://neocities.org">Join the Webring</a>
+          <a href="gallery.html">Follicle Gallery</a>
+          <a href="https://neocities.org/site/beard-jungle" target="_blank">Neocities Profile</a>
+          <a href="https://github.com" target="_blank">View Source</a>
+        </div>
+      </div>
+
+    </div><!-- /site-content -->
+
+    <div id="shave-toolbar">
+      <button id="shave-btn">SHAVE</button>
+      <label>BLADE</label>
+      <input type="range" id="shave-size" min="15" max="100" value="40" />
+      <button id="regrow-btn">REGROW</button>
+    </div>
+    <div id="depth-label">SURFACE</div>
+
+  </section>
+
+  <script>
+  /*  UTILS  */
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function pick(arr)  { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  /*  CURSOR  */
+  const cursorDot = document.getElementById('cursor-dot');
+  document.addEventListener('mousemove', e => {
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top  = e.clientY + 'px';
+  });
+
+  /* 
+     1. LANDING — stubble on yellow
+   */
+  const lCanvas = document.getElementById('landing-canvas');
+  const lCtx    = lCanvas.getContext('2d');
+
+  const HAIR_COLORS = [
+    '#0d0d0d','#1a1008','#222',
+    '#3D1C07','#4a2510','#5c3317',
+    '#6B1A0A','#8B1A0A','#7a2010',
+  ];
+
+  let lStrands = [], lmx = -9999, lmy = -9999, lTime = 0;
+
+  function initLanding() {
+    lCanvas.width  = lCanvas.offsetWidth;
+    lCanvas.height = lCanvas.offsetHeight;
+    lStrands = [];
+    const W = lCanvas.width, H = lCanvas.height;
+    const count = Math.floor(W * H / 220);
+    for (let i = 0; i < count; i++) {
+      lStrands.push({
+        x: rand(0, W), y: rand(0, H),
+        len: rand(7, 20),
+        angle: rand(-0.5, 0.5) + Math.PI * 1.5,
+        width: rand(1.2, 3.0),
+        color: pick(HAIR_COLORS),
+        phase: rand(0, Math.PI * 2),
+      });
+    }
+  }
+
+  lCanvas.addEventListener('mousemove', e => {
+    const r = lCanvas.getBoundingClientRect();
+    lmx = e.clientX - r.left; lmy = e.clientY - r.top;
+  });
+  lCanvas.addEventListener('mouseleave', () => { lmx = -9999; lmy = -9999; });
+
+  function animateLanding() {
+    if (document.getElementById('landing').classList.contains('diving')) return;
+    requestAnimationFrame(animateLanding);
+    lTime += 0.016;
+    lCtx.fillStyle = '#FFD90F';
+    lCtx.fillRect(0, 0, lCanvas.width, lCanvas.height);
+
+    for (const s of lStrands) {
+      const dx = s.x - lmx, dy = s.y - lmy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const influence = Math.max(0, 1 - dist / 85);
+      const pushAngle = Math.atan2(dy, dx);
+      const sway  = Math.sin(lTime * 3 + s.phase) * 0.05;
+      const angle = s.angle + sway + influence * 0.85 * Math.cos(pushAngle - s.angle);
+      const ex  = s.x + Math.cos(angle) * s.len;
+      const ey  = s.y + Math.sin(angle) * s.len;
+      const cpx = s.x + Math.cos(angle) * s.len * 0.5 + Math.sin(angle) * 2;
+      const cpy = s.y + Math.sin(angle) * s.len * 0.5 - Math.cos(angle) * 2;
+
+      lCtx.beginPath();
+      lCtx.moveTo(s.x, s.y);
+      lCtx.quadraticCurveTo(cpx, cpy, ex, ey);
+      lCtx.strokeStyle = s.color;
+      lCtx.lineWidth   = s.width * (1 + influence * 0.5);
+      lCtx.lineCap     = 'round';
+      lCtx.globalAlpha = 0.82 + influence * 0.18;
+      lCtx.stroke();
+    }
+    lCtx.globalAlpha = 1;
+  }
+
+  window.addEventListener('resize', initLanding);
+  initLanding();
+  animateLanding();
+
+  /* 
+     2. ENTER TRANSITION
+   */
+  document.getElementById('enter-btn').addEventListener('click', () => {
+    document.getElementById('landing').classList.add('diving');
+    setTimeout(() => {
+      document.getElementById('landing').style.display = 'none';
+      document.getElementById('jungle-page').classList.add('visible');
+      document.getElementById('shave-toolbar').classList.add('visible');
+      document.getElementById('depth-label').classList.add('visible');
+      initJungle();
+      jungleLoop();
+      setShaveMode(false);  // start in browse mode — user clicks SHAVE to razor up
+    }, 900);
+  });
+
+  /* 
+     3. JUNGLE — HOW THE LAYERING WORKS
+     
+     DOM stack (back → front):
+       #site-content   z:1   — yellow page, sharp dark text
+       #hair-canvas    z:50  — our drawing surface
+
+     Canvas drawing order each frame:
+       Step A: Fill canvas with semi-transparent yellow tint.
+               This lets the DOM text show through at ~30% opacity —
+               always visible as a ghost, impossible to read clearly.
+       Step B: Draw all un-shaved hair strands on top.
+               The hair + tint together obscure the text enough
+               that it reads as texture, not words.
+       Step C: Erase the shave mask holes using destination-out.
+               Erased pixels = fully transparent = DOM text shows
+               through at 100% opacity — sharp and readable.
+
+     Result: text always dimly present, readable only when shaved.
+   */
+
+  const hCanvas  = document.getElementById('hair-canvas');
+  const hCtx     = hCanvas.getContext('2d');
+  const jDiv     = document.getElementById('jungle-page');
+
+  // Offscreen mask — white = covered, transparent = shaved open
+  const maskCanvas = document.createElement('canvas');
+  const maskCtx    = maskCanvas.getContext('2d');
+
+  let strands     = [];
+  let isShaving   = false;
+  let scrollRatio = 0;
+  let jTime       = 0;
+
+  const DEPTH_COLS = [
+    { from: 0.00, to: 0.33, colors: ['#111','#1a1008','#2a1408','#3D1C07'] },
+    { from: 0.33, to: 0.66, colors: ['#3D1C07','#5c3317','#6B1A0A','#7a2010'] },
+    { from: 0.66, to: 1.00, colors: ['#7a2010','#8B1A0A','#9e2010','#a01005'] },
+  ];
+
+  function colForDepth(yFrac, sr) {
+    const d = Math.min(1, yFrac + sr * 0.4);
+    for (const b of DEPTH_COLS) {
+      if (d >= b.from && d <= b.to) return pick(b.colors);
+    }
+    return pick(DEPTH_COLS[2].colors);
+  }
+
+  function initJungle() {
+    const W = window.innerWidth, H = window.innerHeight;
+    hCanvas.width  = W; hCanvas.height  = H;
+    maskCanvas.width = W; maskCanvas.height = H;
+
+    // Mask starts fully transparent — nothing erased yet.
+    // Shaving paints opaque black circles here; destination-out
+    // then uses those pixels' alpha to punch holes in the hair layer.
+    maskCtx.clearRect(0, 0, W, H);
+
+    // Build dense stubble strands
+    strands = [];
+    const count = Math.floor(W * H / 240);
+    for (let i = 0; i < count; i++) {
+      const yFrac = Math.random();
+      strands.push({
+        x:     rand(0, W),
+        y:     rand(0, H),
+        len:   rand(6, 19),
+        angle: rand(-0.55, 0.55) + Math.PI * 1.5,
+        width: rand(1.2, 3.2),
+        color: colForDepth(yFrac, 0),
+        phase: rand(0, Math.PI * 2),
+        yFrac,
+        shaved: false,
+      });
+    }
+  }
+
+  function jungleLoop() {
+    requestAnimationFrame(jungleLoop);
+    jTime += 0.010;
+    const W = hCanvas.width, H = hCanvas.height;
+
+    //  Step A: semi-transparent yellow tint 
+    // Opacity ~0.72 = text visible as ghost but unreadable
+    hCtx.clearRect(0, 0, W, H);
+    hCtx.fillStyle = 'rgba(255, 217, 15, 0.72)';
+    hCtx.fillRect(0, 0, W, H);
+
+    //  Step B: draw hair strands 
+    for (const s of strands) {
+      if (s.shaved) continue;
+      const sway  = Math.sin(jTime * 0.6 + s.phase) * 0.03;
+      const angle = s.angle + sway;
+      const ex    = s.x + Math.cos(angle) * s.len;
+      const ey    = s.y + Math.sin(angle) * s.len;
+      const cpx   = s.x + Math.cos(angle) * s.len * 0.5 + Math.sin(angle) * 1.8;
+      const cpy   = s.y + Math.sin(angle) * s.len * 0.5 - Math.cos(angle) * 1.8;
+
+      hCtx.beginPath();
+      hCtx.moveTo(s.x, s.y);
+      hCtx.quadraticCurveTo(cpx, cpy, ex, ey);
+      hCtx.strokeStyle = s.color;
+      hCtx.lineWidth   = s.width;
+      hCtx.lineCap     = 'round';
+      hCtx.globalAlpha = 0.9;
+      hCtx.stroke();
+    }
+    hCtx.globalAlpha = 1;
+
+    //  Step C: punch shaved holes — erase canvas pixels 
+    // destination-out makes pixels transparent, revealing DOM
+    hCtx.globalCompositeOperation = 'destination-out';
+    hCtx.drawImage(maskCanvas, 0, 0);
+    hCtx.globalCompositeOperation = 'source-over';
+  }
+
+  /* 
+     SHAVE MODE TOGGLE
+     
+     Two modes:
+       SHAVE  — canvas captures all mouse events, click+drag shaves
+       BROWSE — canvas has pointer-events:none, DOM links clickable
+
+     The SHAVE button in the toolbar toggles between them.
+     Default on entry: BROWSE mode (so first thing user does is
+     click SHAVE to start — feels intentional, like picking up a razor).
+   */
+
+  let shaveMode = false;  // start in browse mode
+  const shaveBtn = document.getElementById('shave-btn');
+
+  function setShaveMode(on) {
+    shaveMode = on;
+    if (on) {
+      shaveBtn.textContent = 'SHAVING';
+      shaveBtn.classList.add('shaving');
+      hCanvas.style.pointerEvents = 'all';
+      hCanvas.style.cursor = 'crosshair';
+    } else {
+      shaveBtn.textContent = 'SHAVE';
+      shaveBtn.classList.remove('shaving');
+      hCanvas.style.pointerEvents = 'none';
+      hCanvas.style.cursor = 'default';
+      isShaving = false;
+    }
+  }
+
+  shaveBtn.addEventListener('click', () => setShaveMode(!shaveMode));
+
+  /*  SHAVING  */
+  const shakenEls = new Set();
+
+  function shaveAt(cx, cy) {
+    const r = parseInt(document.getElementById('shave-size').value);
+    maskCtx.globalCompositeOperation = 'source-over';
+    maskCtx.fillStyle = 'black';
+    maskCtx.beginPath();
+    maskCtx.arc(cx, cy, r, 0, Math.PI * 2);
+    maskCtx.fill();
+    const r2 = r * r;
+    for (const s of strands) {
+      const dx = s.x - cx, dy = s.y - cy;
+      if (dx*dx + dy*dy < r2) s.shaved = true;
+    }
+    checkRevealedElements();
+  }
+
+  function alphaAt(x, y) {
+    const px = hCtx.getImageData(Math.round(x), Math.round(y), 1, 1).data;
+    return px[3];
+  }
+
+  // When a heading or link is sufficiently uncovered, shake it once
+  // and mark links as clickable (even in shave mode they'll work in browse mode)
+  function checkRevealedElements() {
+    document.querySelectorAll('.content-section a, .content-section h2').forEach(el => {
+      if (shakenEls.has(el)) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0) return;
+      const pts = [
+        [rect.left + rect.width * 0.2,  rect.top + rect.height * 0.5],
+        [rect.left + rect.width * 0.5,  rect.top + rect.height * 0.5],
+        [rect.left + rect.width * 0.8,  rect.top + rect.height * 0.5],
+      ];
+      if (pts.every(([px, py]) => alphaAt(px, py) < 30)) {
+        shakenEls.add(el);
+        el.classList.remove('shake-once');
+        void el.offsetWidth;          // force reflow → restart animation
+        el.classList.add('shake-once');
+        if (el.tagName === 'A') el.classList.add('revealed-link');
+      }
+    });
+  }
+
+  // Mouse events — only active when shaveMode is on
+  hCanvas.addEventListener('mousedown', e => {
+    if (!shaveMode) return;
+    isShaving = true;
+    shaveAt(e.clientX, e.clientY);
+  });
+  hCanvas.addEventListener('mousemove', e => {
+    if (shaveMode && isShaving) shaveAt(e.clientX, e.clientY);
+  });
+  window.addEventListener('mouseup', () => { isShaving = false; });
+
+  // Touch
+  hCanvas.addEventListener('touchstart', e => {
+    if (!shaveMode) return;
+    isShaving = true;
+    shaveAt(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, {passive:false});
+  hCanvas.addEventListener('touchmove', e => {
+    if (shaveMode && isShaving) shaveAt(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, {passive:false});
+  window.addEventListener('touchend', () => { isShaving = false; });
+
+  /*  REGROW  */
+  document.getElementById('regrow-btn').addEventListener('click', () => {
+    strands.forEach(s => s.shaved = false);
+    maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+    shakenEls.clear();
+    document.querySelectorAll('.shake-once').forEach(el => el.classList.remove('shake-once'));
+    document.querySelectorAll('.revealed-link').forEach(el => el.classList.remove('revealed-link'));
+    // Stay in whatever mode user was in
+  });
+
+  /*  SCROLL → DEPTH + RECOLOUR  */
+  const DEPTH_LABELS = ['SURFACE', 'STUBBLE', 'THE THICKET', 'THE ROOT'];
+  jDiv.addEventListener('scroll', () => {
+    const sc = document.getElementById('site-content');
+    scrollRatio = Math.min(1, jDiv.scrollTop / (sc.scrollHeight - window.innerHeight || 1));
+    const idx = Math.min(DEPTH_LABELS.length - 1, Math.floor(scrollRatio * DEPTH_LABELS.length));
+    document.getElementById('depth-label').textContent = DEPTH_LABELS[idx];
+    strands.forEach(s => { if (!s.shaved) s.color = colForDepth(s.yFrac, scrollRatio); });
+  });
+
+  window.addEventListener('resize', () => {
+    initLanding();
+    if (document.getElementById('jungle-page').classList.contains('visible')) initJungle();
+  });
+  </script>
+
+  <!-- ── GLOBAL BEARD LINK SPROUT ──────────────────────── -->
+  <style>
+    .beard-sprout {
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      animation: beardSprout 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes beardSprout {
+      0%   { opacity:0; transform:translate(-50%,-50%) scale(0.2) rotate(-8deg); }
+      35%  { opacity:1; transform:translate(-50%,-50%) scale(1.2) rotate(3deg); }
+      65%  { opacity:1; transform:translate(-50%,-50%) scale(1.0) rotate(0deg); }
+      100% { opacity:0; transform:translate(-50%,-50%) scale(0.8) rotate(5deg) translateY(-20px); }
+    }
+  </style>
+  <script>
+  (function() {
+    const SPROUTS = [
+      '<svg width="42" height="38" viewBox="0 0 42 38" xmlns="http://www.w3.org/2000/svg"><path d="M4,8 Q2,17 3,26 Q6,36 21,37 Q36,36 39,26 Q40,17 38,8 Q29,4 21,3 Q13,4 4,8Z" fill="#C8943A" opacity="0.92"/></svg>',
+      '<svg width="46" height="22" viewBox="0 0 46 22" xmlns="http://www.w3.org/2000/svg"><path d="M2,11 Q6,5 13,8 Q19,11 22,14 Q23,15 24,14 Q27,11 33,8 Q40,5 44,11 Q42,17 36,15 Q29,11 23,13 Q17,11 10,15 Q4,17 2,11Z" fill="#C8943A" opacity="0.9"/></svg>',
+      '<svg width="30" height="32" viewBox="0 0 30 32" xmlns="http://www.w3.org/2000/svg"><path d="M6,6 Q4,14 5,22 Q8,30 15,31 Q22,30 25,22 Q26,14 24,6 Q19,2 15,1 Q11,2 6,6Z" fill="#C8943A" opacity="0.9"/></svg>',
+      '<svg width="34" height="40" viewBox="0 0 34 40" xmlns="http://www.w3.org/2000/svg"><path d="M4,6 Q2,17 3,27 Q7,36 13,42 Q17,46 21,42 Q27,36 31,27 Q32,17 30,6 Q24,2 17,1 Q10,2 4,6Z" fill="#8B1A0A" opacity="0.88"/></svg>',
+      '<svg width="38" height="34" viewBox="0 0 38 34" xmlns="http://www.w3.org/2000/svg"><path d="M5,7 Q3,16 4,24 Q7,33 19,34 Q31,33 34,24 Q35,16 33,7 Q26,3 19,2 Q12,3 5,7Z" fill="#3D1C07" opacity="0.85"/></svg>',
+    ];
+    let si = 0;
+    document.addEventListener('click', e => {
+      if (!e.target.closest('a')) return;
+      const el = document.createElement('div');
+      el.className = 'beard-sprout';
+      el.style.left = e.clientX + 'px';
+      el.style.top  = e.clientY + 'px';
+      el.innerHTML  = SPROUTS[si++ % SPROUTS.length];
+      document.body.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    });
+  })();
+  </script>
+</body>
+</html>

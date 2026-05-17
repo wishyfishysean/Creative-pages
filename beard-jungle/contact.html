@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Beard Jungle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --yellow:  #FFD90F;
+      --ink:     #1a1008;
+      --red:     #8B1A0A;
+      --brown:   #3D1C07;
+      --rule:    rgba(26,16,8,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--yellow);
+      color: var(--ink);
+      font-family: 'IM Fell English', serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ink);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 48px; height: 52px;
+      border-bottom: 3px solid var(--yellow);
+    }
+    .nav-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 900;
+      color: var(--yellow); text-decoration: none;
+    }
+    .nav-home span { color: var(--red); font-style: italic; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      color: rgba(255,217,15,0.55); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--yellow); }
+
+    /* ── LAYOUT ──────────────────────────────────────────── */
+    .page {
+      max-width: 1100px; margin: 0 auto;
+      padding: 80px 48px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px; align-items: start;
+    }
+
+    /* ── LEFT COLUMN ─────────────────────────────────────── */
+    .left-col { position: sticky; top: 80px; }
+
+    .left-col .kicker {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem; letter-spacing: 0.3em; color: var(--red);
+      margin-bottom: 18px;
+      animation: fadeUp 0.7s both;
+    }
+    .left-col h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900; line-height: 1.0; color: var(--ink);
+      animation: fadeUp 0.8s 0.08s both;
+    }
+    .left-col h1 em { color: var(--red); font-style: italic; }
+
+    .left-rule {
+      width: 50px; height: 3px; background: var(--ink);
+      margin: 28px 0;
+      animation: fadeUp 0.9s 0.14s both;
+    }
+
+    .left-col .intro {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 1.05rem; line-height: 1.85;
+      color: rgba(26,16,8,0.65);
+      animation: fadeUp 0.9s 0.2s both;
+    }
+
+    /* Contact info blocks */
+    .contact-blocks {
+      margin-top: 48px; display: flex; flex-direction: column; gap: 28px;
+      animation: fadeUp 1s 0.28s both;
+    }
+    .contact-block { display: flex; flex-direction: column; gap: 5px; }
+    .cb-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem; letter-spacing: 0.24em; color: var(--red);
+    }
+    .cb-val {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem; color: rgba(26,16,8,0.72);
+    }
+    .cb-val a {
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid rgba(26,16,8,0.2);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .cb-val a:hover { color: var(--red); border-color: var(--red); }
+
+    /* Response time badge */
+    .response-badge {
+      margin-top: 40px;
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1.5px solid rgba(26,16,8,0.18);
+      padding: 10px 18px;
+      animation: fadeUp 1s 0.34s both;
+    }
+    .rb-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #2a6e1a;
+      animation: rbPulse 2s ease-in-out infinite;
+    }
+    @keyframes rbPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(42,110,26,0.4); }
+      50%       { box-shadow: 0 0 0 5px rgba(42,110,26,0); }
+    }
+    .rb-text {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem; letter-spacing: 0.18em;
+      color: rgba(26,16,8,0.5);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── FORM COLUMN ─────────────────────────────────────── */
+    .form-col { animation: fadeUp 0.9s 0.12s both; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 24px; }
+
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.62rem; letter-spacing: 0.22em; color: var(--red);
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: rgba(26,16,8,0.04);
+      border: 1.5px solid rgba(26,16,8,0.2);
+      padding: 13px 16px;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--ink);
+      background: rgba(26,16,8,0.07);
+    }
+    .field input.error,
+    .field textarea.error { border-color: var(--red); }
+
+    .field textarea { min-height: 140px; }
+
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%231a1008'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+    }
+    .field select option { background: var(--yellow); color: var(--ink); }
+
+    .field .error-msg {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.58rem; letter-spacing: 0.16em;
+      color: var(--red); display: none;
+    }
+    .field.has-error .error-msg { display: block; }
+
+    /* Checkbox row */
+    .field-check {
+      display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+    }
+    .field-check input[type="checkbox"] {
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 1.5px solid rgba(26,16,8,0.3);
+      background: transparent; margin-top: 2px;
+      -webkit-appearance: none; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .field-check input[type="checkbox"]:checked {
+      background: var(--ink); border-color: var(--ink);
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23FFD90F' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: center;
+    }
+    .field-check span {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.88rem; line-height: 1.6;
+      color: rgba(26,16,8,0.6);
+    }
+
+    /* Submit button */
+    .submit-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    #submit-btn {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.78rem; letter-spacing: 0.2em;
+      color: var(--yellow); background: var(--ink);
+      border: none; padding: 15px 40px; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    #submit-btn:hover { background: var(--red); transform: translateY(-2px); }
+    #submit-btn:active { transform: none; }
+    #submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* Success state */
+    #form-success {
+      display: none;
+      padding: 36px;
+      background: var(--ink);
+      text-align: center;
+    }
+    #form-success h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900;
+      color: var(--yellow); margin-bottom: 12px;
+    }
+    #form-success h3 em { color: var(--red); font-style: italic; }
+    #form-success p {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 0.95rem; color: rgba(255,217,15,0.6);
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      padding: 44px 48px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    footer .f-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 900; color: var(--yellow);
+    }
+    footer .f-brand em { color: var(--red); font-style: italic; }
+    footer a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem; letter-spacing: 0.16em;
+      color: rgba(255,217,15,0.5); text-decoration: none;
+      border-bottom: 1px solid rgba(255,217,15,0.18); padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--yellow); }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .page { grid-template-columns: 1fr; gap: 48px; padding: 48px 20px 80px; }
+      .left-col { position: static; }
+      nav, footer { padding-left: 20px; padding-right: 20px; }
+    }
+
+    /* ── BEARD SPROUT ────────────────────────────────────── */
+    .beard-sprout {
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      animation: beardSprout 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes beardSprout {
+      0%   { opacity:0; transform:translate(-50%,-50%) scale(0.2) rotate(-8deg); }
+      35%  { opacity:1; transform:translate(-50%,-50%) scale(1.2) rotate(3deg); }
+      65%  { opacity:1; transform:translate(-50%,-50%) scale(1.0) rotate(0deg); }
+      100% { opacity:0; transform:translate(-50%,-50%) scale(0.8) rotate(5deg) translateY(-20px); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-home" href="index.html">Beard <span>Jungle</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page">
+
+    <!-- LEFT -->
+    <div class="left-col">
+      <p class="kicker">Get in Touch</p>
+      <h1>Say <em>Something.</em><br/>We Grow<br/>Beards, Not<br/>Silence.</h1>
+      <div class="left-rule"></div>
+      <p class="intro">
+        Got a beard to submit for the gallery? A project idea too strange
+        to keep to yourself? A wisdom that belongs on the list?
+        A question about wax viscosity in tropical climates?
+        This is the place.
+      </p>
+
+      <div class="contact-blocks">
+        <div class="contact-block">
+          <span class="cb-label">Location</span>
+          <span class="cb-val">Somewhere with decent growing conditions</span>
+        </div>
+        <div class="contact-block">
+          <span class="cb-label">Website</span>
+          <span class="cb-val"><a href="https://creative-pages.org">creative-pages.org</a></span>
+        </div>
+        <div class="contact-block">
+          <span class="cb-label">Neocities</span>
+          <span class="cb-val"><a href="https://neocities.org" target="_blank">View Profile</a></span>
+        </div>
+      </div>
+
+      <div class="response-badge">
+        <div class="rb-dot"></div>
+        <span class="rb-text">Usually responds within a few days</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div class="form-col">
+      <form class="contact-form" id="contact-form" novalidate>
+
+        <div class="field" id="field-name">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="What do people call you" autocomplete="name" />
+          <span class="error-msg">A name would help, even a beard alias.</span>
+        </div>
+
+        <div class="field" id="field-email">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="How to write back to you" autocomplete="email" />
+          <span class="error-msg">That doesn't look like a valid email address.</span>
+        </div>
+
+        <div class="field" id="field-subject">
+          <label for="subject">What's This About?</label>
+          <select id="subject">
+            <option value="" disabled selected>Choose a subject</option>
+            <option value="gallery">Submit a Beard for the Gallery</option>
+            <option value="project">Project Idea or Collaboration</option>
+            <option value="wisdom">A Wisdom for the List</option>
+            <option value="wax">Urgent Wax-Related Enquiry</option>
+            <option value="general">General Beard Correspondence</option>
+            <option value="other">Something Else Entirely</option>
+          </select>
+          <span class="error-msg">Please pick a subject so we know which pile to put this in.</span>
+        </div>
+
+        <div class="field" id="field-beard">
+          <label for="beard-desc">Beard Description (Optional)</label>
+          <input type="text" id="beard-desc" placeholder="Current beard length, style, ambition level..." />
+        </div>
+
+        <div class="field" id="field-message">
+          <label for="message">Your Message</label>
+          <textarea id="message" placeholder="Say what you need to say. Be as specific or as vague as the situation demands."></textarea>
+          <span class="error-msg">A message with some words in it would be ideal.</span>
+        </div>
+
+        <label class="field-check">
+          <input type="checkbox" id="newsletter" />
+          <span>Keep me informed when new projects, gallery pieces or wisdoms are added. No spam — just updates when something grows.</span>
+        </label>
+
+        <div class="submit-row">
+          <button type="submit" id="submit-btn">Send It</button>
+        </div>
+
+      </form>
+
+      <div id="form-success">
+        <h3>Message <em>Received.</em></h3>
+        <p>
+          It's in. We'll get back to you properly, not with an auto-reply.<br/>
+          In the meantime — go condition your beard. You know you should.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="f-brand">Beard <em>Jungle</em></div>
+    <a href="index.html">Return to the Jungle</a>
+  </footer>
+
+  <script>
+  /* ── FORM VALIDATION ────────────────────────────────── */
+  const form = document.getElementById('contact-form');
+
+  function validate() {
+    let ok = true;
+
+    const nameEl  = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const subjEl  = document.getElementById('subject');
+    const msgEl   = document.getElementById('message');
+
+    // Name
+    const fName = document.getElementById('field-name');
+    if (nameEl.value.trim().length < 2) {
+      fName.classList.add('has-error'); nameEl.classList.add('error'); ok = false;
+    } else {
+      fName.classList.remove('has-error'); nameEl.classList.remove('error');
+    }
+
+    // Email
+    const fEmail = document.getElementById('field-email');
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim());
+    if (!emailOk) {
+      fEmail.classList.add('has-error'); emailEl.classList.add('error'); ok = false;
+    } else {
+      fEmail.classList.remove('has-error'); emailEl.classList.remove('error');
+    }
+
+    // Subject
+    const fSubj = document.getElementById('field-subject');
+    if (!subjEl.value) {
+      fSubj.classList.add('has-error'); subjEl.classList.add('error'); ok = false;
+    } else {
+      fSubj.classList.remove('has-error'); subjEl.classList.remove('error');
+    }
+
+    // Message
+    const fMsg = document.getElementById('field-message');
+    if (msgEl.value.trim().length < 10) {
+      fMsg.classList.add('has-error'); msgEl.classList.add('error'); ok = false;
+    } else {
+      fMsg.classList.remove('has-error'); msgEl.classList.remove('error');
+    }
+
+    return ok;
+  }
+
+  // Clear errors on input
+  ['name','email','subject','message'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      const fld = el.closest('.field');
+      if (fld) { fld.classList.remove('has-error'); el.classList.remove('error'); }
+    });
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    // Simulate send (replace with real endpoint when ready)
+    setTimeout(() => {
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }, 900);
+  });
+
+  /* ── BEARD SPROUT ───────────────────────────────────── */
+  const SPROUTS = [
+    '<svg width="42" height="38" viewBox="0 0 42 38"><path d="M4,8 Q2,17 3,26 Q6,36 21,37 Q36,36 39,26 Q40,17 38,8 Q29,4 21,3 Q13,4 4,8Z" fill="#C8943A" opacity="0.92"/></svg>',
+    '<svg width="46" height="22" viewBox="0 0 46 22"><path d="M2,11 Q6,5 13,8 Q19,11 22,14 Q23,15 24,14 Q27,11 33,8 Q40,5 44,11 Q42,17 36,15 Q29,11 23,13 Q17,11 10,15 Q4,17 2,11Z" fill="#C8943A" opacity="0.9"/></svg>',
+    '<svg width="30" height="32" viewBox="0 0 30 32"><path d="M6,6 Q4,14 5,22 Q8,30 15,31 Q22,30 25,22 Q26,14 24,6 Q19,2 15,1 Q11,2 6,6Z" fill="#8B1A0A" opacity="0.9"/></svg>',
+    '<svg width="34" height="40" viewBox="0 0 34 40"><path d="M4,6 Q2,17 3,27 Q7,36 13,42 Q17,46 21,42 Q27,36 31,27 Q32,17 30,6 Q24,2 17,1 Q10,2 4,6Z" fill="#3D1C07" opacity="0.88"/></svg>',
+  ];
+  let si = 0;
+  document.addEventListener('click', e => {
+    if (!e.target.closest('a')) return;
+    const el = document.createElement('div');
+    el.className = 'beard-sprout';
+    el.style.left = e.clientX + 'px'; el.style.top = e.clientY + 'px';
+    el.innerHTML = SPROUTS[si++ % SPROUTS.length];
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Beards — Beard Jungle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --yellow:   #FFD90F;
+      --ink:      #1a1008;
+      --red:      #8B1A0A;
+      --brown:    #3D1C07;
+      --mid:      #5c3317;
+      --cream:    #fff8e7;
+      --rule:     rgba(26,16,8,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--yellow);
+      color: var(--ink);
+      font-family: 'IM Fell English', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /*  GRAIN OVERLAY  */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /*  NAV  */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 52px;
+      border-bottom: 3px solid var(--yellow);
+    }
+    .nav-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 900;
+      color: var(--yellow); text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .nav-home span { color: var(--red); font-style: italic; }
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      color: rgba(255,217,15,0.55); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--yellow); }
+
+    /*  HERO  */
+    .hero {
+      position: relative;
+      padding: 100px 48px 80px;
+      border-bottom: 2px solid var(--ink);
+      overflow: hidden;
+    }
+    .hero-bg-text {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(140px, 22vw, 320px);
+      font-weight: 900; font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(26,16,8,0.08);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-kicker {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem; letter-spacing: 0.3em;
+      color: var(--red); text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s both;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900; line-height: 0.95;
+      color: var(--ink);
+      max-width: 900px;
+      animation: fadeUp 0.9s 0.1s both;
+    }
+    .hero h1 em { color: var(--red); font-style: italic; }
+    .hero-rule {
+      width: 80px; height: 3px;
+      background: var(--ink);
+      margin: 36px 0;
+      animation: fadeUp 1s 0.2s both;
+    }
+    .hero-intro {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.8; color: rgba(26,16,8,0.72);
+      max-width: 660px;
+      animation: fadeUp 1s 0.3s both;
+    }
+    .hero-meta {
+      display: flex; gap: 48px; margin-top: 48px;
+      animation: fadeUp 1s 0.4s both;
+    }
+    .hero-stat { display: flex; flex-direction: column; gap: 4px; }
+    .hero-stat .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem; font-weight: 900; line-height: 1;
+      color: var(--ink);
+    }
+    .hero-stat .num em { color: var(--red); }
+    .hero-stat .label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      color: rgba(26,16,8,0.5);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /*  LAYOUT WRAPPER  */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /*  SECTION HEADERS  */
+    .chapter {
+      padding: 80px 0 0;
+    }
+    .chapter-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem; letter-spacing: 0.3em;
+      color: var(--red); text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .chapter-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: var(--rule);
+    }
+    .chapter h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--ink); margin-bottom: 40px;
+    }
+    .chapter h2 em { color: var(--red); font-style: italic; }
+
+    /*  EDITORIAL GRID  */
+    .col-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .col-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    @media (max-width: 768px) {
+      .col-2, .col-3 { grid-template-columns: 1fr; }
+      .page-wrap { padding: 0 24px; }
+      nav { padding: 0 24px; }
+      .hero { padding: 60px 24px 60px; }
+      .hero-meta { flex-wrap: wrap; gap: 28px; }
+    }
+
+    /*  PROSE  */
+    .prose {
+      font-family: 'IM Fell English', serif;
+      font-size: 1.05rem; line-height: 1.85;
+      color: rgba(26,16,8,0.82);
+    }
+    .prose p + p { margin-top: 1.2em; }
+    .prose strong { color: var(--ink); font-weight: 600; }
+    .prose em { color: var(--brown); }
+
+    /*  DROP CAP  */
+    .drop-cap::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 5.2em; font-weight: 900;
+      float: left; line-height: 0.72;
+      margin: 0.06em 0.1em 0 0;
+      color: var(--red);
+    }
+
+    /*  PULL QUOTE  */
+    .pull-quote {
+      border-left: 5px solid var(--ink);
+      padding: 24px 32px;
+      margin: 40px 0;
+      background: rgba(26,16,8,0.04);
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-style: italic; line-height: 1.4;
+      color: var(--ink);
+    }
+    .pull-quote cite {
+      display: block; margin-top: 12px;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      color: var(--red); font-style: normal;
+    }
+
+    /*  FACTOID CARD  */
+    .factoid {
+      background: var(--ink);
+      color: var(--yellow);
+      padding: 32px 28px;
+    }
+    .factoid .f-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 900; line-height: 1;
+      color: var(--yellow);
+    }
+    .factoid .f-num em { color: var(--red); }
+    .factoid .f-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      color: rgba(255,217,15,0.5);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .factoid .f-desc {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.88rem; line-height: 1.65;
+      color: rgba(255,217,15,0.75);
+      margin-top: 10px;
+    }
+
+    /*  BEARD TYPE CARD  */
+    .beard-card {
+      border: 2px solid var(--ink);
+      padding: 28px 24px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .beard-card:hover {
+      background: var(--ink);
+    }
+    .beard-card:hover * { color: var(--yellow) !important; }
+    .beard-card:hover .beard-icon { border-color: var(--yellow); }
+    .beard-icon {
+      font-size: 2.8rem;
+      display: block;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+    .beard-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 6px;
+    }
+    .beard-card .bc-sub {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.62rem; letter-spacing: 0.18em;
+      color: var(--red); margin-bottom: 14px;
+      display: block;
+    }
+    .beard-card p {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.9rem; line-height: 1.65;
+      color: rgba(26,16,8,0.72);
+    }
+
+    /*  TIMELINE  */
+    .timeline { position: relative; padding-left: 40px; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 10px; top: 0; bottom: 0;
+      width: 2px; background: var(--ink);
+    }
+    .tl-item {
+      position: relative;
+      padding-bottom: 44px;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -36px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--yellow);
+      border: 2px solid var(--ink);
+    }
+    .tl-item:hover::before { background: var(--red); }
+    .tl-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900;
+      color: var(--red); line-height: 1;
+      margin-bottom: 4px;
+    }
+    .tl-era {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.62rem; letter-spacing: 0.18em;
+      color: rgba(26,16,8,0.45); margin-bottom: 10px;
+    }
+    .tl-item h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 8px;
+    }
+    .tl-item p {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem; line-height: 1.7;
+      color: rgba(26,16,8,0.72);
+    }
+
+    /*  GROWTH TABLE  */
+    .data-table {
+      width: 100%; border-collapse: collapse;
+      font-family: 'IM Fell English', serif;
+      margin-top: 24px;
+    }
+    .data-table th {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      color: var(--yellow); background: var(--ink);
+      padding: 12px 16px; text-align: left;
+    }
+    .data-table td {
+      padding: 14px 16px;
+      font-size: 0.95rem; color: rgba(26,16,8,0.82);
+      border-bottom: 1px solid var(--rule);
+    }
+    .data-table tr:nth-child(even) td {
+      background: rgba(26,16,8,0.04);
+    }
+    .data-table td strong { color: var(--red); }
+
+    /*  DIVIDER  */
+    .divider {
+      display: flex; align-items: center; gap: 20px;
+      margin: 70px 0 0;
+      padding-top: 70px;
+      border-top: 1px solid var(--rule);
+    }
+    .divider-glyph {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--red); flex-shrink: 0;
+    }
+
+    /*  FOOTER  */
+    footer {
+      margin-top: 100px;
+      background: var(--ink);
+      padding: 48px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 24px;
+    }
+    footer .f-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 900;
+      color: var(--yellow);
+    }
+    footer .f-brand em { color: var(--red); font-style: italic; }
+    footer .f-back {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      color: rgba(255,217,15,0.55);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,217,15,0.2);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    footer .f-back:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    /*  SCROLL REVEAL  */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!--  NAV  -->
+  <nav>
+    <a class="nav-home" href="index.html">Beard <span>Jungle</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!--  HERO  -->
+  <header class="hero">
+    <div class="hero-bg-text">BEARD</div>
+    <p class="hero-kicker">A Complete & Unreserved Celebration</p>
+    <h1>On Beards &<br/><em>Their Magnificence</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-intro">
+      From the first fossilised chin of prehistoric man to the waxed and sculpted
+      masterworks of the modern age — the beard is not mere hair. It is history,
+      philosophy, and pure, uncut identity.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <span class="num">30<em>,000</em></span>
+        <span class="label">Years of Beard History</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">5.5<em>"</em></span>
+        <span class="label">Average Annual Growth</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">20<em>K</em></span>
+        <span class="label">Hairs in a Full Beard</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">1<em>st</em></span>
+        <span class="label">World Championships, 1990</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 
+       CHAPTER 1 — HISTORY
+   -->
+  <div class="page-wrap">
+
+    <section class="chapter reveal">
+      <p class="chapter-label">Chapter I</p>
+      <h2>A History of the <em>Illustrious</em> Beard</h2>
+
+      <div class="col-2">
+        <div>
+          <div class="prose drop-cap">
+            <p>
+              The beard is older than civilisation itself. Evidence from Stone Age cave art
+              and ancient burial sites suggests that men have been growing — and grooming —
+              facial hair for at least <strong>30,000 years</strong>. Flint scrapers found
+              at archaeological digs in France and Germany date to around 18,000 BC and
+              are widely believed to be among the earliest shaving implements, confirming
+              that even then, the decision to <em>keep</em> a beard was a conscious,
+              deliberate one.
+            </p>
+            <p>
+              The oldest known depiction of a beard belongs to the ancient Sumerians of
+              Mesopotamia, circa <strong>3000 BC</strong>, where carved reliefs show kings
+              and gods with elaborate, tiered beards — oiled, curled and plaited into
+              geometric precision. To the Sumerians, a beard was a badge of divine
+              masculinity; shaving it was a profound humiliation, a punishment reserved
+              for slaves and the defeated.
+            </p>
+          </div>
+
+          <div class="pull-quote">
+            <p>"He who has no beard has no soul — but he who tends his beard
+            has clearly got his priorities right."</p>
+            <cite>— Ancient Sumerian Proverb (paraphrased with editorial liberty)</cite>
+          </div>
+
+          <div class="prose">
+            <p>
+              Ancient <strong>Egypt</strong> presents the beard's most dramatic paradox.
+              Egyptian men generally shaved, considering natural beards unkempt. Yet the
+              Pharaohs — even female ones such as Hatshepsut — wore elaborate false beards
+              of gold and lapis lazuli, braided and strapped in place. The beard was too
+              sacred to abandon; it simply had to be made more perfect than nature allowed.
+            </p>
+            <p>
+              In <strong>ancient Greece</strong>, the beard was philosophy made physical.
+              Socrates, Plato, Aristotle — the great thinkers wore full beards as a mark
+              of wisdom and virility. The word for beard in Greek, <em>pogon</em>, gave us
+              the still-surviving term <em>pogonology</em>: the study of beards. Greek men
+              cut their beards only in mourning; to shave another's beard by force was a
+              criminal offence.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="timeline">
+
+            <div class="tl-item">
+              <div class="tl-date">~30,000</div>
+              <div class="tl-era">BC — Stone Age</div>
+              <h4>The First Groomers</h4>
+              <p>Flint scrapers and clamshell tweezers suggest Stone Age men actively managed
+              facial hair — meaning the beard was a <em>choice</em> even then.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">~3000</div>
+              <div class="tl-era">BC — Sumer, Mesopotamia</div>
+              <h4>The Divine Beard</h4>
+              <p>Sumerian kings depicted with oiled, tiered, plaited beards as symbols of
+              godly authority. Beard oil was among the most expensive commodities in
+              ancient Mesopotamian trade records.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">~1400</div>
+              <div class="tl-era">BC — Ancient Egypt</div>
+              <h4>The Gold Chin-Strap</h4>
+              <p>Pharaohs including Hatshepsut, Tutankhamun and Ramesses II wore ceremonial
+              false beards of gold and precious stone — divinity demanded a better beard
+              than biology could provide.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">~500</div>
+              <div class="tl-era">BC — Classical Greece</div>
+              <h4>The Philosopher's Beard</h4>
+              <p>Greek men wore full beards as emblems of wisdom. Cutting a man's beard
+              against his will was a punishable offence. Alexander the Great later banned
+              beards in his army — enemies could grab them in combat.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">~100</div>
+              <div class="tl-era">AD — Imperial Rome</div>
+              <h4>Rome's Shifting Fashions</h4>
+              <p>Early Roman men shaved; later, Emperor Hadrian grew a beard (reportedly
+              to hide facial scars) and triggered a century-long imperial beard trend.
+              When emperors shaved again, so did Rome.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">800s</div>
+              <div class="tl-era">AD — Medieval Europe</div>
+              <h4>The Viking Braid</h4>
+              <p>Norse warriors braided their beards with rings and bone ornaments. A
+              well-kept beard was a matter of honour — the sagas describe beard-touching
+              as the gravest possible insult, second only to calling a man a coward.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">1535</div>
+              <div class="tl-era">AD — Tudor England</div>
+              <h4>Henry VIII's Beard Tax</h4>
+              <p>Henry VIII — himself magnificently bearded — introduced a tax on beards
+              graduated by social rank. The more important you were, the more you paid
+              to keep yours. His daughter Elizabeth I later retained a version of the tax.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">1860s</div>
+              <div class="tl-era">AD — Victorian Era</div>
+              <h4>The Golden Age of Whiskers</h4>
+              <p>The Victorians elevated the beard to an art form. Mutton chops,
+              Dundrearies, Imperials, Galways — an entire vocabulary of facial hair
+              emerged. Charles Darwin's beard became as famous as his theory.</p>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-date">1990</div>
+              <div class="tl-era">AD — Modern Era</div>
+              <h4>The World Beard Championships</h4>
+              <p>The first World Beard and Moustache Championship is held in Höfen,
+              Germany. Humanity officially decides that competitive facial hair is
+              a legitimate athletic pursuit. They are correct.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+         DIVIDER
+     -->
+    <div class="divider reveal">
+      <span class="divider-glyph"></span>
+    </div>
+
+    <!-- 
+         CHAPTER 2 — FACTOIDS & SCIENCE
+     -->
+    <section class="chapter reveal">
+      <p class="chapter-label">Chapter II</p>
+      <h2>The Science &amp; <em>Astonishing Facts</em></h2>
+
+      <div class="col-3" style="margin-bottom: 48px;">
+        <div class="factoid">
+          <div class="f-label">Daily Growth</div>
+          <div class="f-num">0.4<em>mm</em></div>
+          <div class="f-desc">The average beard grows roughly 0.4mm per day — about 5.5 inches (14cm) per year. Over a lifetime of not shaving, a man could grow a beard over 27 feet long.</div>
+        </div>
+        <div class="factoid">
+          <div class="f-label">Hair Count</div>
+          <div class="f-num">~20<em>K</em></div>
+          <div class="f-desc">A full beard contains approximately 7,000 to 20,000 individual hairs, depending on genetics. Each follicle is capable of growing hair for 2–6 years before resting.</div>
+        </div>
+        <div class="factoid">
+          <div class="f-label">Shaves Per Lifetime</div>
+          <div class="f-num">20<em>,000</em></div>
+          <div class="f-desc">The average shaving man will shave approximately 20,000 times in his lifetime, spending roughly 3,350 hours — or 139 days — with a razor at his face. Time better spent.</div>
+        </div>
+        <div class="factoid">
+          <div class="f-label">Testosterone Link</div>
+          <div class="f-num">5<em>α</em></div>
+          <div class="f-desc">Beard growth is driven by dihydrotestosterone (DHT), converted from testosterone by the enzyme 5α-reductase. Paradoxically, DHT also causes male pattern baldness — the beard giveth and taketh away.</div>
+        </div>
+        <div class="factoid">
+          <div class="f-label">World Record</div>
+          <div class="f-num">17<em>ft</em></div>
+          <div class="f-desc">The longest beard ever recorded belonged to Hans Langseth of Norway, measuring 17 feet 6 inches (5.33m) at the time of his death in 1927. It is now preserved in the Smithsonian Institution.</div>
+        </div>
+        <div class="factoid">
+          <div class="f-label">Fastest Growth</div>
+          <div class="f-num">AM</div>
+          <div class="f-desc">Beard hair grows fastest in the morning and slowest at night. It also grows faster in warm weather, during illness recovery, and — according to some studies — when you're thinking about food.</div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="prose">
+          <p>
+            Contrary to the persistent myth, shaving does <em>not</em> make beard hair
+            grow back thicker or faster. This illusion arises because the blunt, cut tip
+            of a shaved hair feels coarser than the naturally tapered end of an uncut one.
+            The follicle itself is completely indifferent to whatever you do at the surface.
+          </p>
+          <p>
+            Beard hair is chemically identical to the hair on your head but structurally
+            different: it grows from a curved follicle at a steeper angle, which is why
+            it tends to curl and coil rather than lie flat. This curliness also makes
+            beard hair <strong>more porous</strong> than scalp hair — it absorbs and
+            retains water (and food, and secrets) more readily.
+          </p>
+          <p>
+            A healthy beard follicle can cycle through <strong>25 full growth cycles</strong>
+            before it permanently closes. Each cycle consists of three phases: anagen
+            (active growth, 2–6 years), catagen (transition, 2–3 weeks), and telogen
+            (resting and shedding, 2–3 months). The reason beards plateau in length is
+            that most follicles cycle out of their anagen phase before they can grow longer.
+          </p>
+        </div>
+        <div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timeframe</th>
+                <th>Growth</th>
+                <th>Equivalent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1 Day</td><td><strong>0.4mm</strong></td><td>Width of a credit card</td></tr>
+              <tr><td>1 Week</td><td><strong>2.8mm</strong></td><td>A grain of rice</td></tr>
+              <tr><td>1 Month</td><td><strong>~1.2cm</strong></td><td>Thumbnail width</td></tr>
+              <tr><td>3 Months</td><td><strong>~3.6cm</strong></td><td>Short beard territory</td></tr>
+              <tr><td>6 Months</td><td><strong>~7cm</strong></td><td>Full medium beard</td></tr>
+              <tr><td>1 Year</td><td><strong>~14cm</strong></td><td>Yeard — a full year's growth</td></tr>
+              <tr><td>5 Years</td><td><strong>~70cm</strong></td><td>Championship contender</td></tr>
+              <tr><td>Lifetime</td><td><strong>~8.4m</strong></td><td>27.5 feet of pure commitment</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+         DIVIDER
+     -->
+    <div class="divider reveal">
+      <span class="divider-glyph">*</span>
+    </div>
+
+    <!-- 
+         CHAPTER 3 — BEARD TYPES
+     -->
+    <section class="chapter reveal">
+      <p class="chapter-label">Chapter III</p>
+      <h2>The <em>Taxonomy</em> of Beards</h2>
+      <p class="prose" style="max-width:660px; margin-bottom: 48px;">
+        The beard is not one thing. It is a spectrum — from the barely-there to the
+        magnificently impossible. Below, a field guide to the primary species.
+      </p>
+
+      <div class="col-3">
+
+        <div class="beard-card">
+          
+          <h3>Stubble</h3>
+          <span class="bc-sub">1–5mm · 3–10 days growth</span>
+          <p>The gateway beard. Deliberate yet deniable. Heavy stubble (around 10 days)
+          has been consistently rated as most attractive in numerous peer-reviewed studies.
+          Requires maintenance to avoid looking merely unkempt.</p>
+        </div>
+
+        <div class="beard-card">
+          
+          <h3>The Short Beard</h3>
+          <span class="bc-sub">5–25mm · 1–3 months</span>
+          <p>Businesslike without being boring. The Balbo and Van Dyke live here —
+          neat, shaped, intentional. Requires weekly trimming and a good defining
+          line along the cheeks and neck.</p>
+        </div>
+
+        <div class="beard-card">
+          <span class="beard-icon"></span>
+          <h3>The Full Beard</h3>
+          <span class="bc-sub">25–100mm · 3–12 months</span>
+          <p>The classic. From Lincoln to Hemingway to the entire population of
+          Brooklyn circa 2014. A full beard commands attention and demands conditioning
+          oil, a boar-bristle brush, and a certain nonchalance about food particles.</p>
+        </div>
+
+        <div class="beard-card">
+          
+          <h3>The Yeard</h3>
+          <span class="bc-sub">~140mm · Exactly 1 year</span>
+          <p>A Yeard is exactly what it sounds like: one full year of uninterrupted
+          growth. A rite of passage in beard culture. At the 12-month mark,
+          a man must confront what he truly is.</p>
+        </div>
+
+        <div class="beard-card">
+          
+          <h3>The Terminal Beard</h3>
+          <span class="bc-sub">Maximum natural length</span>
+          <p>Every beard has a terminal length — the point where hair sheds as fast
+          as it grows. Genetically determined, it typically falls between 12 and 36
+          inches. The terminal beard is a man's natural beard in its final, true form.</p>
+        </div>
+
+        <div class="beard-card">
+          
+          <h3>The Competition Beard</h3>
+          <span class="bc-sub">No upper limit</span>
+          <p>Where physics goes to negotiate terms. Freestyle category competitors
+          have styled beards into Viking ships, Christmas trees, bicycles and the
+          Eiffel Tower. Held in place with wax, wire, and pure audacity.</p>
+        </div>
+
+        <div class="beard-card">
+          
+          <h3>The Garibaldi</h3>
+          <span class="bc-sub">20cm wide, rounded bottom</span>
+          <p>Named for Italian general Giuseppe Garibaldi. Wide, full, and rounded
+          at the bottom — as if the beard has made peace with itself and spread out
+          comfortably. Can conceal a surprising variety of items.</p>
+        </div>
+
+        <div class="beard-card">
+          
+          <h3>The Ducktail</h3>
+          <span class="bc-sub">Pointed, shaped</span>
+          <p>A full beard tapered to a distinct point at the chin, like a ship's
+          prow. Requires regular shaping and a sculptor's eye. Gives the impression
+          that the wearer has strong opinions about single-malt whisky.</p>
+        </div>
+
+        <div class="beard-card">
+          
+          <h3>The Mutton Chops</h3>
+          <span class="bc-sub">Sideburns only, clean chin</span>
+          <p>The Victorian champion. Sideburns extending to the corners of the mouth,
+          chin left clean. Named for their resemblance to a cut of lamb. Worn by
+          generals, presidents and men who've given up explaining themselves.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+         CHAPTER 4 — CARE & PHILOSOPHY
+     -->
+    <section class="chapter reveal" style="padding-bottom: 80px;">
+      <p class="chapter-label">Chapter IV</p>
+      <h2>Care, <em>Philosophy</em> & the Long Game</h2>
+
+      <div class="col-2">
+        <div class="prose">
+          <p class="drop-cap">
+            A beard is not grown; it is <em>tended</em>. The difference is everything.
+            The man who simply stops shaving produces a beard. The man who conditions,
+            combs, trims and oils produces a <strong>statement</strong>.
+          </p>
+          <p>
+            Beard oil — typically a blend of carrier oils such as jojoba, argan or
+            sweet almond, with essential oils for fragrance — is the single most
+            important product in a beardsman's kit. It moisturises both the hair
+            and the skin beneath, prevents the dreaded <em>beardruff</em> (beard
+            dandruff), and imparts a healthy sheen that separates the intentional
+            from the accidental beard.
+          </p>
+          <p>
+            Combing and brushing are equally vital. A wide-tooth comb detangles
+            and trains the hair to grow in the desired direction. A boar-bristle
+            brush distributes natural sebum oils from root to tip and adds
+            volume by lifting the hairs — particularly useful for beards that
+            grow flat or patchy.
+          </p>
+          <p>
+            The hardest part of growing a proper beard is not the length — it is
+            the <strong>third and fourth week</strong>. This is the itch phase,
+            when new hairs are long enough to curl back and irritate the skin
+            but not long enough to lie flat. This is where most beards die.
+            The answer is moisturiser, beard oil, and resolve.
+          </p>
+        </div>
+
+        <div>
+          <div class="pull-quote">
+            <p>"There are two kinds of men: those with beards, and those who wish
+            they could grow them."</p>
+            <cite>— A man with a beard, probably</cite>
+          </div>
+          <div class="prose" style="margin-top: 32px;">
+            <p>
+              <strong>On the philosophy:</strong> The beard is patience made visible.
+              It cannot be rushed; it cannot be faked. Every day of growth is a day
+              recorded in hair. A long beard is a diary of commitment, worn on the face.
+            </p>
+            <p>
+              Cultures across history have understood this. In many Indigenous traditions,
+              hair — facial and otherwise — is considered a physical extension of thought
+              and spirit. In Sikhism, the kesh (uncut hair including beard) is one of
+              the Five Ks, a mark of devotion and identity. The beard is never merely
+              decorative; it is <em>declared</em>.
+            </p>
+            <p>
+              So let it grow. Oil it. Comb it. Let it collect a little of everything you
+              walk through. It's yours — the slowest, most honest thing about you.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-wrap -->
+
+  <!--  FOOTER  -->
+  <footer>
+    <div class="f-brand">Beard <em>Jungle</em></div>
+    <a class="f-back" href="index.html">← Return to the Jungle</a>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+
+</body>
+</html>

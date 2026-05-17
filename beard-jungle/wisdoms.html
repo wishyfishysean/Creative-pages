@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Wisdoms of The Fuzz — Beard Jungle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0f0b08;
+      --bg-card:  #1a1410;
+      --gold:     #C8943A;
+      --gold-lt:  #e8b455;
+      --gold-dim: rgba(200,148,58,0.15);
+      --cream:    #f5ede0;
+      --red:      #8B1A0A;
+      --rule:     rgba(200,148,58,0.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'IM Fell English', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(15,11,8,0.93);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 48px; height: 52px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 900;
+      color: var(--gold); text-decoration: none;
+    }
+    .nav-home span { color: var(--red); font-style: italic; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      color: rgba(200,148,58,0.45); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 100px 24px 80px;
+      position: relative;
+      border-bottom: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 700px; height: 340px;
+      background: radial-gradient(ellipse, rgba(200,148,58,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem; letter-spacing: 0.45em;
+      color: var(--gold); opacity: 0.65;
+      margin-bottom: 22px;
+      animation: fadeUp 0.8s both;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6.5vw, 5.8rem);
+      font-weight: 900; line-height: 0.98;
+      color: var(--cream);
+      animation: fadeUp 0.9s 0.08s both;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero-rule {
+      width: 1px; height: 56px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      margin: 32px auto;
+      animation: fadeUp 0.9s 0.16s both;
+    }
+    .hero-sub {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: clamp(0.95rem, 1.8vw, 1.18rem);
+      color: rgba(245,237,224,0.48);
+      max-width: 500px; margin: 0 auto;
+      line-height: 1.82;
+      animation: fadeUp 0.9s 0.22s both;
+    }
+    .hero-count {
+      margin-top: 36px;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem; letter-spacing: 0.32em;
+      color: rgba(200,148,58,0.35);
+      animation: fadeUp 0.9s 0.32s both;
+    }
+    .hero-count strong {
+      color: var(--gold); font-size: 1.4rem;
+      font-family: 'Playfair Display', serif;
+      vertical-align: middle; margin-right: 6px;
+      font-weight: 900;
+    }
+    .hero-instruction {
+      margin-top: 28px;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.58rem; letter-spacing: 0.26em;
+      color: rgba(200,148,58,0.32);
+      animation: fadeUp 0.9s 0.38s both;
+    }
+    .hero-instruction span { display: inline-block; animation: bob 2.2s ease-in-out infinite; }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── WISDOM GRID ─────────────────────────────────────── */
+    .grid-wrap {
+      max-width: 1160px; margin: 0 auto;
+      padding: 72px 28px 96px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 3px;
+    }
+
+    /* ── WISDOM CARD ─────────────────────────────────────── */
+    .w-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid rgba(200,148,58,0.08);
+      min-height: 300px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 22px 24px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.22s, background 0.22s;
+    }
+    .w-card:hover { border-color: rgba(200,148,58,0.35); }
+    .w-card.open  { border-color: var(--gold); background: #1e1810; }
+
+    /* hover glow */
+    .w-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 38%, rgba(200,148,58,0.05) 0%, transparent 65%);
+      opacity: 0; transition: opacity 0.28s;
+    }
+    .w-card:hover::before { opacity: 1; }
+
+    /* Number badge */
+    .w-num {
+      position: absolute; top: 14px; left: 18px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.72rem; font-weight: 900;
+      color: rgba(200,148,58,0.28);
+      transition: color 0.25s;
+    }
+    .w-card:hover .w-num,
+    .w-card.open  .w-num { color: var(--gold); }
+
+    /* Keyword badge — top right */
+    .w-keyword {
+      position: absolute; top: 14px; right: 16px;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.52rem; letter-spacing: 0.18em;
+      color: rgba(200,148,58,0); /* hidden by default */
+      transition: color 0.22s;
+      text-align: right; max-width: 100px;
+    }
+    .w-card:hover:not(.open) .w-keyword { color: rgba(200,148,58,0.4); }
+
+    /* ── BEARD SVG ───────────────────────────────────────── */
+    .beard-wrap {
+      width: 120px; height: 120px;
+      transition: transform 0.4s cubic-bezier(0.34,1.46,0.64,1), opacity 0.3s;
+      flex-shrink: 0;
+    }
+    .w-card:hover:not(.open) .beard-wrap { transform: scale(1.08); }
+    .w-card.open .beard-wrap {
+      transform: scale(0.7) translateY(-12px);
+      opacity: 0.3;
+    }
+    .beard-svg { width: 100%; height: 100%; overflow: visible; }
+    .bp { /* beard path */
+      fill: transparent;
+      stroke: var(--gold);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: fill 0.45s ease, stroke 0.3s, stroke-width 0.3s;
+    }
+    .w-card.open .bp { fill: var(--gold); stroke: var(--gold-lt); stroke-width: 0.7; }
+    .w-card:hover:not(.open) .bp { stroke: var(--gold-lt); stroke-width: 2.2; }
+
+    /* hint label under beard */
+    .w-hint {
+      margin-top: 14px;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.55rem; letter-spacing: 0.22em;
+      color: rgba(200,148,58,0); /* invisible by default */
+      transition: color 0.22s; text-align: center;
+    }
+    .w-card:hover:not(.open) .w-hint { color: rgba(200,148,58,0.42); }
+
+    /* ── WISDOM TEXT (revealed on open) ─────────────────── */
+    .w-text {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 28px 22px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.38s 0.08s, transform 0.38s 0.08s;
+      pointer-events: none;
+      text-align: center;
+      background: rgba(15,11,8,0.97);
+    }
+    .w-card.open .w-text { opacity: 1; transform: translateY(0); pointer-events: all; }
+
+    .wt-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 900; line-height: 1;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .wt-rule {
+      width: 32px; height: 1px;
+      background: var(--gold); opacity: 0.35;
+      margin-bottom: 16px;
+    }
+    .wt-keyword {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.62rem; letter-spacing: 0.2em;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .wt-body {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 0.9rem; line-height: 1.75;
+      color: rgba(245,237,224,0.8);
+    }
+    .wt-close {
+      margin-top: 18px;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.5rem; letter-spacing: 0.18em;
+      color: rgba(200,148,58,0.28);
+    }
+
+    /* ── CLOSING QUOTE ───────────────────────────────────── */
+    .closing {
+      text-align: center;
+      padding: 60px 24px 96px;
+      border-top: 1px solid var(--rule);
+    }
+    .closing-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem; letter-spacing: 0.38em;
+      color: rgba(200,148,58,0.3); margin-bottom: 28px;
+    }
+    .closing p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-weight: 400;
+      font-size: clamp(1.05rem, 2.4vw, 1.65rem);
+      color: rgba(245,237,224,0.2);
+      max-width: 680px; margin: 0 auto; line-height: 1.65;
+    }
+    .closing p em { color: rgba(200,148,58,0.38); font-style: normal; }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background: rgba(10,8,5,0.95);
+      padding: 40px 48px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 20px;
+      border-top: 1px solid var(--rule);
+    }
+    footer .f-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 900; color: var(--gold);
+    }
+    footer .f-brand em { color: var(--red); font-style: italic; }
+    footer .f-links { display: flex; gap: 28px; }
+    footer a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem; letter-spacing: 0.16em;
+      color: rgba(200,148,58,0.4); text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--gold); }
+
+    /* ── GLOBAL LINK ANIMATION (beard sprout) ────────────── */
+    /* Injected by JS — a small SVG beard that pops at click position */
+    .beard-sprout {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      animation: beardSprout 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes beardSprout {
+      0%   { opacity: 0;   transform: translate(-50%,-50%) scale(0.2) rotate(-8deg); }
+      35%  { opacity: 1;   transform: translate(-50%,-50%) scale(1.15) rotate(3deg); }
+      65%  { opacity: 1;   transform: translate(-50%,-50%) scale(1.0) rotate(0deg); }
+      100% { opacity: 0;   transform: translate(-50%,-50%) scale(0.8) rotate(5deg) translateY(-18px); }
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 700px) {
+      nav, footer { padding-left: 20px; padding-right: 20px; }
+      .grid-wrap { padding: 48px 10px 72px; grid-template-columns: repeat(2, 1fr); }
+      .hero { padding: 72px 20px 60px; }
+      .w-card { min-height: 240px; }
+      .beard-wrap { width: 90px; height: 90px; }
+    }
+    @media (max-width: 400px) {
+      .grid-wrap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-home" href="index.html">Beard <span>Jungle</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <p class="hero-eyebrow">Collected Knowledge of the Follicle</p>
+    <h1>The <em>Wisdoms</em><br/>of The Fuzz</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">
+      Not rules. Not laws. Just things that turned out to be true —
+      discovered the hard way, by people who grew beards and paid attention.
+    </p>
+    <p class="hero-count"><strong id="wisdom-count">22</strong> Wisdoms &amp; Counting</p>
+    <p class="hero-instruction">Pick a beard. Get some wisdom. <span>&#x2193;</span></p>
+  </header>
+
+  <div class="grid-wrap" id="wisdom-grid"></div>
+
+  <div class="closing">
+    <p class="closing-label">Final Word</p>
+    <p>
+      Every wisdom here came from a mistake first.
+      The <em>neckline</em> too high. The <em>trim too hasty</em>.
+      The oil bottle empty for a week while you told yourself it was fine.
+      It was not fine. Now you know.
+    </p>
+  </div>
+
+  <footer>
+    <div class="f-brand">Beard <em>Jungle</em></div>
+    <div class="f-links">
+      <a href="index.html">Return to the Jungle</a>
+      <a href="projects.html">All Projects</a>
+      <a href="about.html">About Beards</a>
+    </div>
+  </footer>
+
+  <script>
+  /* ══════════════════════════════════════════════════════════
+     THE WISDOMS OF THE FUZZ
+  ══════════════════════════════════════════════════════════ */
+  const WISDOMS = [
+    {
+      n: 1,
+      keyword: 'THE NECKLINE',
+      text: 'The neckline is the foundation. Every single time you neglect it, people notice before you do. Two fingers above the Adam\'s apple. Everything below that line goes. Non-negotiable.',
+    },
+    {
+      n: 2,
+      keyword: 'OIL IT',
+      text: 'The beard is hair. Hair dries out. Dry things break, split, and feel like a wire brush. Three drops of oil on a damp beard does more for your face than any product costing five times as much.',
+    },
+    {
+      n: 3,
+      keyword: 'SLOW DOWN',
+      text: 'Never trim in a hurry. A panicked Tuesday morning shave creates an asymmetry that lives in your face for three weeks. The beard isn\'t going anywhere. You have time. Use it.',
+    },
+    {
+      n: 4,
+      keyword: 'KNOW YOUR FACE',
+      text: 'Your face has a shape. The beard should work with it, not fight it. Round faces need length at the chin. Square jaws need softer edges. Find out what you\'re working with before you commit to anything.',
+    },
+    {
+      n: 5,
+      keyword: 'THE ITCH ENDS',
+      text: 'The itch phase — weeks two through four — is the great filter. Most beards die here. The ones that survive are owned by people who knew it was temporary. Moisturise. Hold on. It ends.',
+    },
+    {
+      n: 6,
+      keyword: 'YOUR PACE ONLY',
+      text: 'Someone else\'s beard grew faster. Great. Their genetics wrote that schedule. Yours wrote a different one. Comparing growth rates is like being annoyed that your height is what it is.',
+    },
+    {
+      n: 7,
+      keyword: 'WASH LESS',
+      text: 'Daily shampooing strips the oils your skin spent two days producing. Three washes a week is plenty for most people. The beard will thank you by not feeling like a dried-out welcome mat.',
+    },
+    {
+      n: 8,
+      keyword: 'RIGHT TOOL',
+      text: 'Scissors for detail and shape. Trimmer for bulk. The right comb for your length. Using the wrong tool is why lines come out crooked and why you end up one centimetre shorter than you planned.',
+    },
+    {
+      n: 9,
+      keyword: 'GO TO THE BARBER',
+      text: 'A barber who actually knows beards is worth every cent without negotiation. Go before you attempt anything you\'ve never successfully done before. Watch. Ask questions. Then do it yourself at home.',
+    },
+    {
+      n: 10,
+      keyword: 'COMMIT FULLY',
+      text: 'Half-committed facial hair fools nobody. Either grow it with intention or shave it clean. The in-between — the "I\'m sort of growing something" look — is only acceptable for about three weeks before it becomes a problem.',
+    },
+    {
+      n: 11,
+      keyword: 'THE SILK TRICK',
+      text: 'A silk pillowcase sounds like an absurd luxury until you notice that cotton creates friction overnight that tangles, breaks, and frizzes beard hair. The difference by morning is not subtle.',
+    },
+    {
+      n: 12,
+      keyword: 'WAX + HEAT = BAD',
+      text: 'Standard beard wax has a softening point of around 35°C. South African summer regularly exceeds this. If you want held styles in warm climates, find a carnauba-blended formula or manage your expectations.',
+    },
+    {
+      n: 13,
+      keyword: 'GREY IS A MATERIAL',
+      text: 'Grey beard hair is not a problem to fix. It\'s a material with different properties — coarser, more porous, higher contrast. Work with it. A good beard oil and a weekly toning rinse transforms silver into something genuinely striking.',
+    },
+    {
+      n: 14,
+      keyword: 'SOUP IS AN ADVERSARY',
+      text: 'There is a category of food — soup, burritos, soft-serve, anything glazed — that becomes genuinely adversarial once you have a full beard. Slow down. Tilt the bowl away. Keep a dark napkin nearby. This is just your life now.',
+    },
+    {
+      n: 15,
+      keyword: 'THE CURVE MATTERS',
+      text: 'The neckline should follow a gentle U-curve, not a straight horizontal line. Necks aren\'t flat. A straight neckline looks like it was applied with a ruler by someone who has never seen a human neck before.',
+    },
+    {
+      n: 16,
+      keyword: 'SHAVING DOESN\'T SPEED IT UP',
+      text: 'Shaving does not make beard hair grow back thicker or faster. This is a myth based on the fact that a blunt cut tip feels coarser than a naturally tapered one. The follicle doesn\'t know or care what you did at the surface.',
+    },
+    {
+      n: 17,
+      keyword: 'THE PLATEAU IS REAL',
+      text: 'Every beard has a terminal length — the point where hair sheds as fast as it grows. This is genetics, not failure. Most terminal beards fall between 12 and 36 inches. Yours will find its own level and stay there.',
+    },
+    {
+      n: 18,
+      keyword: 'BEARD DAY IS REAL',
+      text: 'One dedicated day a week — hot towel, careful trim, oil, comb, balm — produces better results than five rushed daily attempts. Treat it like a practice session, not a chore. Sunday works best.',
+    },
+    {
+      n: 19,
+      keyword: 'THE WEEK 3 ASYMMETRY',
+      text: 'At some point around week three, one side will appear longer or fuller than the other. It\'s almost certainly an optical illusion caused by natural curl direction. Wait two more weeks before deciding it\'s a real problem.',
+    },
+    {
+      n: 20,
+      keyword: 'STRESS SHOWS',
+      text: 'High stress periods slow hair growth. Not dramatically, but measurably. If the beard feels like it\'s stalled during a rough patch — it might not be your imagination. The follicle is paying attention too.',
+    },
+    {
+      n: 21,
+      keyword: 'THE PHOTO CHECK',
+      text: 'You see your beard in the mirror every day, which means you stop actually looking at it. Take a photo from the side once a month. You will immediately see things the mirror hides. This is useful and occasionally horrifying.',
+    },
+    {
+      n: 22,
+      keyword: 'IT\'S YOURS',
+      text: 'Other people will have opinions about your beard. They will volunteer these opinions unsolicited, sometimes in public. Their opinions are noted and irrelevant. The beard is yours. Grow what you want. Wear it with confidence.',
+    },
+  ];
+
+  /* ══════════════════════════════════════════════════════════
+     22 DISTINCT BEARD SVG SHAPES  (viewBox 0 0 120 120)
+  ══════════════════════════════════════════════════════════ */
+  const BEARD_SVG = [
+    // 1 — Full round (Garibaldi)
+    `<path class="bp" d="M18,28 Q14,50 16,75 Q22,105 60,108 Q98,105 104,75 Q106,50 102,28 Q82,20 60,18 Q38,20 18,28Z"/>`,
+    // 2 — Short square
+    `<path class="bp" d="M22,32 Q20,55 22,78 Q28,100 60,102 Q92,100 98,78 Q100,55 98,32 Q80,25 60,23 Q40,25 22,32Z"/>
+     <path class="bp" d="M40,28 Q60,22 80,28" fill="none"/>`,
+    // 3 — Ducktail pointed
+    `<path class="bp" d="M22,26 Q16,52 18,78 Q26,102 44,118 Q60,128 76,118 Q94,102 102,78 Q104,52 98,26 Q80,18 60,16 Q40,18 22,26Z"/>`,
+    // 4 — Chin strap only
+    `<path class="bp" d="M22,30 L22,75 Q26,92 36,103 Q47,112 60,113 Q73,112 84,103 Q94,92 98,75 L98,30" fill="none"/>
+     <path class="bp" d="M22,30 Q40,23 60,21 Q80,23 98,30" fill="none"/>`,
+    // 5 — Van Dyke (goatee)
+    `<path class="bp" d="M42,52 Q38,70 40,86 Q46,104 60,107 Q74,104 80,86 Q82,70 78,52 Q70,46 60,44 Q50,46 42,52Z"/>
+     <path class="bp" d="M28,38 Q42,32 56,38 Q60,40 64,38 Q78,32 92,38 Q95,46 88,50 Q75,46 60,47 Q45,46 32,50 Q25,46 28,38Z"/>`,
+    // 6 — Mutton chops
+    `<path class="bp" d="M14,24 Q10,46 12,70 Q16,90 26,101 Q36,110 42,106 Q48,98 46,82 Q40,66 38,50 Q36,38 38,26" fill="none"/>
+     <path class="bp" d="M82,26 Q84,38 82,50 Q80,66 74,82 Q72,98 78,106 Q84,110 94,101 Q104,90 108,70 Q110,46 106,24" fill="none"/>`,
+    // 7 — Long yeard
+    `<path class="bp" d="M16,22 Q10,50 12,82 Q16,110 32,128 Q46,144 60,146 Q74,144 88,128 Q104,110 108,82 Q110,50 104,22 Q84,12 60,10 Q36,12 16,22Z"/>`,
+    // 8 — Balbo
+    `<path class="bp" d="M34,56 Q30,74 32,90 Q38,108 60,111 Q82,108 88,90 Q90,74 86,56 Q74,50 60,48 Q46,50 34,56Z"/>
+     <path class="bp" d="M30,40 Q44,34 56,39 Q60,41 64,39 Q76,34 90,40 Q92,48 84,52 Q72,48 60,50 Q48,48 36,52 Q28,48 30,40Z"/>`,
+    // 9 — Imperial fork
+    `<path class="bp" d="M24,28 Q18,52 20,76 Q24,96 40,112 Q48,118 50,113 Q44,96 43,76 Q42,58 44,40" fill="none"/>
+     <path class="bp" d="M96,28 Q102,52 100,76 Q96,96 80,112 Q72,118 70,113 Q76,96 77,76 Q78,58 76,40" fill="none"/>
+     <path class="bp" d="M44,40 Q60,32 76,40" fill="none"/>`,
+    // 10 — Terminal full
+    `<path class="bp" d="M12,22 Q6,52 8,86 Q12,116 28,134 Q44,150 60,152 Q76,150 92,134 Q108,116 112,86 Q114,52 108,22 Q86,12 60,10 Q34,12 12,22Z"/>`,
+    // 11 — Stubble dots (short bristle)
+    `<circle class="bp" cx="35" cy="52" r="3"/>
+     <circle class="bp" cx="46" cy="48" r="3"/>
+     <circle class="bp" cx="57" cy="46" r="3"/>
+     <circle class="bp" cx="68" cy="46" r="3"/>
+     <circle class="bp" cx="79" cy="48" r="3"/>
+     <circle class="bp" cx="88" cy="52" r="3"/>
+     <circle class="bp" cx="32" cy="64" r="3"/>
+     <circle class="bp" cx="44" cy="62" r="3"/>
+     <circle class="bp" cx="56" cy="60" r="3"/>
+     <circle class="bp" cx="68" cy="60" r="3"/>
+     <circle class="bp" cx="80" cy="62" r="3"/>
+     <circle class="bp" cx="91" cy="64" r="3"/>
+     <circle class="bp" cx="40" cy="76" r="3"/>
+     <circle class="bp" cx="52" cy="74" r="3"/>
+     <circle class="bp" cx="64" cy="73" r="3"/>
+     <circle class="bp" cx="76" cy="74" r="3"/>
+     <circle class="bp" cx="87" cy="76" r="3"/>`,
+    // 12 — Handlebar moustache only
+    `<path class="bp" d="M15,58 Q22,48 36,52 Q48,56 56,62 Q60,64 64,62 Q72,56 84,52 Q98,48 105,58 Q102,68 94,65 Q82,60 70,64 Q65,66 60,66 Q55,66 50,64 Q38,60 26,65 Q18,68 15,58Z"/>
+     <path class="bp" d="M22,52 Q18,44 20,36 Q28,28 40,34" fill="none"/>
+     <path class="bp" d="M98,52 Q102,44 100,36 Q92,28 80,34" fill="none"/>`,
+    // 13 — Anchor beard
+    `<path class="bp" d="M44,58 Q40,74 42,88 Q46,104 60,107 Q74,104 78,88 Q80,74 76,58 Q70,52 60,50 Q50,52 44,58Z"/>
+     <path class="bp" d="M30,40 Q44,34 56,40 Q60,42 64,40 Q76,34 90,40 Q92,48 84,52 Q72,48 60,50 Q48,48 36,52 Q28,48 30,40Z"/>
+     <path class="bp" d="M60,107 L60,118" fill="none"/>
+     <path class="bp" d="M50,118 L70,118" fill="none"/>`,
+    // 14 — Extended sideburns
+    `<path class="bp" d="M16,22 Q12,44 14,68 Q18,88 28,98 Q36,105 40,100 Q44,90 42,72 Q38,56 38,40 Q38,30 40,22" fill="none"/>
+     <path class="bp" d="M80,22 Q82,30 82,40 Q82,56 78,72 Q76,90 80,100 Q84,105 92,98 Q102,88 106,68 Q108,44 104,22" fill="none"/>
+     <path class="bp" d="M46,80 Q52,86 60,88 Q68,86 74,80" fill="none"/>`,
+    // 15 — Petite goatee
+    `<path class="bp" d="M48,60 Q44,74 46,88 Q50,102 60,104 Q70,102 74,88 Q76,74 72,60 Q68,55 60,54 Q52,55 48,60Z"/>`,
+    // 16 — Beaded braid beard
+    `<path class="bp" d="M28,30 Q22,54 24,80 Q30,104 60,106 Q90,104 96,80 Q98,54 92,30 Q76,22 60,20 Q44,22 28,30Z"/>
+     <ellipse class="bp" cx="60" cy="95" rx="7" ry="5"/>
+     <ellipse class="bp" cx="60" cy="112" rx="5" ry="4"/>`,
+    // 17 — Natural parted beard
+    `<path class="bp" d="M20,28 Q14,52 16,78 Q20,104 38,118 Q50,126 56,120 Q54,104 52,84 Q50,66 52,48" fill="none"/>
+     <path class="bp" d="M100,28 Q106,52 104,78 Q100,104 82,118 Q70,126 64,120 Q66,104 68,84 Q70,66 68,48" fill="none"/>
+     <path class="bp" d="M52,48 Q60,40 68,48" fill="none"/>
+     <path class="bp" d="M22,28 Q40,20 60,18 Q80,20 100,28" fill="none"/>`,
+    // 18 — Rolled waxed tips
+    `<path class="bp" d="M26,32 Q20,56 22,80 Q28,104 60,106 Q92,104 98,80 Q100,56 94,32 Q76,24 60,22 Q44,24 26,32Z"/>
+     <path class="bp" d="M22,38 Q14,30 12,22 Q16,18 20,24 Q22,30 22,38" fill="none"/>
+     <path class="bp" d="M98,38 Q106,30 108,22 Q104,18 100,24 Q98,30 98,38" fill="none"/>`,
+    // 19 — Asymmetric (one side longer)
+    `<path class="bp" d="M20,28 Q14,52 16,80 Q20,106 44,118 Q56,122 60,118 Q66,110 64,90 Q60,70 62,50 Q64,36 66,28" fill="none"/>
+     <path class="bp" d="M100,28 Q102,36 100,50 Q98,70 96,90 Q94,104 96,112 Q100,118 106,110 Q112,98 112,80 Q114,52 106,28" fill="none"/>
+     <path class="bp" d="M66,28 Q80,20 100,28" fill="none"/>
+     <path class="bp" d="M20,28 Q40,20 66,28" fill="none"/>`,
+    // 20 — Lightning sideburn
+    `<path class="bp" d="M16,22 Q12,38 14,54 Q18,68 24,74 Q32,80 38,72 Q42,62 36,50 Q30,40 32,30" fill="none"/>
+     <path class="bp" d="M104,22 Q108,38 106,54 Q102,68 96,74 Q88,80 82,72 Q78,62 84,50 Q90,40 88,30" fill="none"/>
+     <path class="bp" d="M38,72 Q48,80 60,82 Q72,80 82,72" fill="none"/>`,
+    // 21 — Knotted Viking braid
+    `<path class="bp" d="M24,28 Q18,52 20,78 Q26,106 60,108 Q94,106 100,78 Q102,52 96,28 Q78,20 60,18 Q42,20 24,28Z"/>
+     <path class="bp" d="M52,96 Q56,104 60,106 Q64,104 68,96 Q72,106 68,114 Q64,120 60,120 Q56,120 52,114 Q48,106 52,96Z"/>`,
+    // 22 — Abstract beard mark
+    `<path class="bp" d="M30,30 Q20,55 24,82 Q30,106 60,110 Q90,106 96,82 Q100,55 90,30" fill="none"/>
+     <path class="bp" d="M44,110 Q52,122 60,124 Q68,122 76,110" fill="none"/>
+     <line class="bp" x1="60" y1="18" x2="60" y2="30"/>
+     <path class="bp" d="M46,24 Q60,16 74,24" fill="none"/>`,
+  ];
+
+  /* ══════════════════════════════════════════════════════════
+     RENDER WISDOM CARDS
+  ══════════════════════════════════════════════════════════ */
+  const grid = document.getElementById('wisdom-grid');
+  document.getElementById('wisdom-count').textContent = WISDOMS.length;
+
+  WISDOMS.forEach((w, i) => {
+    const card = document.createElement('div');
+    card.className = 'w-card';
+    card.style.cssText = `opacity:0; transform:translateY(22px); transition: opacity 0.55s ${(i % 8) * 0.055}s ease, transform 0.55s ${(i % 8) * 0.055}s ease, border-color 0.22s, background 0.22s;`;
+
+    card.innerHTML = `
+      <span class="w-num">${w.n}</span>
+      <span class="w-keyword">${w.keyword}</span>
+
+      <div class="beard-wrap">
+        <svg class="beard-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          ${BEARD_SVG[i % BEARD_SVG.length]}
+        </svg>
+      </div>
+
+      <p class="w-hint">tap to reveal</p>
+
+      <div class="w-text">
+        <div class="wt-num">${w.n}</div>
+        <div class="wt-rule"></div>
+        <p class="wt-keyword">${w.keyword}</p>
+        <p class="wt-body">${w.text}</p>
+        <p class="wt-close">tap to close</p>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.w-card.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    });
+
+    grid.appendChild(card);
+  });
+
+  /* ══════════════════════════════════════════════════════════
+     INTERSECTION OBSERVER — staggered entrance
+  ══════════════════════════════════════════════════════════ */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.w-card').forEach(el => obs.observe(el));
+
+  /* ══════════════════════════════════════════════════════════
+     GLOBAL LINK CLICK — beard sprout animation
+     A tiny SVG beard pops out at the cursor position
+     whenever any <a> link is clicked, then fades away.
+  ══════════════════════════════════════════════════════════ */
+  const SPROUT_BEARDS = [
+    // small full beard
+    `<svg width="40" height="36" viewBox="0 0 40 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4,8 Q2,16 3,24 Q6,34 20,35 Q34,34 37,24 Q38,16 36,8 Q28,5 20,4 Q12,5 4,8Z" fill="#C8943A" opacity="0.92"/>
+    </svg>`,
+    // handlebar moustache
+    `<svg width="44" height="22" viewBox="0 0 44 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2,12 Q5,6 12,9 Q18,12 21,14 Q22,15 23,14 Q26,12 32,9 Q39,6 42,12 Q40,17 35,15 Q28,11 22,13 Q16,11 9,15 Q4,17 2,12Z" fill="#C8943A" opacity="0.9"/>
+    </svg>`,
+    // goatee
+    `<svg width="28" height="30" viewBox="0 0 28 30" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6,6 Q4,14 5,22 Q8,30 14,31 Q20,30 23,22 Q24,14 22,6 Q18,3 14,2 Q10,3 6,6Z" fill="#C8943A" opacity="0.9"/>
+    </svg>`,
+    // ducktail
+    `<svg width="32" height="38" viewBox="0 0 32 38" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4,6 Q2,16 3,26 Q6,34 12,40 Q16,44 20,40 Q26,34 29,26 Q30,16 28,6 Q22,2 16,1 Q10,2 4,6Z" fill="#C8943A" opacity="0.9"/>
+    </svg>`,
+  ];
+
+  let sproutIndex = 0;
+
+  document.addEventListener('click', e => {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    // Grab position before navigation
+    const x = e.clientX;
+    const y = e.clientY;
+
+    const el = document.createElement('div');
+    el.className = 'beard-sprout';
+    el.style.left = x + 'px';
+    el.style.top  = y + 'px';
+    el.innerHTML  = SPROUT_BEARDS[sproutIndex % SPROUT_BEARDS.length];
+    sproutIndex++;
+
+    document.body.appendChild(el);
+    // Remove after animation completes
+    el.addEventListener('animationend', () => el.remove());
+  });
+  </script>
+
+</body>
+</html>
