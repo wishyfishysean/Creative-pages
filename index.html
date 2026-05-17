@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creative-pages.org | a studio of many things</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <style>
+    :root {
+      --rose:    #f2a7b0;
+      --blush:   #fce4e8;
+      --sage:    #b5d5c5;
+      --mint:    #d8ede4;
+      --sky:     #aecde8;
+      --cream:   #fdf7f0;
+      --peach:   #f9dcc4;
+      --lavender:#dcd0f0;
+      --charcoal:#2c2c2c;
+      --dark:    #1e1e2e;
+      --mid:     #5a5a7a;
+      --shadow:  rgba(44,44,44,0.10);
+      --nav-h:   68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; color: var(--charcoal); background: var(--cream); overflow-x: hidden; }
+
+    /* ── LANDING ── */
+    #landing {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, #fce4e8 0%, #d8ede4 45%, #aecde8 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: transform 0.9s cubic-bezier(0.77,0,0.175,1), opacity 0.6s ease;
+    }
+    #landing.away { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+    .land-inner { text-align: center; padding: 2rem; animation: riseUp 1.1s ease both; position: relative; z-index: 2; }
+    @keyframes riseUp { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:translateY(0); } }
+    .land-ring {
+      width: 112px; height: 112px; border-radius: 50%; overflow: hidden;
+      margin: 0 auto 1.5rem; box-shadow: 0 10px 36px rgba(0,0,0,0.18);
+    }
+    .land-ring img { width: 100%; height: 100%; object-fit: cover; }
+    .land-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,6vw,3.6rem); font-weight: 900; color: var(--dark); line-height: 1.08; margin-bottom: 0.35rem; }
+    .land-title span { color: var(--mid); font-weight: 400; }
+    .land-sub { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid); margin-bottom: 2.4rem; }
+    .land-btn {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: var(--dark); color: white;
+      padding: 0.9rem 2.4rem; border-radius: 50px; border: none; cursor: pointer;
+      font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.04em;
+      box-shadow: 0 6px 24px rgba(26,26,46,0.25); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .land-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(26,26,46,0.3); }
+    .petals-wrap { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .petal { position: absolute; border-radius: 50% 0 50% 0; opacity: 0.3; animation: petalFall linear infinite; }
+    @keyframes petalFall {
+      0%   { transform:translateY(-60px) rotate(0deg); opacity:0; }
+      8%   { opacity:0.32; }
+      92%  { opacity:0.2; }
+      100% { transform:translateY(110vh) rotate(400deg); opacity:0; }
+    }
+
+    /* ── NAV ── */
+    .cp-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h); background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px); border-bottom: 2px solid var(--blush);
+      display: flex; align-items: center; padding: 0 1.5rem;
+      box-shadow: 0 2px 18px var(--shadow);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; flex-shrink: 0; }
+    .nav-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .nav-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--dark); line-height: 1.1; }
+    .nav-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 0.15rem; margin: 0 0 0 auto; padding: 0; }
+    .nav-links a { display: block; padding: 0.42rem 0.82rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.18s, background 0.18s; }
+    .nav-links a:hover { color: var(--dark); background: var(--blush); }
+    .nav-links .cta { background: var(--dark); color: white !important; border-radius: 50px; padding: 0.42rem 1.1rem; }
+    .nav-links .cta:hover { background: var(--rose); }
+    .nav-tog { display: none; margin-left: auto; background: none; border: none; font-size: 1.5rem; color: var(--dark); cursor: pointer; }
+    .mob-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: white; padding: 0.8rem 1rem; border-bottom: 2px solid var(--blush); box-shadow: 0 8px 22px var(--shadow); z-index: 998; }
+    .mob-menu.open { display: block; }
+    .mob-menu a { display: block; padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--mint); }
+    .mob-menu a:last-child { border-bottom: none; }
+    .mob-menu a:hover { background: var(--blush); color: var(--dark); }
+    @media (max-width: 900px) { .nav-links { display: none; } .nav-tog { display: block; } }
+
+    /* ── HERO ── */
+    .hero-wrap { margin-top: var(--nav-h); position: relative; overflow: hidden; height: 88vh; min-height: 460px; }
+    .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.3s ease; }
+    .hero-slide.on { opacity: 1; }
+    .hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(26,26,46,0.48); display: flex; align-items: center; justify-content: center; }
+    .hero-content { text-align: center; color: white; padding: 1rem; }
+    .hero-tag { display: inline-block; background: rgba(255,255,255,0.2); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.38); border-radius: 50px; padding: 0.32rem 1.05rem; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .hero-h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 7.5vw, 5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1rem; text-shadow: 0 2px 22px rgba(0,0,0,0.3); }
+    .hero-p { font-size: clamp(0.95rem, 2.5vw, 1.2rem); opacity: 0.93; max-width: 580px; margin: 0 auto 2rem; line-height: 1.6; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-btns a { text-decoration: none; padding: 0.78rem 1.9rem; border-radius: 50px; font-weight: 700; font-size: 0.93rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .hero-btns a:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.2); }
+    .hbtn-w { background: white; color: var(--dark); }
+    .hbtn-o { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.68); }
+    .hero-dots { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; }
+    .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.45); border: none; cursor: pointer; transition: background 0.3s, width 0.3s; }
+    .hero-dot.on { background: white; width: 22px; border-radius: 4px; }
+
+    /* ── STATS BAR ── */
+    .stats-bar { background: var(--dark); padding: 1.4rem 1rem; }
+    .stats-row { display: flex; flex-wrap: wrap; justify-content: space-evenly; gap: 1rem; max-width: 950px; margin: 0 auto; }
+    .stat { text-align: center; }
+    .stat-n { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--rose); line-height: 1; }
+    .stat-l { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.58); margin-top: 0.15rem; }
+
+    /* ── SHARED ── */
+    .eyebrow { display: inline-block; font-size: 0.71rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.45rem; }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 0.75rem; }
+    .sec-desc { color: var(--mid); font-size: 0.98rem; line-height: 1.7; max-width: 560px; }
+
+    /* ── WELCOME ── */
+    .welcome-sec { padding: 5rem 1.5rem; background: var(--cream); }
+    .welcome-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media (max-width: 768px) { .welcome-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .welcome-visual { position: relative; }
+    .welcome-card { border-radius: 24px; height: 380px; overflow: hidden; box-shadow: 0 18px 52px rgba(242,167,176,0.28); position: relative; }
+    .welcome-card img { width: 100%; height: 100%; object-fit: cover; }
+    .welcome-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(26,26,46,0.35) 100%); }
+    .welcome-badge { position: absolute; bottom: -18px; right: 22px; background: white; border-radius: 16px; padding: 0.85rem 1.3rem; box-shadow: 0 8px 26px var(--shadow); display: flex; align-items: center; gap: 0.6rem; z-index: 2; }
+    .badge-n { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--dark); line-height: 1; }
+    .badge-l { font-size: 0.7rem; font-weight: 700; color: var(--mid); text-transform: uppercase; line-height: 1.3; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .chip { background: var(--blush); color: var(--dark); border-radius: 50px; padding: 0.28rem 0.85rem; font-size: 0.79rem; font-weight: 700; }
+    .chip.g { background: var(--mint); } .chip.b { background: var(--sky); } .chip.p { background: var(--peach); } .chip.v { background: var(--lavender); }
+    .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--dark); color: white; padding: 0.72rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; margin-top: 1.8rem; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--rose); color: white; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; border: 2px solid var(--dark); color: var(--dark); padding: 0.68rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--dark); color: white; }
+
+    /* ── PROJECTS GALLERY ── */
+    .gallery-sec { background: var(--dark); padding: 4.5rem 0; overflow: hidden; }
+    .gallery-hd { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 2rem; }
+    .gallery-hd .eyebrow { color: var(--rose); }
+    .gallery-hd .sec-title { color: white; }
+    .gallery-hd .sec-desc { color: rgba(255,255,255,0.55); }
+    .scroller { display: flex; gap: 1.2rem; padding: 0.5rem 1.5rem 1.2rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .scroller::-webkit-scrollbar { display: none; }
+    .sc-card { flex: 0 0 290px; scroll-snap-align: start; border-radius: 20px; overflow: hidden; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.3); transition: transform 0.28s, box-shadow 0.28s; text-decoration: none; display: block; color: inherit; }
+    .sc-card:hover { transform: translateY(-8px); box-shadow: 0 18px 48px rgba(0,0,0,0.45); }
+    .sc-img { height: 175px; position: relative; overflow: hidden; }
+    .sc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .sc-card:hover .sc-img img { transform: scale(1.06); }
+    .sc-img .proj-tag { position: absolute; top: 0.8rem; left: 0.8rem; background: rgba(255,255,255,0.22); backdrop-filter: blur(6px); border-radius: 50px; padding: 0.18rem 0.7rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: white; z-index: 1; }
+    .sc-body { padding: 1.2rem 1.3rem 1.5rem; }
+    .sc-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: white; margin-bottom: 0.32rem; }
+    .sc-desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
+    .sc-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.8rem; }
+    .sc-type { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); }
+    .sc-arrow { color: rgba(255,255,255,0.3); font-size: 0.85rem; transition: color 0.2s, transform 0.2s; }
+    .sc-card:hover .sc-arrow { color: white; transform: translateX(3px); }
+
+    /* ── DISCIPLINES ── */
+    .phases-sec { padding: 5rem 1.5rem; background: white; }
+    .phases-hd { max-width: 1080px; margin: 0 auto; text-align: center; }
+    .phases-grid { max-width: 1080px; margin: 2.5rem auto 0; display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+    @media (max-width: 640px) { .phases-grid { grid-template-columns: 1fr; } }
+    .phase-card { border-radius: 20px; overflow: hidden; box-shadow: 0 5px 26px var(--shadow); transition: transform 0.28s, box-shadow 0.28s; }
+    .phase-card:hover { transform: translateY(-6px); box-shadow: 0 14px 42px rgba(0,0,0,0.12); }
+    .ph-head { height: 180px; overflow: hidden; position: relative; }
+    .ph-head img { width: 100%; height: 100%; object-fit: cover; }
+    .ph-head-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.4rem 1.8rem; background: linear-gradient(to top, rgba(26,26,46,0.82) 0%, transparent 60%); }
+    .ph-tag { display: inline-block; background: rgba(255,255,255,0.22); border-radius: 50px; padding: 0.18rem 0.75rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.35rem; color: white; width: fit-content; }
+    .ph-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; line-height: 1.1; color: white; }
+    .ph-body { padding: 1.5rem 1.8rem; background: white; }
+    .ph-body p { font-size: 0.87rem; color: var(--mid); line-height: 1.65; }
+    .ph-list { list-style: none; margin-top: 0.9rem; }
+    .ph-list li { font-size: 0.82rem; font-weight: 600; color: var(--charcoal); padding: 0.28rem 0; display: flex; align-items: center; gap: 0.5rem; }
+    .ph-list li::before { content: '✦'; color: var(--rose); font-size: 0.58rem; flex-shrink: 0; }
+
+    /* ── APPROACH PILLARS ── */
+    .blocks-sec { padding: 5rem 1.5rem; background: var(--mint); }
+    .blocks-hd { max-width: 1080px; margin: 0 auto; text-align: center; }
+    .blocks-grid { max-width: 1080px; margin: 2.5rem auto 0; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; }
+    @media (max-width: 900px) { .blocks-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 480px) { .blocks-grid { grid-template-columns: 1fr; } }
+    .img-block { border-radius: 18px; overflow: hidden; background: white; box-shadow: 0 4px 18px var(--shadow); transition: transform 0.28s; text-decoration: none; display: block; }
+    .img-block:hover { transform: translateY(-5px); }
+    .ib-vis { height: 135px; overflow: hidden; }
+    .ib-vis img { width: 100%; height: 100%; object-fit: cover; }
+    .ib-body { padding: 1rem; }
+    .ib-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.28rem; }
+    .ib-desc { font-size: 0.78rem; color: var(--mid); line-height: 1.5; }
+
+    /* ── LATEST DROPS ── */
+    .events-sec { padding: 5rem 1.5rem; background: var(--cream); }
+    .events-hd { max-width: 1080px; margin: 0 auto; text-align: center; }
+    .events-grid { max-width: 1080px; margin: 2.5rem auto 0; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.3rem; }
+    @media (max-width: 768px) { .events-grid { grid-template-columns: 1fr; } }
+    .ev-card { background: white; border-radius: 16px; padding: 1.4rem 1.5rem; box-shadow: 0 4px 18px var(--shadow); display: flex; gap: 1rem; align-items: flex-start; transition: transform 0.22s; text-decoration: none; color: inherit; }
+    .ev-card:hover { transform: translateY(-4px); }
+    .ev-date { background: var(--blush); border-radius: 12px; padding: 0.6rem 0.8rem; text-align: center; flex-shrink: 0; min-width: 52px; }
+    .ev-day { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--dark); line-height: 1; }
+    .ev-mon { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .ev-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.28rem; }
+    .ev-place { font-size: 0.78rem; color: var(--mid); display: flex; align-items: center; gap: 0.28rem; }
+    .events-cta { text-align: center; margin-top: 2.5rem; }
+
+    /* ── VALUES ── */
+    .safety-sec { padding: 5rem 1.5rem; background: linear-gradient(135deg, var(--dark) 0%, #2e1a3d 100%); }
+    .safety-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media (max-width: 768px) { .safety-inner { grid-template-columns: 1fr; } .safety-visual { display: none; } }
+    .safety-sec .eyebrow { color: var(--rose); }
+    .safety-sec .sec-title { color: white; }
+    .safety-sec .sec-desc { color: rgba(255,255,255,0.55); }
+    .safety-pills { margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .sp { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.2rem; }
+    .sp-icon { width: 36px; height: 36px; border-radius: 10px; overflow: hidden; margin-bottom: 0.7rem; }
+    .sp-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .sp-title { font-weight: 700; color: white; font-size: 0.88rem; margin-bottom: 0.28rem; }
+    .sp-desc { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.55; }
+    .safety-visual { border-radius: 20px; overflow: hidden; height: 420px; opacity: 0.55; }
+    .safety-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── NUMBERS ── */
+    .nums-sec { padding: 4rem 1.5rem; background: var(--blush); text-align: center; }
+    .nums-grid { max-width: 900px; margin: 2rem auto 0; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+    @media (max-width: 600px) { .nums-grid { grid-template-columns: repeat(2,1fr); } }
+    .num-big { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--dark); line-height: 1; }
+    .num-lbl { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-top: 0.3rem; }
+
+    /* ── FOOTER ── */
+    .cp-footer { background: var(--dark); padding: 4rem 1.5rem 2rem; color: white; }
+    .ft-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; }
+    @media (max-width: 900px) { .ft-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
+    .ft-logo { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+    .ft-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .ft-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .ft-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: white; line-height: 1.2; }
+    .ft-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .ft-tag { font-size: 0.82rem; color: rgba(255,255,255,0.48); line-height: 1.65; margin-bottom: 1.2rem; }
+    .ft-socials { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+    .ft-soc { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.11); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.05rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .ft-soc:hover { background: var(--rose); transform: translateY(-2px); color: white; }
+    .ft-col-h { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 1rem; }
+    .ft-links { list-style: none; }
+    .ft-links li { margin-bottom: 0.5rem; }
+    .ft-links a { color: rgba(255,255,255,0.52); font-size: 0.83rem; text-decoration: none; transition: color 0.18s; }
+    .ft-links a:hover { color: white; }
+    .ft-ci { display: flex; align-items: flex-start; gap: 0.6rem; color: rgba(255,255,255,0.52); font-size: 0.8rem; margin-bottom: 0.58rem; }
+    .ft-ci i { color: var(--rose); flex-shrink: 0; margin-top: 2px; }
+    .ft-ci a { color: rgba(255,255,255,0.52); text-decoration: none; transition: color 0.18s; }
+    .ft-ci a:hover { color: white; }
+    .ft-bottom { max-width: 1080px; margin: 1.5rem auto 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.73rem; color: rgba(255,255,255,0.28); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ LANDING ═══ -->
+<div id="landing">
+  <div class="petals-wrap" id="petals"></div>
+  <div class="land-inner">
+    <div class="land-ring">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop&crop=center" alt="Studio" />
+    </div>
+    <h1 class="land-title">creative<span>-pages</span><br/>.org</h1>
+    <p class="land-sub">a studio of many things</p>
+    <button class="land-btn" onclick="enterSite()">
+      <i class="bi bi-arrow-right-circle"></i> Enter the Studio
+    </button>
+  </div>
+</div>
+
+<!-- ═══ MAIN PAGE ═══ -->
+<div id="main-page">
+
+  <!-- NAV -->
+  <nav class="cp-nav">
+    <a class="nav-brand" href="#home">
+      <div class="nav-sq">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" />
+      </div>
+      <div class="nav-name">creative-pages<small>Studio · Est. 2024</small></div>
+    </a>
+    <button class="nav-tog" onclick="toggleMob()" aria-label="Menu">
+      <i class="bi bi-list" id="mico"></i>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html" class="cta">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="mob-menu" id="mobMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="work.html">Work</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- HERO CAROUSEL -->
+  <section id="home" class="hero-wrap">
+
+    <div class="hero-slide on">
+      <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=1400&h=900&fit=crop&crop=center" alt="Web Design" />
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <div class="hero-tag">Web Design &amp; Development</div>
+          <h1 class="hero-h1">Pages That<br/>Feel Alive</h1>
+          <p class="hero-p">From concept to code - building websites and digital experiences that are functional, beautiful and genuinely yours.</p>
+          <div class="hero-btns">
+            <a href="work.html" class="hbtn-w">See the Work</a>
+            <a href="about.html" class="hbtn-o">About Me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=1400&h=900&fit=crop&crop=center" alt="Copy and Brand Voice" />
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <div class="hero-tag">Copy &amp; Brand Voice</div>
+          <h1 class="hero-h1">Words That<br/>Do the Work</h1>
+          <p class="hero-p">Web copy and brand voice that sounds like a real person - clear, considered and built to last beyond a single brief.</p>
+          <div class="hero-btns">
+            <a href="work.html" class="hbtn-w">See the Work</a>
+            <a href="projects.html" class="hbtn-o">All Projects</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1400&h=900&fit=crop&crop=center" alt="Visual Art" />
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <div class="hero-tag">Visual Art &amp; Experiments</div>
+          <h1 class="hero-h1">Making Things<br/>Just to See</h1>
+          <p class="hero-p">Art projects, visual experiments, weird ideas and side quests - a creative practice that doesn't ask normal questions.</p>
+          <div class="hero-btns">
+            <a href="projects.html" class="hbtn-w">Browse Projects</a>
+            <a href="work.html" class="hbtn-o">Client Work</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-dots">
+      <button class="hero-dot on" onclick="goSlide(0)"></button>
+      <button class="hero-dot" onclick="goSlide(1)"></button>
+      <button class="hero-dot" onclick="goSlide(2)"></button>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">40+</div><div class="stat-l">Projects Completed</div></div>
+      <div class="stat"><div class="stat-n">2</div><div class="stat-l">Disciplines</div></div>
+      <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Ideas in the Queue</div></div>
+      <div class="stat"><div class="stat-n">1</div><div class="stat-l">Creative Studio</div></div>
+    </div>
+  </div>
+
+  <!-- WELCOME / STUDIO INTRO -->
+  <section class="welcome-sec">
+    <div class="welcome-grid">
+      <div class="welcome-visual">
+        <div class="welcome-card">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop&crop=center" alt="Studio workspace" />
+        </div>
+        <div class="welcome-badge">
+          <div>
+            <div class="badge-n">cp</div>
+            <div class="badge-l">creative<br/>pages</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">The Studio</span>
+        <h2 class="sec-title">A Place Where Many<br/>Things Get Made</h2>
+        <p class="sec-desc">creative-pages.org is an independent studio - web projects | visual art | brand copy and whatever else seems worth making.</p>
+        <p class="sec-desc" style="margin-top:0.8rem;">Each project lives in its own folder, with its own world. Some are client work. Some are pure play. All of them are made with care.</p>
+        <div class="chips">
+          <span class="chip">Web</span>
+          <span class="chip b">Visual Art</span>
+          <span class="chip p">Copy &amp; Brand Voice</span>
+          <span class="chip v">Experiments</span>
+          <span class="chip g">Open Source</span>
+        </div>
+        <a href="about.html" class="btn-dark">More About the Studio <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS GALLERY -->
+  <section class="gallery-sec">
+    <div class="gallery-hd">
+      <span class="eyebrow">The Showcase</span>
+      <h2 class="sec-title">Projects &amp; Experiments</h2>
+      <p class="sec-desc">Each card is a self-contained world. Scroll to explore.</p>
+    </div>
+    <div class="scroller">
+
+      <!-- Beard Jungle — live -->
+      <a href="beard-jungle/index.html" class="sc-card">
+        <div class="sc-img">
+          <span class="proj-tag">Live</span>
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&h=350&fit=crop&crop=center" alt="Beard Jungle" />
+        </div>
+        <div class="sc-body">
+          <div class="sc-title">Beard Jungle</div>
+          <div class="sc-desc">A wild, overgrown corner of the internet. The original creative-pages project · still breathing, still weird, still hairy.</div>
+          <div class="sc-footer">
+            <span class="sc-type">Web · Art</span>
+            <i class="bi bi-arrow-right sc-arrow"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Placeholder cards — swap images and links as you add folders -->
+      <a href="#" class="sc-card">
+        <div class="sc-img">
+          <span class="proj-tag">Visual</span>
+          <img src="https://images.unsplash.com/photo-1558865869-c93f6f8482af?w=600&h=350&fit=crop&crop=center" alt="Project Two" />
+        </div>
+        <div class="sc-body">
+          <div class="sc-title">Project Two</div>
+          <div class="sc-desc">This is planned for end of 2026.</div>
+          <div class="sc-footer">
+            <span class="sc-type">Coming Soon</span>
+            <i class="bi bi-arrow-right sc-arrow"></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="sc-card">
+        <div class="sc-img">
+          <span class="proj-tag">Web</span>
+          <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=350&fit=crop&crop=center" alt="Project Three" />
+        </div>
+        <div class="sc-body">
+          <div class="sc-title">Project Three</div>
+          <div class="sc-desc">A site, a tool, a coded thing. This is planned for end of 2026.</div>
+          <div class="sc-footer">
+            <span class="sc-type">Coming Soon</span>
+            <i class="bi bi-arrow-right sc-arrow"></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="sc-card">
+        <div class="sc-img">
+          <span class="proj-tag">Art</span>
+          <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&h=350&fit=crop&crop=center" alt="Project Four" />
+        </div>
+        <div class="sc-body">
+          <div class="sc-title">Project Four</div>
+          <div class="sc-desc">A visual experiment, an illustration project. This is planned for mid 2027.</div>
+          <div class="sc-footer">
+            <span class="sc-type">Coming Soon</span>
+            <i class="bi bi-arrow-right sc-arrow"></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="sc-card">
+        <div class="sc-img">
+          <span class="proj-tag">Experiment</span>
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=350&fit=crop&crop=center" alt="Project Five" />
+        </div>
+        <div class="sc-body">
+          <div class="sc-title">Project Five</div>
+          <div class="sc-desc">Side quests and weird ideas welcome. If it made you curious, it belongs here.</div>
+          <div class="sc-footer">
+            <span class="sc-type">Coming Soon</span>
+            <i class="bi bi-arrow-right sc-arrow"></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="sc-card">
+        <div class="sc-img">
+          <span class="proj-tag">Yours</span>
+          <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=350&fit=crop&crop=center" alt="Add a project" />
+        </div>
+        <div class="sc-body">
+          <div class="sc-title">Add a Project</div>
+          <div class="sc-desc">Create a folder, build something, drop a card in the scroller. The gallery grows as the work does.</div>
+          <div class="sc-footer">
+            <span class="sc-type">Modular</span>
+            <i class="bi bi-plus-circle sc-arrow"></i>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- DISCIPLINES — 2 cards, writing removed, copy moved into Web -->
+  <section class="phases-sec">
+    <div class="phases-hd">
+      <span class="eyebrow">What Gets Made Here</span>
+      <h2 class="sec-title">Two Disciplines, One Studio</h2>
+      <p class="sec-desc" style="margin:0 auto;">Web and visual art | they bleed into each other. That's the point.</p>
+    </div>
+    <div class="phases-grid">
+
+      <div class="phase-card">
+        <div class="ph-head">
+          <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&h=360&fit=crop&crop=center" alt="Web Design" />
+          <div class="ph-head-overlay">
+            <div class="ph-tag">Discipline 01</div>
+            <div class="ph-name">Web Design &amp; Development</div>
+          </div>
+        </div>
+        <div class="ph-body">
+          <p>Sites, tools and digital experiences built from scratch | with a strong point of view on what the web can feel like.</p>
+          <ul class="ph-list">
+            <li>HTML / CSS / JavaScript</li>
+            <li>Responsive, accessible design</li>
+            <li>Static sites &amp; creative microsites</li>
+            <li>Web copy &amp; brand voice</li>
+            <li>Client &amp; personal projects</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="ph-head">
+          <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=360&fit=crop&crop=center" alt="Visual Art" />
+          <div class="ph-head-overlay">
+            <div class="ph-tag">Discipline 02</div>
+            <div class="ph-name">Visual Art &amp; Experiments</div>
+          </div>
+        </div>
+        <div class="ph-body">
+          <p>Illustration, visual projects and experiments that don't always have a brief | just a question worth exploring.</p>
+          <ul class="ph-list">
+            <li>Digital illustration</li>
+            <li>Generative &amp; code-based art</li>
+            <li>Visual experiments</li>
+            <li>Collaborative projects</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- APPROACH PILLARS -->
+  <section class="blocks-sec">
+    <div class="blocks-hd">
+      <span class="eyebrow">The Approach</span>
+      <h2 class="sec-title">How Things Get Done</h2>
+    </div>
+    <div class="blocks-grid">
+      <div class="img-block">
+        <div class="ib-vis">
+          <img src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?w=400&h=270&fit=crop&crop=center" alt="Start Small" />
+        </div>
+        <div class="ib-body">
+          <div class="ib-title">Start Small</div>
+          <div class="ib-desc">Every project begins with a single honest question. No decks, no roadmaps, just a reason to begin.</div>
+        </div>
+      </div>
+      <div class="img-block">
+        <div class="ib-vis">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=270&fit=crop&crop=center" alt="Iterate Openly" />
+        </div>
+        <div class="ib-body">
+          <div class="ib-title">Iterate Privately</div>
+          <div class="ib-desc">Work in private, update in the dark. Projects evolve | The messiness is part of the process.</div>
+        </div>
+      </div>
+      <div class="img-block">
+        <div class="ib-vis">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=270&fit=crop&crop=center" alt="Collaborate" />
+        </div>
+        <div class="ib-body">
+          <div class="ib-title">Collaborate</div>
+          <div class="ib-desc">The best things get made with other people. Open to collabs, commissions and interesting conversations.</div>
+        </div>
+      </div>
+      <div class="img-block">
+        <div class="ib-vis">
+          <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=270&fit=crop&crop=center" alt="Ship It" />
+        </div>
+        <div class="ib-body">
+          <div class="ib-title">Ship It</div>
+          <div class="ib-desc">Done and published beats perfect and invisible. The folder goes live, the card goes in the gallery.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST DROPS -->
+  <section class="events-sec">
+    <div class="events-hd">
+      <span class="eyebrow">Latest Activity</span>
+      <h2 class="sec-title">Recent Drops</h2>
+      <p class="sec-desc" style="margin:0 auto;">New work, updates, launches and live experiments, as they happen.</p>
+    </div>
+    <div class="events-grid">
+      <div class="ev-card">
+        <div class="ev-date"><div class="ev-day">01</div><div class="ev-mon">Jan</div></div>
+        <div>
+          <div class="ev-title">creative-pages.org launches</div>
+          <div class="ev-place"><i class="bi bi-globe" style="color:var(--rose)"></i>&nbsp;creative-pages.org</div>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-date"><div class="ev-day">✦</div><div class="ev-mon">TBD</div></div>
+        <div>
+          <div class="ev-title">Next project drops here</div>
+          <div class="ev-place"><i class="bi bi-hourglass-split" style="color:var(--rose)"></i>&nbsp;In progress</div>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-date"><div class="ev-day">✦</div><div class="ev-mon">TBD</div></div>
+        <div>
+          <div class="ev-title">Something's always brewing</div>
+          <div class="ev-place"><i class="bi bi-stars" style="color:var(--rose)"></i>&nbsp;Watch this space</div>
+        </div>
+      </div>
+    </div>
+    <div class="events-cta">
+      <a href="projects.html" class="btn-outline">All Projects <i class="bi bi-arrow-right"></i></a>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="safety-sec">
+    <div class="safety-inner">
+      <div>
+        <span class="eyebrow">The Way I Work</span>
+        <h2 class="sec-title">A Few Things<br/>That Matter Here</h2>
+        <p class="sec-desc">creative-pages.org is independent, ad-free and made by hand. These are the principles that keep it that way.</p>
+        <div class="safety-pills">
+          <div class="sp">
+            <div class="sp-icon"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=72&h=72&fit=crop&crop=center" alt="Open" /></div>
+            <div class="sp-title">Open by Default</div>
+            <div class="sp-desc">Source code is public. Knowledge is shared.</div>
+          </div>
+          <div class="sp">
+            <div class="sp-icon"><img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=72&h=72&fit=crop&crop=center" alt="No ads" /></div>
+            <div class="sp-title">No Ads, No Tracking</div>
+            <div class="sp-desc">No analytics creep, no banner ads. Just the work and the people who find it.</div>
+          </div>
+          <div class="sp">
+            <div class="sp-icon"><img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=72&h=72&fit=crop&crop=center" alt="Evolving" /></div>
+            <div class="sp-title">Always Evolving</div>
+            <div class="sp-desc">Nothing here is finished. Each project is updated, expanded, occasionally broken.</div>
+          </div>
+        </div>
+      </div>
+      <div class="safety-visual">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=840&fit=crop&crop=center" alt="Studio" />
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section class="nums-sec">
+    <span class="eyebrow">creative-pages in Numbers</span>
+    <h2 class="sec-title">By the Numbers</h2>
+    <div class="nums-grid">
+      <div class="num-item"><div class="num-big">2</div><div class="num-lbl">Disciplines</div></div>
+      <div class="num-item"><div class="num-big">1</div><div class="num-lbl">Live Project</div></div>
+      <div class="num-item"><div class="num-big">∞</div><div class="num-lbl">Ideas Queued</div></div>
+      <div class="num-item"><div class="num-big">0</div><div class="num-lbl">Ads. Ever.</div></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="cp-footer">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo">
+          <div class="ft-sq">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" />
+          </div>
+          <div class="ft-name">creative-pages.org<small>Independent Studio · Est. 2024</small></div>
+        </div>
+        <p class="ft-tag">A studio of many things | web, visual art and brand copy | made independently.</p>
+        <div class="ft-socials">
+          <a href="#" target="_blank" class="ft-soc" aria-label="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="mailto:hello@creative-pages.org" class="ft-soc" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-h">Navigate</div>
+        <ul class="ft-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="projects.html">All Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Projects</div>
+        <ul class="ft-links">
+          <li><a href="beard-jungle/index.html">Beard Jungle</a></li>
+          <li><a href="#">Project Two</a></li>
+          <li><a href="#">Project Three</a></li>
+          <li><a href="projects.html">View All →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Get in Touch</div>
+        <div class="ft-ci"><i class="bi bi-envelope-fill"></i><a href="mailto:hello@creative-pages.org">admin@creative-pages.org</a></div>
+        <div class="ft-ci"><i class="bi bi-geo-alt-fill"></i><span>Sunny Side<br/>South Africa</span></div>
+        <div class="ft-ci"><i class="bi bi-clock-fill"></i><span>Open to collabs<br/>&amp; commissions</span></div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 creative-pages.org | Tickle me Pink</span>
+      <span>Some Sunny Place, South Africa</span>
+    </div>
+  </footer>
+
+</div><!-- #main-page -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // LANDING
+  function enterSite() {
+    document.getElementById('landing').classList.add('away');
+    setTimeout(() => { document.getElementById('landing').style.display = 'none'; }, 960);
+  }
+
+  // PETALS
+  (function() {
+    const cols = ['#f2a7b0','#b5d5c5','#aecde8','#dcd0f0','#f9dcc4'];
+    const wrap = document.getElementById('petals');
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const sz = 10 + Math.random() * 14;
+      p.style.cssText = `left:${Math.random()*100}vw;width:${sz}px;height:${sz}px;background:${cols[i%cols.length]};animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*9}s`;
+      wrap.appendChild(p);
+    }
+  })();
+
+  // HERO CAROUSEL
+  let cur = 0;
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-dot');
+  function goSlide(n) {
+    slides[cur].classList.remove('on'); dots[cur].classList.remove('on');
+    cur = n;
+    slides[cur].classList.add('on'); dots[cur].classList.add('on');
+  }
+  setInterval(() => goSlide((cur + 1) % slides.length), 5000);
+
+  // MOBILE NAV
+  function toggleMob() {
+    const m = document.getElementById('mobMenu');
+    const ic = document.getElementById('mico');
+    m.classList.toggle('open');
+    ic.className = m.classList.contains('open') ? 'bi bi-x-lg' : 'bi bi-list';
+  }
+</script>
+</body>
+</html>
