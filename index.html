@@ -202,19 +202,33 @@
     .ib-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.28rem; }
     .ib-desc { font-size: 0.78rem; color: var(--mid); line-height: 1.5; }
 
-    /* ── LATEST DROPS ── */
-    .events-sec { padding: 5rem 1.5rem; background: var(--cream); }
-    .events-hd { max-width: 1080px; margin: 0 auto; text-align: center; }
-    .events-grid { max-width: 1080px; margin: 2.5rem auto 0; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.3rem; }
-    @media (max-width: 768px) { .events-grid { grid-template-columns: 1fr; } }
-    .ev-card { background: white; border-radius: 16px; padding: 1.4rem 1.5rem; box-shadow: 0 4px 18px var(--shadow); display: flex; gap: 1rem; align-items: flex-start; transition: transform 0.22s; text-decoration: none; color: inherit; }
-    .ev-card:hover { transform: translateY(-4px); }
-    .ev-date { background: var(--blush); border-radius: 12px; padding: 0.6rem 0.8rem; text-align: center; flex-shrink: 0; min-width: 52px; }
-    .ev-day { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--dark); line-height: 1; }
-    .ev-mon { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
-    .ev-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.28rem; }
-    .ev-place { font-size: 0.78rem; color: var(--mid); display: flex; align-items: center; gap: 0.28rem; }
-    .events-cta { text-align: center; margin-top: 2.5rem; }
+    /* ── ORIGIN TIMELINE ── */
+    .timeline-sec { padding: 5rem 1.5rem; background: var(--cream); }
+    .timeline-hd { max-width: 760px; margin: 0 auto; text-align: center; }
+    .timeline-wrap { max-width: 760px; margin: 3.5rem auto 0; position: relative; }
+    .timeline-wrap::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--rose), var(--sage), var(--sky), var(--lavender)); border-radius: 2px; }
+    @media (max-width: 600px) { .timeline-wrap::before { left: 20px; } }
+    .tl-item { display: flex; gap: 1.5rem; padding-bottom: 2.8rem; position: relative; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot-col { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; width: 58px; }
+    .tl-dot { width: 14px; height: 14px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px var(--rose); margin-top: 6px; flex-shrink: 0; }
+    .tl-item:nth-child(1) .tl-dot { box-shadow: 0 0 0 2px var(--rose); background: var(--rose); }
+    .tl-item:nth-child(2) .tl-dot { box-shadow: 0 0 0 2px var(--sage); background: var(--sage); }
+    .tl-item:nth-child(3) .tl-dot { box-shadow: 0 0 0 2px var(--sky); background: var(--sky); }
+    .tl-item:nth-child(4) .tl-dot { box-shadow: 0 0 0 2px var(--lavender); background: var(--lavender); }
+    .tl-year { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; color: var(--mid); margin-top: 0.3rem; text-align: center; }
+    .tl-card { background: white; border-radius: 16px; padding: 1.4rem 1.6rem; box-shadow: 0 4px 18px var(--shadow); flex: 1; transition: transform 0.22s, box-shadow 0.22s; }
+    .tl-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px var(--shadow); }
+    .tl-badge { display: inline-flex; align-items: center; gap: 0.35rem; border-radius: 50px; padding: 0.2rem 0.75rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .tl-badge.r { background: var(--blush); color: #a04060; }
+    .tl-badge.g { background: var(--mint); color: #3a6b52; }
+    .tl-badge.b { background: var(--sky); color: #2a5a7a; }
+    .tl-badge.v { background: var(--lavender); color: #4a3a7a; }
+    .tl-badge.now { background: var(--dark); color: white; }
+    .tl-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; line-height: 1.2; }
+    .tl-desc { font-size: 0.84rem; color: var(--mid); line-height: 1.65; }
+ 
+
 
     /* ── VALUES ── */
     .safety-sec { padding: 5rem 1.5rem; background: linear-gradient(135deg, var(--dark) 0%, #2e1a3d 100%); }
