@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | creative-pages.org</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <style>
+    :root {
+      --rose:    #f2a7b0;
+      --blush:   #fce4e8;
+      --sage:    #b5d5c5;
+      --mint:    #d8ede4;
+      --sky:     #aecde8;
+      --cream:   #fdf7f0;
+      --peach:   #f9dcc4;
+      --lavender:#dcd0f0;
+      --charcoal:#2c2c2c;
+      --dark:    #1e1e2e;
+      --mid:     #5a5a7a;
+      --shadow:  rgba(44,44,44,0.10);
+      --nav-h:   68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; color: var(--charcoal); background: var(--cream); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    .cp-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h); background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px); border-bottom: 2px solid var(--blush);
+      display: flex; align-items: center; padding: 0 1.5rem;
+      box-shadow: 0 2px 18px var(--shadow);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; flex-shrink: 0; }
+    .nav-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .nav-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--dark); line-height: 1.1; }
+    .nav-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 0.15rem; margin: 0 0 0 auto; padding: 0; }
+    .nav-links a { display: block; padding: 0.42rem 0.82rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.18s, background 0.18s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--dark); background: var(--blush); }
+    .nav-links .cta { background: var(--dark); color: white !important; border-radius: 50px; padding: 0.42rem 1.1rem; }
+    .nav-links .cta:hover { background: var(--rose); }
+    .nav-tog { display: none; margin-left: auto; background: none; border: none; font-size: 1.5rem; color: var(--dark); cursor: pointer; }
+    .mob-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: white; padding: 0.8rem 1rem; border-bottom: 2px solid var(--blush); box-shadow: 0 8px 22px var(--shadow); z-index: 998; }
+    .mob-menu.open { display: block; }
+    .mob-menu a { display: block; padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--mint); }
+    .mob-menu a:last-child { border-bottom: none; }
+    .mob-menu a:hover { background: var(--blush); color: var(--dark); }
+    @media (max-width: 900px) { .nav-links { display: none; } .nav-tog { display: block; } }
+
+    /* ── SHARED ── */
+    .eyebrow { display: inline-block; font-size: 0.71rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.45rem; }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 0.75rem; }
+    .sec-desc { color: var(--mid); font-size: 0.98rem; line-height: 1.7; max-width: 580px; }
+    .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--dark); color: white; padding: 0.72rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--rose); color: white; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; border: 2px solid var(--dark); color: var(--dark); padding: 0.68rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--dark); color: white; }
+    .chip { background: var(--blush); color: var(--dark); border-radius: 50px; padding: 0.28rem 0.85rem; font-size: 0.79rem; font-weight: 700; }
+    .chip.g { background: var(--mint); } .chip.b { background: var(--sky); } .chip.p { background: var(--peach); } .chip.v { background: var(--lavender); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      margin-top: var(--nav-h);
+      min-height: 52vh; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .page-hero img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(26,26,46,0.72) 0%, rgba(46,26,61,0.65) 100%); }
+    .page-hero-content { position: relative; z-index: 2; text-align: center; color: white; padding: 3rem 1.5rem; max-width: 760px; }
+    .page-hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; padding: 0.35rem 1.1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 900; line-height: 1.05; margin-bottom: 1rem; text-shadow: 0 2px 22px rgba(0,0,0,0.3); }
+    .page-hero p { font-size: clamp(0.95rem, 2vw, 1.15rem); opacity: 0.88; line-height: 1.65; max-width: 540px; margin: 0 auto; }
+    .ai-pill { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--rose); color: white; border-radius: 50px; padding: 0.28rem 0.9rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1.5rem; }
+
+    /* ── INTRO SPLIT ── */
+    .intro-sec { padding: 5.5rem 1.5rem; background: var(--cream); }
+    .intro-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    @media (max-width: 768px) { .intro-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .intro-img { border-radius: 24px; overflow: hidden; height: 440px; position: relative; box-shadow: 0 20px 56px rgba(242,167,176,0.22); }
+    .intro-img img { width: 100%; height: 100%; object-fit: cover; }
+    .intro-img-badge { position: absolute; bottom: 1.4rem; left: 1.4rem; background: white; border-radius: 14px; padding: 0.75rem 1.1rem; box-shadow: 0 6px 22px var(--shadow); display: flex; align-items: center; gap: 0.55rem; }
+    .iib-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--rose), var(--lavender)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; flex-shrink: 0; }
+    .iib-text { font-size: 0.72rem; font-weight: 700; color: var(--dark); line-height: 1.3; }
+    .iib-text span { display: block; font-weight: 400; color: var(--mid); font-size: 0.68rem; }
+    .intro-text p { font-size: 0.97rem; color: var(--mid); line-height: 1.78; margin-bottom: 1.1rem; }
+    .intro-text p strong { color: var(--dark); }
+    .intro-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.4rem 0 2rem; }
+
+    /* ── THE IDEA — FULL-WIDTH DARK ── */
+    .idea-sec {
+      padding: 5.5rem 1.5rem;
+      background: linear-gradient(135deg, var(--dark) 0%, #2e1a3d 100%);
+    }
+    .idea-inner { max-width: 1080px; margin: 0 auto; }
+    .idea-header { text-align: center; margin-bottom: 3.5rem; }
+    .idea-header .eyebrow { color: var(--rose); }
+    .idea-header .sec-title { color: white; }
+    .idea-header .sec-desc { color: rgba(255,255,255,0.55); margin: 0 auto; }
+    .idea-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem; }
+    @media (max-width: 768px) { .idea-grid { grid-template-columns: 1fr; } }
+    .idea-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 2rem 1.8rem; transition: background 0.25s, transform 0.25s; }
+    .idea-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+    .idea-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: var(--rose); opacity: 0.35; line-height: 1; margin-bottom: 0.6rem; }
+    .idea-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: white; margin-bottom: 0.6rem; line-height: 1.2; }
+    .idea-desc { font-size: 0.84rem; color: rgba(255,255,255,0.52); line-height: 1.7; }
+    .idea-tag { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(242,167,176,0.18); border: 1px solid rgba(242,167,176,0.3); border-radius: 50px; padding: 0.18rem 0.7rem; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); margin-top: 1rem; }
+
+    /* ── THE HUMAN + AI PROCESS ── */
+    .process-sec { padding: 5.5rem 1.5rem; background: white; }
+    .process-hd { max-width: 1080px; margin: 0 auto; text-align: center; margin-bottom: 3.5rem; }
+    .process-flow { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 48px 1fr 48px 1fr; align-items: center; gap: 0; }
+    @media (max-width: 700px) { .process-flow { grid-template-columns: 1fr; } .process-arrow { transform: rotate(90deg); } }
+    .pf-step { background: var(--cream); border-radius: 20px; padding: 1.8rem 1.6rem; text-align: center; box-shadow: 0 4px 18px var(--shadow); }
+    .pf-step.human { border-top: 4px solid var(--rose); }
+    .pf-step.collab { border-top: 4px solid var(--lavender); background: linear-gradient(to bottom, #f5f0ff, white); }
+    .pf-step.ai    { border-top: 4px solid var(--sage); }
+    .pf-icon { width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .pf-step.human .pf-icon  { background: var(--blush); }
+    .pf-step.collab .pf-icon { background: var(--lavender); }
+    .pf-step.ai .pf-icon     { background: var(--mint); }
+    .pf-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+    .pf-desc { font-size: 0.8rem; color: var(--mid); line-height: 1.6; }
+    .process-arrow { display: flex; align-items: center; justify-content: center; color: var(--rose); font-size: 1.4rem; }
+    .process-quote { max-width: 680px; margin: 3.5rem auto 0; text-align: center; padding: 2rem 2.5rem; background: var(--blush); border-radius: 20px; }
+    .process-quote blockquote { font-family: 'Playfair Display', serif; font-size: clamp(1.05rem, 2.5vw, 1.35rem); font-weight: 700; color: var(--dark); line-height: 1.45; font-style: italic; }
+    .process-quote cite { display: block; margin-top: 0.8rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); font-style: normal; }
+
+    /* ── WHAT WE DO ── */
+    .services-sec { padding: 5.5rem 1.5rem; background: var(--mint); }
+    .services-hd { max-width: 1080px; margin: 0 auto; text-align: center; margin-bottom: 3rem; }
+    .services-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(2,1fr); gap: 1.4rem; }
+    @media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; } }
+    .srv-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 24px var(--shadow); transition: transform 0.25s, box-shadow 0.25s; }
+    .srv-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px rgba(0,0,0,0.1); }
+    .srv-img { height: 175px; overflow: hidden; position: relative; }
+    .srv-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .srv-card:hover .srv-img img { transform: scale(1.05); }
+    .srv-body { padding: 1.6rem 1.8rem; }
+    .srv-label { display: inline-flex; align-items: center; gap: 0.35rem; border-radius: 50px; padding: 0.2rem 0.75rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.65rem; }
+    .srv-label.r { background: var(--blush); color: #a04060; }
+    .srv-label.b { background: var(--sky); color: #2a5a7a; }
+    .srv-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--dark); margin-bottom: 0.55rem; }
+    .srv-desc { font-size: 0.85rem; color: var(--mid); line-height: 1.7; }
+    .srv-list { list-style: none; margin-top: 1rem; }
+    .srv-list li { font-size: 0.82rem; font-weight: 600; color: var(--charcoal); padding: 0.25rem 0; display: flex; align-items: center; gap: 0.5rem; }
+    .srv-list li::before { content: '✦'; color: var(--rose); font-size: 0.55rem; flex-shrink: 0; }
+    .ai-note { margin-top: 1rem; padding: 0.65rem 0.9rem; background: var(--blush); border-radius: 10px; font-size: 0.76rem; color: var(--mid); display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.55; }
+    .ai-note i { color: var(--rose); flex-shrink: 0; margin-top: 1px; }
+
+    /* ── VALUES ── */
+    .values-sec { padding: 5.5rem 1.5rem; background: linear-gradient(135deg, var(--dark) 0%, #2e1a3d 100%); }
+    .values-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media (max-width: 768px) { .values-inner { grid-template-columns: 1fr; } .values-img { display: none; } }
+    .values-sec .eyebrow { color: var(--rose); }
+    .values-sec .sec-title { color: white; }
+    .values-sec .sec-desc { color: rgba(255,255,255,0.55); }
+    .val-pills { margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .vp { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.2rem; }
+    .vp-icon { width: 36px; height: 36px; border-radius: 10px; overflow: hidden; margin-bottom: 0.7rem; }
+    .vp-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .vp-title { font-weight: 700; color: white; font-size: 0.88rem; margin-bottom: 0.28rem; }
+    .vp-desc { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.55; }
+    .values-img { border-radius: 20px; overflow: hidden; height: 460px; opacity: 0.6; }
+    .values-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── CTA BANNER ── */
+    .cta-sec { padding: 5rem 1.5rem; background: var(--blush); text-align: center; }
+    .cta-inner { max-width: 620px; margin: 0 auto; }
+    .cta-sec .sec-title { margin-bottom: 0.8rem; }
+    .cta-sec .sec-desc { margin: 0 auto 2.2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    .cp-footer { background: var(--dark); padding: 4rem 1.5rem 2rem; color: white; }
+    .ft-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; }
+    @media (max-width: 900px) { .ft-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
+    .ft-logo { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+    .ft-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .ft-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .ft-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: white; line-height: 1.2; }
+    .ft-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .ft-tag { font-size: 0.82rem; color: rgba(255,255,255,0.48); line-height: 1.65; margin-bottom: 1.2rem; }
+    .ft-socials { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+    .ft-soc { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.11); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.05rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .ft-soc:hover { background: var(--rose); transform: translateY(-2px); color: white; }
+    .ft-col-h { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 1rem; }
+    .ft-links { list-style: none; }
+    .ft-links li { margin-bottom: 0.5rem; }
+    .ft-links a { color: rgba(255,255,255,0.52); font-size: 0.83rem; text-decoration: none; transition: color 0.18s; }
+    .ft-links a:hover { color: white; }
+    .ft-ci { display: flex; align-items: flex-start; gap: 0.6rem; color: rgba(255,255,255,0.52); font-size: 0.8rem; margin-bottom: 0.58rem; }
+    .ft-ci i { color: var(--rose); flex-shrink: 0; margin-top: 2px; }
+    .ft-ci a { color: rgba(255,255,255,0.52); text-decoration: none; transition: color 0.18s; }
+    .ft-ci a:hover { color: white; }
+    .ft-bottom { max-width: 1080px; margin: 1.5rem auto 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.73rem; color: rgba(255,255,255,0.28); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="cp-nav">
+    <a class="nav-brand" href="index.html">
+      <div class="nav-sq">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" />
+      </div>
+      <div class="nav-name">creative-pages<small>Studio · Est. 2024</small></div>
+    </a>
+    <button class="nav-tog" onclick="toggleMob()" aria-label="Menu">
+      <i class="bi bi-list" id="mico"></i>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html" class="cta">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="mob-menu" id="mobMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="work.html">Work</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <img class="bg" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1600&h=900&fit=crop&crop=center" alt="About creative-pages" />
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-tag">
+        <i class="bi bi-stars"></i> About the Studio
+      </div>
+      <h1>Planned by Human.<br/>Perfected by AI.</h1>
+      <p>creative-pages.org is an independent studio built on a simple idea — that the best digital work starts with a human perspective, and gets sharper with the right tools.</p>
+      <div class="ai-pill">
+        <i class="bi bi-cpu"></i> Human Vision · AI Precision
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO SPLIT -->
+  <section class="intro-sec">
+    <div class="intro-grid">
+      <div class="intro-img">
+        <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800&h=880&fit=crop&crop=center" alt="Creative workspace" />
+        <div class="intro-img-badge">
+          <div class="iib-icon"><i class="bi bi-lightbulb-fill"></i></div>
+          <div class="iib-text">Independent Studio<span>Est. 2024 · South Africa</span></div>
+        </div>
+      </div>
+      <div class="intro-text">
+        <span class="eyebrow">The Origin</span>
+        <h2 class="sec-title">Where the Idea<br/>Came From</h2>
+        <p>creative-pages.org started with a question: what if you could get website design and brand strategy that actually reflects how you think — not a template, not a trend-chasing agency deck, but something rooted in a real point of view?</p>
+        <p>The studio was built around the belief that <strong>creative direction is a human job.</strong> The instinct, the strategy, the understanding of an audience — those come from experience, not an algorithm. But the execution? That's where AI changes everything.</p>
+        <p>Every project here is <strong>planned by a human first.</strong> The idea, the brief, the design direction, the brand thinking — all of it begins with a person who knows what they want to say. AI then steps in to sharpen, refine, build and perfect — faster and more precisely than either could do alone.</p>
+        <div class="intro-chips">
+          <span class="chip">Web Design</span>
+          <span class="chip b">Brand Strategy</span>
+          <span class="chip p">Copy &amp; Voice</span>
+          <span class="chip v">Visual Direction</span>
+          <span class="chip g">Open Source</span>
+        </div>
+        <a href="work.html" class="btn-dark">See the Work <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE IDEA — 3 PILLARS -->
+  <section class="idea-sec">
+    <div class="idea-inner">
+      <div class="idea-header">
+        <span class="eyebrow">The Philosophy</span>
+        <h2 class="sec-title">Why This Exists</h2>
+        <p class="sec-desc">Three ideas drove the creation of creative-pages.org. They still drive every project.</p>
+      </div>
+      <div class="idea-grid">
+        <div class="idea-card">
+          <div class="idea-num">01</div>
+          <div class="idea-title">Creative strategy can't be automated — but it can be accelerated</div>
+          <div class="idea-desc">Good design decisions come from understanding people, context and intent. That understanding belongs to humans. What AI does is take that understanding and build from it faster, more consistently, and with fewer dead ends.</div>
+          <div class="idea-tag"><i class="bi bi-person-fill"></i> Human-led</div>
+        </div>
+        <div class="idea-card">
+          <div class="idea-num">02</div>
+          <div class="idea-title">Small studios can now produce work that used to need big teams</div>
+          <div class="idea-desc">creative-pages.org is one person and a set of well-chosen tools. That leanness isn't a limitation — it means every decision goes through a single clear perspective, and nothing gets lost in committee.</div>
+          <div class="idea-tag"><i class="bi bi-cpu"></i> AI-perfected</div>
+        </div>
+        <div class="idea-card">
+          <div class="idea-num">03</div>
+          <div class="idea-title">The web should still feel like it was made by someone</div>
+          <div class="idea-desc">Too much of the internet feels frictionless in the wrong way — smooth, generic, forgettable. creative-pages.org builds things with a point of view, an edge, a reason to exist. Planned by human. Perfected by AI. Felt by people.</div>
+          <div class="idea-tag"><i class="bi bi-stars"></i> Made with intent</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROCESS -->
+  <section class="process-sec">
+    <div class="process-hd">
+      <span class="eyebrow">How It Works</span>
+      <h2 class="sec-title">The Human + AI Process</h2>
+      <p class="sec-desc" style="margin:0 auto;">Not AI-generated. Not purely handcrafted. Something better — the creative instinct of a human, sharpened by the precision of AI.</p>
+    </div>
+    <div class="process-flow">
+      <div class="pf-step human">
+        <div class="pf-icon"><i class="bi bi-person-fill"></i></div>
+        <div class="pf-title">Human Plans</div>
+        <div class="pf-desc">The idea, the brief, the brand strategy, the design direction — all conceived by a person with a clear point of view and a real understanding of the goal.</div>
+      </div>
+      <div class="process-arrow"><i class="bi bi-arrow-right"></i></div>
+      <div class="pf-step collab">
+        <div class="pf-icon"><i class="bi bi-arrow-left-right"></i></div>
+        <div class="pf-title">Collaboration</div>
+        <div class="pf-desc">Human judgment and AI capability work in cycles — reviewing, refining, questioning. The direction stays human. The execution gets sharper.</div>
+      </div>
+      <div class="process-arrow"><i class="bi bi-arrow-right"></i></div>
+      <div class="pf-step ai">
+        <div class="pf-icon"><i class="bi bi-cpu-fill"></i></div>
+        <div class="pf-title">AI Perfects</div>
+        <div class="pf-desc">Code, copy, layouts and details are refined with AI — eliminating the tedious, accelerating the technical, and finding solutions a solo studio couldn't reach alone.</div>
+      </div>
+    </div>
+    <div class="process-quote">
+      <blockquote>"The idea is always the human's. The AI just makes sure the execution does it justice."</blockquote>
+      <cite>— The creative-pages.org approach</cite>
+    </div>
+  </section>
+
+  <!-- SERVICES / WHAT WE DO -->
+  <section class="services-sec">
+    <div class="services-hd">
+      <span class="eyebrow">What Gets Made</span>
+      <h2 class="sec-title">The Work</h2>
+      <p class="sec-desc" style="margin:0 auto;">Two disciplines. One consistent approach: planned by human, perfected by AI.</p>
+    </div>
+    <div class="services-grid">
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&h=350&fit=crop&crop=center" alt="Web Design" />
+        </div>
+        <div class="srv-body">
+          <div class="srv-label r"><i class="bi bi-laptop"></i> Discipline 01</div>
+          <div class="srv-title">Web Design &amp; Development</div>
+          <div class="srv-desc">Websites built from a clear strategy — not just made to look good, but designed to communicate something specific. Each one begins with a brief, a purpose and a human decision about what matters most.</div>
+          <ul class="srv-list">
+            <li>Custom HTML / CSS / JavaScript</li>
+            <li>Responsive, accessible design</li>
+            <li>Creative microsites &amp; project sites</li>
+            <li>Web copy &amp; brand voice</li>
+            <li>Neocities &amp; static hosting projects</li>
+          </ul>
+          <div class="ai-note">
+            <i class="bi bi-cpu-fill"></i>
+            <span>Every site is strategically planned by a human, then built and refined with AI to get the details exactly right.</span>
+          </div>
+        </div>
+      </div>
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=350&fit=crop&crop=center" alt="Visual Art" />
+        </div>
+        <div class="srv-body">
+          <div class="srv-label b"><i class="bi bi-palette"></i> Discipline 02</div>
+          <div class="srv-title">Visual Art &amp; Brand Strategy</div>
+          <div class="srv-desc">Visual direction and brand thinking for projects and clients that want to look and feel like something. Not a logo generator — a considered creative process that starts with what a brand actually means.</div>
+          <ul class="srv-list">
+            <li>Brand strategy &amp; positioning</li>
+            <li>Visual direction &amp; identity</li>
+            <li>Digital illustration &amp; visual experiments</li>
+            <li>Generative &amp; code-based art</li>
+          </ul>
+          <div class="ai-note">
+            <i class="bi bi-cpu-fill"></i>
+            <span>Brand direction and creative concepts are human-originated. AI is used to explore, iterate and perfect the visual execution.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values-sec">
+    <div class="values-inner">
+      <div>
+        <span class="eyebrow">What Drives This</span>
+        <h2 class="sec-title">The Principles</h2>
+        <p class="sec-desc">creative-pages.org is independent, ad-free and built to a standard — the same one applied to every project that comes through here.</p>
+        <div class="val-pills">
+          <div class="vp">
+            <div class="vp-icon"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=72&h=72&fit=crop&crop=center" alt="Open" /></div>
+            <div class="vp-title">Open by Default</div>
+            <div class="vp-desc">Source code is public. Projects are linkable. Good ideas are worth sharing.</div>
+          </div>
+          <div class="vp">
+            <div class="vp-icon"><img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=72&h=72&fit=crop&crop=center" alt="No ads" /></div>
+            <div class="vp-title">No Ads, No Tracking</div>
+            <div class="vp-desc">No banner ads, no analytics surveillance. The work stands on its own.</div>
+          </div>
+          <div class="vp">
+            <div class="vp-icon"><img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=72&h=72&fit=crop&crop=center" alt="Intent" /></div>
+            <div class="vp-title">Human Intent, Always</div>
+            <div class="vp-desc">AI accelerates — it never replaces the human thinking behind every brief and decision.</div>
+          </div>
+          <div class="vp">
+            <div class="vp-icon"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=72&h=72&fit=crop&crop=center" alt="Evolving" /></div>
+            <div class="vp-title">Always Evolving</div>
+            <div class="vp-desc">Nothing here is finished. Projects are updated, expanded and occasionally broken — that's part of the process.</div>
+          </div>
+        </div>
+      </div>
+      <div class="values-img">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=920&fit=crop&crop=center" alt="Collaboration" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-sec">
+    <div class="cta-inner">
+      <span class="eyebrow">Work Together</span>
+      <h2 class="sec-title">Got a Project in Mind?</h2>
+      <p class="sec-desc">Bring the idea. creative-pages.org handles the rest — planned with your direction, perfected with the right tools.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-dark">Start a Conversation <i class="bi bi-arrow-right"></i></a>
+        <a href="work.html" class="btn-outline">See the Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="cp-footer">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo">
+          <div class="ft-sq">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" />
+          </div>
+          <div class="ft-name">creative-pages.org<small>Independent Studio · Est. 2024</small></div>
+        </div>
+        <p class="ft-tag">A studio of many things | web, visual art and brand copy | planned by human, perfected by AI.</p>
+        <div class="ft-socials">
+          <a href="#" target="_blank" class="ft-soc" aria-label="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="mailto:admin@creative-pages.org" class="ft-soc" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-h">Navigate</div>
+        <ul class="ft-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="projects.html">All Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Projects</div>
+        <ul class="ft-links">
+          <li><a href="beard-jungle/index.html">Beard Jungle</a></li>
+          <li><a href="#">Project Two</a></li>
+          <li><a href="#">Project Three</a></li>
+          <li><a href="projects.html">View All →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Get in Touch</div>
+        <div class="ft-ci"><i class="bi bi-envelope-fill"></i><a href="mailto:admin@creative-pages.org">admin@creative-pages.org</a></div>
+        <div class="ft-ci"><i class="bi bi-geo-alt-fill"></i><span>Sunny Side<br/>South Africa</span></div>
+        <div class="ft-ci"><i class="bi bi-clock-fill"></i><span>Open to collabs<br/>&amp; commissions</span></div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 creative-pages.org | Planned by Human, Perfected by AI</span>
+      <span>Some Sunny Place, South Africa</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleMob() {
+      const m = document.getElementById('mobMenu');
+      const ic = document.getElementById('mico');
+      m.classList.toggle('open');
+      ic.className = m.classList.contains('open') ? 'bi bi-x-lg' : 'bi bi-list';
+    }
+  </script>
+</body>
+</html>
