@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work | creative-pages.org</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <style>
+    :root {
+      --rose:    #f2a7b0;
+      --blush:   #fce4e8;
+      --sage:    #b5d5c5;
+      --mint:    #d8ede4;
+      --sky:     #aecde8;
+      --cream:   #fdf7f0;
+      --peach:   #f9dcc4;
+      --lavender:#dcd0f0;
+      --charcoal:#2c2c2c;
+      --dark:    #1e1e2e;
+      --mid:     #5a5a7a;
+      --shadow:  rgba(44,44,44,0.10);
+      --nav-h:   68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; color: var(--charcoal); background: var(--cream); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    .cp-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h); background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px); border-bottom: 2px solid var(--blush);
+      display: flex; align-items: center; padding: 0 1.5rem;
+      box-shadow: 0 2px 18px var(--shadow);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; flex-shrink: 0; }
+    .nav-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .nav-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--dark); line-height: 1.1; }
+    .nav-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 0.15rem; margin: 0 0 0 auto; padding: 0; }
+    .nav-links a { display: block; padding: 0.42rem 0.82rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.18s, background 0.18s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--dark); background: var(--blush); }
+    .nav-links .cta { background: var(--dark); color: white !important; border-radius: 50px; padding: 0.42rem 1.1rem; }
+    .nav-links .cta:hover { background: var(--rose); }
+    .nav-tog { display: none; margin-left: auto; background: none; border: none; font-size: 1.5rem; color: var(--dark); cursor: pointer; }
+    .mob-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: white; padding: 0.8rem 1rem; border-bottom: 2px solid var(--blush); box-shadow: 0 8px 22px var(--shadow); z-index: 998; }
+    .mob-menu.open { display: block; }
+    .mob-menu a { display: block; padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--mint); }
+    .mob-menu a:last-child { border-bottom: none; }
+    .mob-menu a:hover { background: var(--blush); color: var(--dark); }
+    @media (max-width: 900px) { .nav-links { display: none; } .nav-tog { display: block; } }
+
+    /* ── SHARED ── */
+    .eyebrow { display: inline-block; font-size: 0.71rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.45rem; }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 0.75rem; }
+    .sec-desc { color: var(--mid); font-size: 0.98rem; line-height: 1.7; max-width: 580px; }
+    .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--dark); color: white; padding: 0.72rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--rose); color: white; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; border: 2px solid var(--dark); color: var(--dark); padding: 0.68rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--dark); color: white; }
+    .btn-outline-light { display: inline-flex; align-items: center; gap: 0.5rem; border: 2px solid rgba(255,255,255,0.45); color: white; padding: 0.68rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; }
+    .btn-outline-light:hover { background: white; color: var(--dark); }
+    .ai-pill { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; padding: 0.28rem 0.9rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: white; }
+
+    /* ── PAGE HERO ── */
+    .page-hero { margin-top: var(--nav-h); min-height: 48vh; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .page-hero img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(26,26,46,0.75) 0%, rgba(30,46,46,0.65) 100%); }
+    .page-hero-content { position: relative; z-index: 2; text-align: center; color: white; padding: 3rem 1.5rem; max-width: 720px; }
+    .page-hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.28); border-radius: 50px; padding: 0.35rem 1.1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 900; line-height: 1.05; margin-bottom: 1rem; text-shadow: 0 2px 22px rgba(0,0,0,0.3); }
+    .page-hero p { font-size: clamp(0.95rem, 2vw, 1.12rem); opacity: 0.88; line-height: 1.65; max-width: 520px; margin: 0 auto 1.5rem; }
+    .hero-pills { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar { background: white; border-bottom: 2px solid var(--blush); padding: 1rem 1.5rem; position: sticky; top: var(--nav-h); z-index: 100; }
+    .filter-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-right: 0.5rem; flex-shrink: 0; }
+    .filter-btn { padding: 0.3rem 0.9rem; border-radius: 50px; border: 2px solid var(--blush); background: white; color: var(--mid); font-family: 'Nunito', sans-serif; font-size: 0.77rem; font-weight: 700; cursor: pointer; transition: all 0.18s; }
+    .filter-btn:hover { border-color: var(--rose); color: var(--dark); }
+    .filter-btn.on { background: var(--dark); border-color: var(--dark); color: white; }
+
+    /* ── FEATURED CASE STUDY ── */
+    .featured-sec { padding: 4.5rem 1.5rem; background: var(--cream); }
+    .featured-inner { max-width: 1080px; margin: 0 auto; }
+    .featured-hd { margin-bottom: 2.5rem; }
+    .featured-card { border-radius: 24px; overflow: hidden; background: white; box-shadow: 0 8px 36px rgba(0,0,0,0.10); display: grid; grid-template-columns: 1.2fr 1fr; }
+    @media (max-width: 768px) { .featured-card { grid-template-columns: 1fr; } }
+    .featured-img { overflow: hidden; min-height: 380px; position: relative; }
+    .featured-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .featured-card:hover .featured-img img { transform: scale(1.04); }
+    .featured-img-badge { position: absolute; top: 1.2rem; left: 1.2rem; background: var(--dark); color: white; border-radius: 50px; padding: 0.25rem 0.85rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; align-items: center; gap: 0.35rem; }
+    .feat-live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rose); animation: pulse 1.8s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.75)} }
+    .featured-body { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .feat-tag { display: inline-flex; align-items: center; gap: 0.35rem; background: var(--blush); color: #a04060; border-radius: 50px; padding: 0.22rem 0.8rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.9rem; width: fit-content; }
+    .feat-title { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 0.8rem; }
+    .feat-desc { font-size: 0.9rem; color: var(--mid); line-height: 1.7; margin-bottom: 1.4rem; }
+    .feat-meta { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 1.8rem; }
+    .feat-meta-item { font-size: 0.76rem; color: var(--mid); display: flex; align-items: center; gap: 0.35rem; }
+    .feat-meta-item i { color: var(--rose); }
+    .feat-meta-item strong { color: var(--dark); }
+    .ai-note-inline { display: flex; align-items: flex-start; gap: 0.5rem; background: var(--mint); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.76rem; color: var(--mid); line-height: 1.55; margin-bottom: 1.5rem; }
+    .ai-note-inline i { color: var(--sage); flex-shrink: 0; margin-top: 1px; }
+
+    /* ── WORK GRID ── */
+    .work-grid-sec { padding: 4rem 1.5rem 5rem; background: white; }
+    .work-grid-inner { max-width: 1080px; margin: 0 auto; }
+    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 900px) { .work-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 560px) { .work-grid { grid-template-columns: 1fr; } }
+    .wk-card { border-radius: 20px; overflow: hidden; background: var(--cream); box-shadow: 0 4px 22px var(--shadow); transition: transform 0.28s, box-shadow 0.28s; display: flex; flex-direction: column; }
+    .wk-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(0,0,0,0.11); }
+    .wk-img { height: 195px; overflow: hidden; position: relative; }
+    .wk-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .wk-card:hover .wk-img img { transform: scale(1.06); }
+    .wk-type { position: absolute; top: 0.85rem; left: 0.85rem; border-radius: 50px; padding: 0.2rem 0.7rem; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+    .wk-type.web { background: var(--blush); color: #a04060; }
+    .wk-type.brand { background: var(--sky); color: #2a5a7a; }
+    .wk-type.art { background: var(--lavender); color: #4a3a7a; }
+    .wk-type.copy { background: var(--peach); color: #7a4a2a; }
+    .wk-type.pent { background: var(--mint); color: #2a6a4a; }
+    .wk-body { padding: 1.4rem 1.5rem 1.6rem; flex: 1; display: flex; flex-direction: column; }
+    .wk-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; line-height: 1.2; }
+    .wk-desc { font-size: 0.82rem; color: var(--mid); line-height: 1.6; flex: 1; }
+    .wk-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1.1rem; padding-top: 0.9rem; border-top: 1px solid var(--blush); }
+    .wk-year { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: var(--mid); }
+    .wk-ai { display: flex; align-items: center; gap: 0.28rem; font-size: 0.62rem; font-weight: 700; color: var(--rose); letter-spacing: 0.06em; text-transform: uppercase; }
+    .wk-ai i { font-size: 0.7rem; }
+
+    /* ── DARK STATEMENT BAND ── */
+    .statement-sec { padding: 4.5rem 1.5rem; background: linear-gradient(135deg, var(--dark) 0%, #1a2e3d 100%); text-align: center; }
+    .statement-inner { max-width: 720px; margin: 0 auto; }
+    .statement-sec .eyebrow { color: var(--rose); }
+    .statement-quote { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3.5vw, 2.2rem); font-weight: 700; color: white; line-height: 1.35; margin: 1rem 0 2rem; }
+    .statement-quote em { color: var(--rose); font-style: normal; }
+    .statement-pills { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; }
+    .st-pill { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 50px; padding: 0.4rem 1rem; font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 0.06em; text-transform: uppercase; }
+    .st-pill i { color: var(--rose); font-size: 0.78rem; }
+
+    /* ── SERVICES OFFERED ── */
+    .services-sec { padding: 5rem 1.5rem; background: var(--mint); }
+    .services-hd { max-width: 1080px; margin: 0 auto; text-align: center; margin-bottom: 3rem; }
+    .services-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
+    @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; } }
+    .sv-card { background: white; border-radius: 20px; padding: 2rem 1.8rem; box-shadow: 0 4px 20px var(--shadow); transition: transform 0.25s, box-shadow 0.25s; }
+    .sv-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(0,0,0,0.09); }
+    .sv-icon-wrap { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.1rem; }
+    .sv-card:nth-child(1) .sv-icon-wrap { background: var(--blush); color: #a04060; }
+    .sv-card:nth-child(2) .sv-icon-wrap { background: var(--sky); color: #2a5a7a; }
+    .sv-card:nth-child(3) .sv-icon-wrap { background: var(--lavender); color: #4a3a7a; }
+    .sv-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+    .sv-desc { font-size: 0.83rem; color: var(--mid); line-height: 1.68; margin-bottom: 1rem; }
+    .sv-list { list-style: none; }
+    .sv-list li { font-size: 0.8rem; font-weight: 600; color: var(--charcoal); padding: 0.22rem 0; display: flex; align-items: center; gap: 0.45rem; }
+    .sv-list li::before { content: '✦'; color: var(--rose); font-size: 0.55rem; flex-shrink: 0; }
+    .sv-ai-note { margin-top: 1rem; background: var(--cream); border-radius: 10px; padding: 0.6rem 0.85rem; font-size: 0.73rem; color: var(--mid); display: flex; gap: 0.4rem; align-items: flex-start; line-height: 1.5; }
+    .sv-ai-note i { color: var(--rose); flex-shrink: 0; margin-top: 1px; }
+
+    /* ── CTA ── */
+    .cta-sec { padding: 5rem 1.5rem; background: var(--blush); text-align: center; }
+    .cta-inner { max-width: 600px; margin: 0 auto; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+
+    /* ── FOOTER ── */
+    .cp-footer { background: var(--dark); padding: 4rem 1.5rem 2rem; color: white; }
+    .ft-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; }
+    @media (max-width: 900px) { .ft-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
+    .ft-logo { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+    .ft-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .ft-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .ft-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: white; line-height: 1.2; }
+    .ft-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .ft-tag { font-size: 0.82rem; color: rgba(255,255,255,0.48); line-height: 1.65; margin-bottom: 1.2rem; }
+    .ft-socials { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+    .ft-soc { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.11); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.05rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .ft-soc:hover { background: var(--rose); transform: translateY(-2px); color: white; }
+    .ft-col-h { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 1rem; }
+    .ft-links { list-style: none; }
+    .ft-links li { margin-bottom: 0.5rem; }
+    .ft-links a { color: rgba(255,255,255,0.52); font-size: 0.83rem; text-decoration: none; transition: color 0.18s; }
+    .ft-links a:hover { color: white; }
+    .ft-ci { display: flex; align-items: flex-start; gap: 0.6rem; color: rgba(255,255,255,0.52); font-size: 0.8rem; margin-bottom: 0.58rem; }
+    .ft-ci i { color: var(--rose); flex-shrink: 0; margin-top: 2px; }
+    .ft-ci a { color: rgba(255,255,255,0.52); text-decoration: none; transition: color 0.18s; }
+    .ft-ci a:hover { color: white; }
+    .ft-bottom { max-width: 1080px; margin: 1.5rem auto 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.73rem; color: rgba(255,255,255,0.28); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="cp-nav">
+    <a class="nav-brand" href="index.html">
+      <div class="nav-sq">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" />
+      </div>
+      <div class="nav-name">creative-pages<small>Studio · Est. 2024</small></div>
+    </a>
+    <button class="nav-tog" onclick="toggleMob()" aria-label="Menu">
+      <i class="bi bi-list" id="mico"></i>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="work.html" class="active">Work</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html" class="cta">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="mob-menu" id="mobMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="work.html">Work</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <img class="bg" src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1600&h=900&fit=crop&crop=center" alt="Work" />
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-tag"><i class="bi bi-folder2-open"></i> The Work</div>
+      <h1>What Gets Made<br/>& How</h1>
+      <p>Web design, brand strategy, copy and visual direction — each project planned with human intent, refined to a sharp finish with AI.</p>
+      <div class="hero-pills">
+        <div class="ai-pill"><i class="bi bi-person-fill"></i> Human-planned</div>
+        <div class="ai-pill"><i class="bi bi-cpu-fill"></i> AI-perfected</div>
+        <div class="ai-pill"><i class="bi bi-geo-alt-fill"></i> South Africa</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="filter-inner">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn on" onclick="filterWork('all', this)">All</button>
+      <button class="filter-btn" onclick="filterWork('web', this)">Web Design</button>
+      <button class="filter-btn" onclick="filterWork('brand', this)">Brand &amp; Copy</button>
+      <button class="filter-btn" onclick="filterWork('art', this)">Visual Art</button>
+      <button class="filter-btn" onclick="filterWork('pent', this)">Security</button>
+    </div>
+  </div>
+
+  <!-- FEATURED: BEARD JUNGLE -->
+  <section class="featured-sec">
+    <div class="featured-inner">
+      <div class="featured-hd">
+        <span class="eyebrow">Featured Project</span>
+        <h2 class="sec-title">The Live Work</h2>
+      </div>
+      <div class="featured-card">
+        <div class="featured-img">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&h=600&fit=crop&crop=center" alt="Beard Jungle" />
+          <div class="featured-img-badge">
+            <div class="feat-live-dot"></div> Live
+          </div>
+        </div>
+        <div class="featured-body">
+          <div class="feat-tag"><i class="bi bi-laptop"></i> Web · Visual Art</div>
+          <div class="feat-title">Beard Jungle</div>
+          <div class="feat-desc">The original creative-pages.org project — a standalone web experience with its own visual language, structure and personality. Built from scratch and deployed as a self-contained folder under the studio domain.</div>
+          <div class="feat-meta">
+            <div class="feat-meta-item"><i class="bi bi-calendar3"></i> <strong>2024</strong></div>
+            <div class="feat-meta-item"><i class="bi bi-globe"></i> <strong>beard-jungle/</strong></div>
+            <div class="feat-meta-item"><i class="bi bi-tag"></i> <strong>Web · Art</strong></div>
+          </div>
+          <div class="ai-note-inline">
+            <i class="bi bi-cpu-fill"></i>
+            <span>Conceived and directed by a human. Built and refined with AI — the modular folder structure, design details and copy all perfected through the creative-pages.org process.</span>
+          </div>
+          <div style="display:flex;gap:0.8rem;flex-wrap:wrap;">
+            <a href="beard-jungle/index.html" class="btn-dark">Visit the Project <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK GRID -->
+  <section class="work-grid-sec">
+    <div class="work-grid-inner">
+      <div style="margin-bottom:2.5rem;">
+        <span class="eyebrow">All Work</span>
+        <h2 class="sec-title">Past &amp; Present</h2>
+        <p class="sec-desc">A catalogue of client work, studio projects and services delivered since 2024. Each one started with a human brief — and ended with AI-perfected execution.</p>
+      </div>
+      <div class="work-grid" id="workGrid">
+
+        <div class="wk-card" data-type="pent">
+          <div class="wk-img">
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&h=390&fit=crop&crop=center" alt="Pentesting" />
+            <span class="wk-type pent">Security</span>
+          </div>
+          <div class="wk-body">
+            <div class="wk-title">Web Penetration Testing</div>
+            <div class="wk-desc">Vulnerability assessments and penetration tests for small business and personal web properties — the founding service of creative-pages.org.</div>
+            <div class="wk-footer">
+              <span class="wk-year">2024</span>
+              <span class="wk-ai"><i class="bi bi-cpu"></i> Human-led</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wk-card" data-type="web">
+          <div class="wk-img">
+            <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=390&fit=crop&crop=center" alt="Web Dev Service" />
+            <span class="wk-type web">Web Design</span>
+          </div>
+          <div class="wk-body">
+            <div class="wk-title">Web Development Service</div>
+            <div class="wk-desc">Custom websites for clients needing something beyond templates — built from scratch with HTML, CSS and JavaScript, designed to a clear brief.</div>
+            <div class="wk-footer">
+              <span class="wk-year">2024</span>
+              <span class="wk-ai"><i class="bi bi-cpu"></i> AI-perfected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wk-card" data-type="web">
+          <div class="wk-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=390&fit=crop&crop=center" alt="Neocities Projects" />
+            <span class="wk-type web">Web Design</span>
+          </div>
+          <div class="wk-body">
+            <div class="wk-title">Neocities Sites — For Sale &amp; Hire</div>
+            <div class="wk-desc">A series of handcrafted web projects hosted on Neocities — available for purchase or built to order. Each with a distinct visual identity and purpose.</div>
+            <div class="wk-footer">
+              <span class="wk-year">2024</span>
+              <span class="wk-ai"><i class="bi bi-cpu"></i> AI-perfected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wk-card" data-type="brand">
+          <div class="wk-img">
+            <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=600&h=390&fit=crop&crop=center" alt="Brand Copy" />
+            <span class="wk-type copy">Brand &amp; Copy</span>
+          </div>
+          <div class="wk-body">
+            <div class="wk-title">Web Copy &amp; Brand Voice</div>
+            <div class="wk-desc">Copy and brand language for websites and businesses that need to sound like a real person — clear, considered, and consistent across every page.</div>
+            <div class="wk-footer">
+              <span class="wk-year">2024–25</span>
+              <span class="wk-ai"><i class="bi bi-cpu"></i> AI-perfected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wk-card" data-type="brand">
+          <div class="wk-img">
+            <img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=600&h=390&fit=crop&crop=center" alt="Email Services" />
+            <span class="wk-type copy">Corporate</span>
+          </div>
+          <div class="wk-body">
+            <div class="wk-title">Email &amp; Domain Services</div>
+            <div class="wk-desc">Mail management, email forwarding and domain utilities for corporate and academic clients — reliable, unglamorous infrastructure work that keeps organisations running.</div>
+            <div class="wk-footer">
+              <span class="wk-year">2025</span>
+              <span class="wk-ai"><i class="bi bi-person-fill"></i> Human-managed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wk-card" data-type="art">
+          <div class="wk-img">
+            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&h=390&fit=crop&crop=center" alt="Visual Experiments" />
+            <span class="wk-type art">Visual Art</span>
+          </div>
+          <div class="wk-body">
+            <div class="wk-title">Visual Experiments &amp; Art Projects</div>
+            <div class="wk-desc">Generative work, digital illustration and visual experiments — projects made for the sake of making, with no brief but a clear point of view.</div>
+            <div class="wk-footer">
+              <span class="wk-year">2024–now</span>
+              <span class="wk-ai"><i class="bi bi-cpu"></i> AI-perfected</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder — next project slot -->
+        <div class="wk-card" data-type="web" style="opacity:0.55;">
+          <div class="wk-img">
+            <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=390&fit=crop&crop=center" alt="Next project" />
+            <span class="wk-type web">Coming Soon</span>
+          </div>
+          <div class="wk-body">
+            <div class="wk-title">Next Project</div>
+            <div class="wk-desc">Something is being planned. The human part is underway — the AI part will follow when the brief is ready.</div>
+            <div class="wk-footer">
+              <span class="wk-year">TBD</span>
+              <span class="wk-ai"><i class="bi bi-hourglass-split"></i> In progress</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT BAND -->
+  <section class="statement-sec">
+    <div class="statement-inner">
+      <span class="eyebrow">The Standard</span>
+      <div class="statement-quote">
+        Every project starts with a <em>human with an idea.</em><br/>
+        It ends with work that's been <em>perfected to a standard</em> no single person could reach alone.
+      </div>
+      <div class="statement-pills">
+        <div class="st-pill"><i class="bi bi-person-fill"></i> Human-planned</div>
+        <div class="st-pill"><i class="bi bi-cpu-fill"></i> AI-perfected</div>
+        <div class="st-pill"><i class="bi bi-shield-check"></i> Independently made</div>
+        <div class="st-pill"><i class="bi bi-geo-alt-fill"></i> South Africa</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES OFFERED -->
+  <section class="services-sec">
+    <div class="services-hd">
+      <span class="eyebrow">What's Available</span>
+      <h2 class="sec-title">Services</h2>
+      <p class="sec-desc" style="margin:0 auto;">What creative-pages.org takes on — and how each one gets done.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="sv-card">
+        <div class="sv-icon-wrap"><i class="bi bi-laptop"></i></div>
+        <div class="sv-title">Web Design &amp; Development</div>
+        <div class="sv-desc">Custom websites built from a clear creative brief — responsive, accessible, and designed to communicate something specific.</div>
+        <ul class="sv-list">
+          <li>HTML / CSS / JavaScript builds</li>
+          <li>Creative microsites</li>
+          <li>Static &amp; Neocities projects</li>
+          <li>Maintenance &amp; updates</li>
+        </ul>
+        <div class="sv-ai-note"><i class="bi bi-cpu-fill"></i> Strategy planned by human — built and refined with AI for precision and speed.</div>
+      </div>
+
+      <div class="sv-card">
+        <div class="sv-icon-wrap"><i class="bi bi-palette2"></i></div>
+        <div class="sv-title">Brand Strategy &amp; Visual Direction</div>
+        <div class="sv-desc">Brand positioning, visual identity and creative direction for projects and businesses that want to look and feel like something real.</div>
+        <ul class="sv-list">
+          <li>Brand strategy &amp; positioning</li>
+          <li>Visual direction &amp; identity</li>
+          <li>Web copy &amp; brand voice</li>
+          <li>Digital illustration</li>
+        </ul>
+        <div class="sv-ai-note"><i class="bi bi-cpu-fill"></i> Creative direction is human-originated — AI used to explore, iterate and perfect the execution.</div>
+      </div>
+
+      <div class="sv-card">
+        <div class="sv-icon-wrap"><i class="bi bi-envelope-at"></i></div>
+        <div class="sv-title">Email &amp; Domain Services</div>
+        <div class="sv-desc">Simple, reliable mail management and domain utilities for corporate and academic clients who need it to just work.</div>
+        <ul class="sv-list">
+          <li>Email forwarding setup</li>
+          <li>Domain DNS management</li>
+          <li>Mail routing &amp; configuration</li>
+          <li>Ongoing support</li>
+        </ul>
+        <div class="sv-ai-note"><i class="bi bi-person-fill"></i> Managed directly — no automation where human oversight matters.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-sec">
+    <div class="cta-inner">
+      <span class="eyebrow">Start Something</span>
+      <h2 class="sec-title">Got a Project?</h2>
+      <p class="sec-desc" style="margin:0 auto;">Bring the idea. creative-pages.org handles strategy, design and execution — planned by human, perfected by AI.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-dark">Start a Conversation <i class="bi bi-arrow-right"></i></a>
+        <a href="about.html" class="btn-outline">About the Studio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="cp-footer">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo">
+          <div class="ft-sq">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" />
+          </div>
+          <div class="ft-name">creative-pages.org<small>Independent Studio · Est. 2024</small></div>
+        </div>
+        <p class="ft-tag">A studio of many things | web, visual art and brand copy | planned by human, perfected by AI.</p>
+        <div class="ft-socials">
+          <a href="#" target="_blank" class="ft-soc" aria-label="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="mailto:admin@creative-pages.org" class="ft-soc" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-h">Navigate</div>
+        <ul class="ft-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="projects.html">All Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Projects</div>
+        <ul class="ft-links">
+          <li><a href="beard-jungle/index.html">Beard Jungle</a></li>
+          <li><a href="#">Project Two</a></li>
+          <li><a href="#">Project Three</a></li>
+          <li><a href="projects.html">View All →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Get in Touch</div>
+        <div class="ft-ci"><i class="bi bi-envelope-fill"></i><a href="mailto:admin@creative-pages.org">admin@creative-pages.org</a></div>
+        <div class="ft-ci"><i class="bi bi-geo-alt-fill"></i><span>Sunny Side<br/>South Africa</span></div>
+        <div class="ft-ci"><i class="bi bi-clock-fill"></i><span>Open to collabs<br/>&amp; commissions</span></div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 creative-pages.org | Planned by Human, Perfected by AI</span>
+      <span>Some Sunny Place, South Africa</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Mobile nav
+    function toggleMob() {
+      const m = document.getElementById('mobMenu');
+      const ic = document.getElementById('mico');
+      m.classList.toggle('open');
+      ic.className = m.classList.contains('open') ? 'bi bi-x-lg' : 'bi bi-list';
+    }
+
+    // Work filter
+    function filterWork(type, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      document.querySelectorAll('.wk-card').forEach(card => {
+        if (type === 'all' || card.dataset.type === type) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
