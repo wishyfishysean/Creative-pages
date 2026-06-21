@@ -1,1 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deep Hollow — a cave template</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+<style>
+  :root{
+    --void:#0a0a14; --rock:#1c1c2e; --rock-l:#2a2a42; --crystal:#7fe8d4;
+    --crystal-2:#a78bfa; --crystal-3:#f4a8c4; --stone:#3d3d56; --glow:rgba(127,232,212,0.4);
+    --shadow:rgba(0,0,0,0.5);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--void);color:#d8d8ec;overflow-x:hidden;}
 
+  .tpl-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--rock-l);color:white;padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:0.78rem;border-top:1px solid var(--crystal);}
+  .tpl-banner a{color:var(--crystal);font-weight:700;text-decoration:none;}
+  .tpl-banner a:hover{text-decoration:underline;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(10,10,20,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--stone);padding:0.9rem 1.5rem;display:flex;align-items:center;gap:1rem;}
+  .logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1.15rem;color:var(--crystal);display:flex;align-items:center;gap:0.5rem;text-shadow:0 0 12px var(--glow);}
+  .nav-links{list-style:none;display:flex;gap:0.3rem;margin-left:auto;}
+  .nav-links a{text-decoration:none;color:#a8a8c4;font-weight:700;font-size:0.8rem;padding:0.4rem 0.8rem;border-radius:8px;transition:background 0.2s, color 0.2s;}
+  .nav-links a:hover{background:var(--rock-l);color:var(--crystal);}
+
+  /* HERO */
+  .hero{margin-top:62px;min-height:92vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 50% 30%, #1c1c2e 0%, #0a0a14 75%);}
+  .crystal-shard{position:absolute;border-radius:2px;filter:blur(0.5px);animation:pulse-glow 4s ease-in-out infinite;}
+  @keyframes pulse-glow{0%,100%{opacity:0.35;}50%{opacity:0.95;}}
+  .drip{position:absolute;width:2px;background:linear-gradient(to bottom, transparent, var(--crystal));animation:drip-fall 3.5s linear infinite;opacity:0.6;}
+  @keyframes drip-fall{0%{transform:translateY(0);opacity:0;}10%{opacity:0.6;}100%{transform:translateY(120px);opacity:0;}}
+  .hero-content{position:relative;z-index:3;text-align:center;padding:2rem;max-width:700px;}
+  .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(127,232,212,0.1);border:1px solid var(--crystal);border-radius:50px;padding:0.4rem 1.1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--crystal);margin-bottom:1.6rem;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,7vw,4.8rem);font-weight:900;line-height:1.05;margin-bottom:1.2rem;background:linear-gradient(135deg,var(--crystal) 0%,var(--crystal-2) 50%,var(--crystal-3) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero p{color:#a8a8c4;font-size:1.05rem;line-height:1.75;margin-bottom:2.2rem;}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:0.92rem;text-decoration:none;transition:transform 0.2s, box-shadow 0.2s;}
+  .btn-glow{background:var(--crystal);color:var(--void);box-shadow:0 0 24px var(--glow);}
+  .btn-glow:hover{transform:translateY(-3px);box-shadow:0 0 40px var(--glow);}
+
+  .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--crystal);font-size:1.4rem;animation:bob 2s ease-in-out infinite;opacity:0.6;}
+  @keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,8px);}}
+
+  /* SECTIONS */
+  .section{padding:5.5rem 1.5rem;}
+  .section-inner{max-width:1000px;margin:0 auto;}
+  .eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--crystal);margin-bottom:0.5rem;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:#e8e8f4;margin-bottom:0.8rem;}
+  .sec-desc{color:#9494b8;max-width:560px;line-height:1.7;}
+
+  /* CHAMBERS GRID */
+  .chamber-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3rem;}
+  @media(max-width:760px){.chamber-grid{grid-template-columns:1fr;}}
+  .chamber{background:var(--rock);border:1px solid var(--stone);border-radius:18px;padding:2rem 1.6rem;position:relative;overflow:hidden;transition:transform 0.25s, border-color 0.25s;}
+  .chamber:hover{transform:translateY(-6px);border-color:var(--crystal);}
+  .chamber::before{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle, var(--glow) 0%, transparent 70%);}
+  .chamber-icon{font-size:2rem;margin-bottom:1rem;position:relative;}
+  .chamber h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--crystal);margin-bottom:0.6rem;position:relative;}
+  .chamber p{font-size:0.85rem;color:#9494b8;line-height:1.65;position:relative;}
+
+  /* DEPTH GAUGE */
+  .depth-sec{background:var(--rock);padding:5rem 1.5rem;border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);}
+  .depth-track{max-width:700px;margin:3rem auto 0;position:relative;padding-left:2rem;}
+  .depth-track::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom, var(--crystal), var(--crystal-2), var(--crystal-3));}
+  .depth-stop{position:relative;padding-bottom:2.6rem;}
+  .depth-stop:last-child{padding-bottom:0;}
+  .depth-stop::before{content:'';position:absolute;left:-2.45rem;top:4px;width:12px;height:12px;border-radius:50%;background:var(--crystal);box-shadow:0 0 14px var(--glow);}
+  .depth-m{font-size:0.7rem;font-weight:700;color:var(--crystal);letter-spacing:0.08em;margin-bottom:0.3rem;}
+  .depth-stop h4{font-family:'Playfair Display',serif;color:#e8e8f4;font-size:1.05rem;margin-bottom:0.4rem;}
+  .depth-stop p{font-size:0.83rem;color:#9494b8;line-height:1.6;}
+
+  /* ECHO QUOTE */
+  .echo-quote{max-width:680px;margin:0 auto;text-align:center;padding:5.5rem 1.5rem;}
+  .echo-quote blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:#e8e8f4;line-height:1.55;}
+  .echo-quote .echoes{margin-top:1rem;font-size:0.95rem;color:var(--stone);opacity:0.6;}
+  .echo-quote .echoes span{display:block;}
+
+  footer{background:#060610;color:#7a7a98;padding:3rem 1.5rem 5rem;text-align:center;border-top:1px solid var(--stone);}
+  footer .logo{justify-content:center;margin-bottom:0.8rem;}
+  footer p{font-size:0.82rem;max-width:420px;margin:0 auto;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="tpl-banner">
+  <span>💎 This is a sample template from creative-pages.org</span>
+  <a href="../../projects.html">← Back to Projects</a>
+</div>
+
+<nav>
+  <div class="logo">💎 Deep Hollow</div>
+  <ul class="nav-links">
+    <li><a href="#chambers">Chambers</a></li>
+    <li><a href="#depth">The Descent</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero">
+  <div id="shards"></div>
+  <div id="drips"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="bi bi-gem"></i> Depth unknown · Echo confirmed</div>
+    <h1>You Are Now<br/>Underground</h1>
+    <p>Deep Hollow is a quiet, glowing template for things that live in the dark — crystal logs, sound studies, and the occasional very large beetle.</p>
+    <a href="#chambers" class="btn btn-glow">Begin the Descent <i class="bi bi-arrow-down"></i></a>
+  </div>
+  <div class="scroll-hint"><i class="bi bi-chevron-double-down"></i></div>
+</section>
+
+<section class="section" id="chambers">
+  <div class="section-inner">
+    <span class="eyebrow">Mapped So Far</span>
+    <h2 class="sec-title">The Chambers</h2>
+    <p class="sec-desc">Three rooms, three moods. Bring a light source. Or don't — the crystals handle that.</p>
+    <div class="chamber-grid">
+      <div class="chamber">
+        <div class="chamber-icon">💠</div>
+        <h3>The Glow Room</h3>
+        <p>Walls lined with crystal clusters that hum faintly at 40Hz. No one knows why. Everyone agrees it's nice.</p>
+      </div>
+      <div class="chamber">
+        <div class="chamber-icon">🦇</div>
+        <h3>The Echo Hall</h3>
+        <p>Say something here and it comes back changed — slightly kinder, slightly delayed. Acoustically perfect, emotionally unpredictable.</p>
+      </div>
+      <div class="chamber">
+        <div class="chamber-icon">🕳️</div>
+        <h3>The Unmapped Drop</h3>
+        <p>A hole that goes further down. We have not measured it. We are not going to. Some things stay theoretical.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="depth-sec" id="depth">
+  <div class="section-inner">
+    <span class="eyebrow">The Descent</span>
+    <h2 class="sec-title">How Deep We've Gone</h2>
+    <p class="sec-desc">A log of progress, kept loosely, by whoever remembered to write it down.</p>
+    <div class="depth-track">
+      <div class="depth-stop">
+        <div class="depth-m">12m</div>
+        <h4>Entrance Chamber</h4>
+        <p>Daylight still reaches here. Mostly used for storing gear and pretending the dark part hasn't started yet.</p>
+      </div>
+      <div class="depth-stop">
+        <div class="depth-m">48m</div>
+        <h4>First Crystal Bloom</h4>
+        <p>Where the glow starts. Everything past this point requires no flashlight and a moderate tolerance for silence.</p>
+      </div>
+      <div class="depth-stop">
+        <div class="depth-m">110m</div>
+        <h4>The Echo Hall</h4>
+        <p>Sound behaves strangely here. A dropped pebble takes four full seconds to stop being heard.</p>
+      </div>
+      <div class="depth-stop">
+        <div class="depth-m">??? m</div>
+        <h4>The Unmapped Drop</h4>
+        <p>Current frontier. Progress paused indefinitely, by mutual and somewhat nervous agreement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="echo-quote">
+  <blockquote>"It's quiet down here. Loud, too. Both, somehow."</blockquote>
+  <div class="echoes"><span>quiet down here</span><span>down here</span><span>here…</span></div>
+</div>
+
+<footer>
+  <div class="logo">💎 Deep Hollow</div>
+  <p>A cave-themed template from creative-pages.org — planned by human, perfected by AI, definitely not haunted.</p>
+</footer>
+
+<script>
+  const colors = ['#7fe8d4','#a78bfa','#f4a8c4'];
+  const sw = document.getElementById('shards');
+  for(let i=0;i<22;i++){
+    const s=document.createElement('div');
+    s.className='crystal-shard';
+    const w=4+Math.random()*8, h=18+Math.random()*38;
+    const c=colors[i%colors.length];
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${w}px;height:${h}px;background:${c};box-shadow:0 0 ${10+Math.random()*14}px ${c};animation-delay:${Math.random()*4}s;transform:rotate(${Math.random()*40-20}deg);`;
+    sw.appendChild(s);
+  }
+  const dw = document.getElementById('drips');
+  for(let i=0;i<8;i++){
+    const d=document.createElement('div');
+    d.className='drip';
+    d.style.cssText=`left:${10+Math.random()*80}%;top:${Math.random()*40}%;height:${40+Math.random()*60}px;animation-delay:${Math.random()*3.5}s;`;
+    dw.appendChild(d);
+  }
+</script>
+</body>
+</html>
