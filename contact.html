@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | creative-pages.org</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <style>
+    :root {
+      --rose:    #f2a7b0;
+      --blush:   #fce4e8;
+      --sage:    #b5d5c5;
+      --mint:    #d8ede4;
+      --sky:     #aecde8;
+      --cream:   #fdf7f0;
+      --peach:   #f9dcc4;
+      --lavender:#dcd0f0;
+      --charcoal:#2c2c2c;
+      --dark:    #1e1e2e;
+      --mid:     #5a5a7a;
+      --shadow:  rgba(44,44,44,0.10);
+      --nav-h:   68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; color: var(--charcoal); background: var(--cream); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    .cp-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 2px solid var(--blush); display: flex; align-items: center; padding: 0 1.5rem; box-shadow: 0 2px 18px var(--shadow); }
+    .nav-brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; flex-shrink: 0; }
+    .nav-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .nav-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--dark); line-height: 1.1; }
+    .nav-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 0.15rem; margin: 0 0 0 auto; padding: 0; }
+    .nav-links a { display: block; padding: 0.42rem 0.82rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.18s, background 0.18s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--dark); background: var(--blush); }
+    .nav-links .cta { background: var(--dark); color: white !important; border-radius: 50px; padding: 0.42rem 1.1rem; }
+    .nav-links .cta:hover { background: var(--rose); }
+    .nav-tog { display: none; margin-left: auto; background: none; border: none; font-size: 1.5rem; color: var(--dark); cursor: pointer; }
+    .mob-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: white; padding: 0.8rem 1rem; border-bottom: 2px solid var(--blush); box-shadow: 0 8px 22px var(--shadow); z-index: 998; }
+    .mob-menu.open { display: block; }
+    .mob-menu a { display: block; padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--mint); }
+    .mob-menu a:last-child { border-bottom: none; }
+    .mob-menu a:hover { background: var(--blush); color: var(--dark); }
+    @media (max-width: 900px) { .nav-links { display: none; } .nav-tog { display: block; } }
+
+    /* ── SHARED ── */
+    .eyebrow { display: inline-block; font-size: 0.71rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.45rem; }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 0.75rem; }
+    .sec-desc { color: var(--mid); font-size: 0.98rem; line-height: 1.7; max-width: 560px; }
+    .btn-dark { display: inline-flex; align-items: center; justify-content:center; gap: 0.5rem; background: var(--dark); color: white; padding: 0.85rem 1.9rem; border-radius: 50px; font-weight: 700; font-size: 0.92rem; text-decoration: none; transition: background 0.2s, transform 0.2s; border: none; cursor: pointer; }
+    .btn-dark:hover { background: var(--rose); color: white; transform: translateY(-2px); }
+    .btn-dark:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; border: 2px solid var(--dark); color: var(--dark); padding: 0.68rem 1.7rem; border-radius: 50px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--dark); color: white; }
+
+    /* ── PAGE HERO ── */
+    .page-hero { margin-top: var(--nav-h); min-height: 42vh; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .page-hero img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(26,26,46,0.78) 0%, rgba(46,26,61,0.65) 100%); }
+    .page-hero-content { position: relative; z-index: 2; text-align: center; color: white; padding: 3rem 1.5rem; max-width: 680px; }
+    .page-hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.28); border-radius: 50px; padding: 0.35rem 1.1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem,5.5vw,3.6rem); font-weight: 900; line-height: 1.08; margin-bottom: 1rem; text-shadow: 0 2px 22px rgba(0,0,0,0.3); }
+    .page-hero p { font-size: clamp(0.92rem,2vw,1.08rem); opacity: 0.88; line-height: 1.65; max-width: 480px; margin: 0 auto; }
+
+    /* ── CONTACT LAYOUT ── */
+    .contact-sec { padding: 5rem 1.5rem 5.5rem; background: var(--cream); }
+    .contact-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 3.5rem; align-items: flex-start; }
+    @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+    /* Left: info panel */
+    .info-panel { position: sticky; top: calc(var(--nav-h) + 1.5rem); }
+    @media (max-width: 860px) { .info-panel { position: static; } }
+    .info-card { background: var(--dark); border-radius: 24px; padding: 2.4rem 2.2rem; color: white; position: relative; overflow: hidden; }
+    .info-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(242,167,176,0.18) 0%, transparent 70%); }
+    .info-eyebrow { color: var(--rose); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .info-title { font-family: 'Playfair Display', serif; font-size: 1.65rem; font-weight: 700; line-height: 1.25; margin-bottom: 1rem; position: relative; }
+    .info-desc { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 1.8rem; position: relative; }
+    .info-rows { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 1.8rem; position: relative; }
+    .info-row { display: flex; align-items: flex-start; gap: 0.8rem; }
+    .info-row-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: var(--rose); font-size: 1rem; flex-shrink: 0; }
+    .info-row-text { font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.55; }
+    .info-row-text strong { display: block; color: white; font-size: 0.86rem; margin-bottom: 0.1rem; }
+    .info-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1.6rem 0; position: relative; }
+    .info-socials { display: flex; gap: 0.6rem; position: relative; }
+    .info-soc { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .info-soc:hover { background: var(--rose); transform: translateY(-2px); color: white; }
+
+    .ai-info-card { margin-top: 1.4rem; background: white; border-radius: 18px; padding: 1.4rem 1.5rem; box-shadow: 0 4px 18px var(--shadow); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .ai-info-card i { color: var(--rose); font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .ai-info-card div { font-size: 0.82rem; color: var(--mid); line-height: 1.6; }
+    .ai-info-card strong { color: var(--dark); }
+
+    /* Right: form panel */
+    .form-card { background: white; border-radius: 24px; padding: 2.6rem 2.4rem; box-shadow: 0 12px 48px rgba(0,0,0,0.07); }
+    @media (max-width: 560px) { .form-card { padding: 2rem 1.5rem; } }
+    .form-card h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; }
+    .form-card .form-sub { font-size: 0.86rem; color: var(--mid); margin-bottom: 2rem; line-height: 1.6; }
+
+    .field-group { margin-bottom: 1.4rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+    label { display: block; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--dark); margin-bottom: 0.5rem; }
+    label .opt { font-weight: 400; text-transform: none; color: var(--mid); letter-spacing: 0; font-size: 0.74rem; }
+    input[type="text"], input[type="email"], select, textarea {
+      width: 100%; border: 2px solid var(--blush); background: var(--cream); border-radius: 12px;
+      padding: 0.75rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.92rem; color: var(--charcoal);
+      transition: border-color 0.2s, background 0.2s; outline: none;
+    }
+    input::placeholder, textarea::placeholder { color: #a8a8b8; }
+    input:focus, select:focus, textarea:focus { border-color: var(--rose); background: white; }
+    textarea { resize: vertical; min-height: 130px; line-height: 1.55; }
+    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235a5a7a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.4rem; }
+
+    /* Project type chips */
+    .chip-select { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .chip-opt { position: relative; }
+    .chip-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .chip-opt label { margin: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; background: var(--cream); border: 2px solid var(--blush); border-radius: 50px; padding: 0.5rem 1.1rem; font-size: 0.8rem; font-weight: 700; text-transform: none; letter-spacing: 0; color: var(--mid); transition: all 0.2s; }
+    .chip-opt input:checked + label { background: var(--dark); border-color: var(--dark); color: white; }
+    .chip-opt label:hover { border-color: var(--rose); }
+
+    .form-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 0.6rem; }
+    .form-note { font-size: 0.74rem; color: var(--mid); display: flex; align-items: center; gap: 0.4rem; line-height: 1.5; }
+    .form-note i { color: var(--sage); flex-shrink: 0; }
+
+    .preview-box { margin-top: 1.6rem; background: var(--mint); border-radius: 14px; padding: 1rem 1.2rem; font-size: 0.78rem; color: var(--charcoal); display: none; }
+    .preview-box.show { display: block; }
+    .preview-box strong { display: block; margin-bottom: 0.3rem; color: var(--dark); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ── FAQ ── */
+    .faq-sec { padding: 5rem 1.5rem; background: white; }
+    .faq-hd { max-width: 720px; margin: 0 auto 2.8rem; text-align: center; }
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.9rem; }
+    .faq-item { background: var(--cream); border-radius: 16px; overflow: hidden; border: 1px solid var(--blush); }
+    .faq-q { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.4rem; cursor: pointer; font-weight: 700; font-size: 0.92rem; color: var(--dark); }
+    .faq-q i { color: var(--rose); transition: transform 0.25s; flex-shrink: 0; }
+    .faq-item.open .faq-q i { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 1.4rem; font-size: 0.85rem; color: var(--mid); line-height: 1.65; }
+    .faq-item.open .faq-a { max-height: 240px; padding: 0 1.4rem 1.3rem; }
+
+    /* ── FOOTER ── */
+    .cp-footer { background: var(--dark); padding: 4rem 1.5rem 2rem; color: white; }
+    .ft-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; }
+    @media (max-width: 900px) { .ft-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
+    .ft-logo { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+    .ft-sq { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .ft-sq img { width: 100%; height: 100%; object-fit: cover; }
+    .ft-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: white; line-height: 1.2; }
+    .ft-name small { display: block; font-family: 'Nunito', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .ft-tag { font-size: 0.82rem; color: rgba(255,255,255,0.48); line-height: 1.65; margin-bottom: 1.2rem; }
+    .ft-socials { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+    .ft-soc { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.11); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.05rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .ft-soc:hover { background: var(--rose); transform: translateY(-2px); color: white; }
+    .ft-col-h { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 1rem; }
+    .ft-links { list-style: none; }
+    .ft-links li { margin-bottom: 0.5rem; }
+    .ft-links a { color: rgba(255,255,255,0.52); font-size: 0.83rem; text-decoration: none; transition: color 0.18s; }
+    .ft-links a:hover { color: white; }
+    .ft-ci { display: flex; align-items: flex-start; gap: 0.6rem; color: rgba(255,255,255,0.52); font-size: 0.8rem; margin-bottom: 0.58rem; }
+    .ft-ci i { color: var(--rose); flex-shrink: 0; margin-top: 2px; }
+    .ft-ci a { color: rgba(255,255,255,0.52); text-decoration: none; transition: color 0.18s; }
+    .ft-ci a:hover { color: white; }
+    .ft-bottom { max-width: 1080px; margin: 1.5rem auto 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.73rem; color: rgba(255,255,255,0.28); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="cp-nav">
+    <a class="nav-brand" href="index.html">
+      <div class="nav-sq"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" /></div>
+      <div class="nav-name">creative-pages<small>Studio · Est. 2024</small></div>
+    </a>
+    <button class="nav-tog" onclick="toggleMob()" aria-label="Menu"><i class="bi bi-list" id="mico"></i></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html" class="cta active">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="mob-menu" id="mobMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="work.html">Work</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <img class="bg" src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&h=800&fit=crop&crop=center" alt="Get in touch" />
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-tag"><i class="bi bi-chat-heart-fill"></i> Get in Touch</div>
+      <h1>Let's Start Something</h1>
+      <p>Bring the idea — a site, a brand, a domain headache. Fill in the brief below and it'll open straight in your email client, ready to send.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-sec">
+    <div class="contact-grid">
+
+      <!-- LEFT: INFO PANEL -->
+      <div class="info-panel">
+        <div class="info-card">
+          <div class="info-eyebrow">Direct Line</div>
+          <div class="info-title">Tell me what you're<br/>trying to build.</div>
+          <div class="info-desc">Every project starts as a conversation. No forms locked behind a CRM, no auto-responder maze — just a message that lands in an inbox and gets read.</div>
+
+          <div class="info-rows">
+            <div class="info-row">
+              <div class="info-row-icon"><i class="bi bi-envelope-fill"></i></div>
+              <div class="info-row-text"><strong>Email goes to</strong>admin@creative-pages.org</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon"><i class="bi bi-clock-fill"></i></div>
+              <div class="info-row-text"><strong>Response time</strong>Usually within 2–3 days</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon"><i class="bi bi-geo-alt-fill"></i></div>
+              <div class="info-row-text"><strong>Based in</strong>Eastern Cape, South Africa</div>
+            </div>
+          </div>
+
+          <div class="info-divider"></div>
+          <div class="info-socials">
+            <a href="#" target="_blank" class="info-soc" aria-label="GitHub"><i class="bi bi-github"></i></a>
+            <a href="#" target="_blank" class="info-soc" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" target="_blank" class="info-soc" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          </div>
+        </div>
+
+        <div class="ai-info-card">
+          <i class="bi bi-cpu-fill"></i>
+          <div><strong>How this form works:</strong> there's no server behind this page — it's static, hosted simply, built to last. Submitting opens a pre-filled email in your own mail app, planned by you, sent by you.</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="form-card">
+        <h2>Start the Brief</h2>
+        <p class="form-sub">Fill this in, hit send, and your email client opens with everything pre-filled — ready to fire off to admin@creative-pages.org.</p>
+
+        <form id="contactForm" onsubmit="return sendMail(event)">
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="fname">Name</label>
+              <input type="text" id="fname" placeholder="Your name" required />
+            </div>
+            <div class="field-group">
+              <label for="femail">Your Email</label>
+              <input type="email" id="femail" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>What kind of project is this?</label>
+            <div class="chip-select">
+              <div class="chip-opt">
+                <input type="radio" name="ptype" id="t-web" value="Web Design & Development" checked />
+                <label for="t-web"><i class="bi bi-laptop"></i> Web Design</label>
+              </div>
+              <div class="chip-opt">
+                <input type="radio" name="ptype" id="t-brand" value="Brand Strategy" />
+                <label for="t-brand"><i class="bi bi-palette2"></i> Brand Strategy</label>
+              </div>
+              <div class="chip-opt">
+                <input type="radio" name="ptype" id="t-art" value="Visual Art" />
+                <label for="t-art"><i class="bi bi-brush"></i> Visual Art</label>
+              </div>
+              <div class="chip-opt">
+                <input type="radio" name="ptype" id="t-mail" value="Email & Domain Setup" />
+                <label for="t-mail"><i class="bi bi-envelope-at"></i> Email &amp; Domain</label>
+              </div>
+              <div class="chip-opt">
+                <input type="radio" name="ptype" id="t-other" value="Something Else" />
+                <label for="t-other"><i class="bi bi-stars"></i> Something Else</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="fbudget">Budget Range <span class="opt">(optional)</span></label>
+            <select id="fbudget">
+              <option value="Not specified">Prefer not to say</option>
+              <option value="Under R2,000">Under R2,000</option>
+              <option value="R2,000 – R5,000">R2,000 – R5,000</option>
+              <option value="R5,000 – R15,000">R5,000 – R15,000</option>
+              <option value="R15,000+">R15,000+</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="fmsg">Tell me about it</label>
+            <textarea id="fmsg" placeholder="What are you trying to build? Who's it for? Any timeline or links worth sharing?" required></textarea>
+          </div>
+
+          <div class="form-foot">
+            <div class="form-note"><i class="bi bi-cpu-fill"></i> Planned by you, perfected by AI — once we get started.</div>
+            <button type="submit" class="btn-dark">Open in Email <i class="bi bi-send-fill"></i></button>
+          </div>
+
+          <div class="preview-box" id="previewBox">
+            <strong>Email Preview</strong>
+            <span id="previewText"></span>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-sec">
+    <div class="faq-hd">
+      <span class="eyebrow">Before You Send</span>
+      <h2 class="sec-title">A Few Things People Ask</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Why does this open my email app instead of just sending?<i class="bi bi-plus"></i></div>
+        <div class="faq-a">creative-pages.org runs as a simple static site — no server sitting behind it collecting form data. The "Open in Email" button builds a pre-filled message and hands it to your own email client, so nothing gets lost in a spam filter or a database somewhere.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How long until I hear back?<i class="bi bi-plus"></i></div>
+        <div class="faq-a">Usually within 2–3 days. Email lands straight in the inbox at admin@creative-pages.org — no auto-responder, no ticket queue, no AI gatekeeper reading it first.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do you take on small or one-off projects?<i class="bi bi-plus"></i></div>
+        <div class="faq-a">Yes — anything from a single landing page or a domain/email cleanup to a full brand strategy. If it fits one of the four categories on the Work page, it's worth sending.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What does "planned by human, perfected by AI" actually mean for my project?<i class="bi bi-plus"></i></div>
+        <div class="faq-a">The brief, the strategy and every creative decision come from a real conversation with you. AI is used afterward to accelerate the build — code, copy refinement, layout iteration — so the work moves faster without losing the human judgment behind it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="cp-footer">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo">
+          <div class="ft-sq"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center" alt="cp" /></div>
+          <div class="ft-name">creative-pages.org<small>Independent Studio · Est. 2024</small></div>
+        </div>
+        <p class="ft-tag">A studio of many things | web, visual art and brand copy | planned by human, perfected by AI.</p>
+        <div class="ft-socials">
+          <a href="#" target="_blank" class="ft-soc" aria-label="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" target="_blank" class="ft-soc" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="mailto:admin@creative-pages.org" class="ft-soc" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-h">Navigate</div>
+        <ul class="ft-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="projects.html">All Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Projects</div>
+        <ul class="ft-links">
+          <li><a href="beard-jungle/index.html">Beard Jungle</a></li>
+          <li><a href="projects.html#web">Web Design</a></li>
+          <li><a href="projects.html#brand">Brand Strategy</a></li>
+          <li><a href="projects.html">View All →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Get in Touch</div>
+        <div class="ft-ci"><i class="bi bi-envelope-fill"></i><a href="mailto:admin@creative-pages.org">admin@creative-pages.org</a></div>
+        <div class="ft-ci"><i class="bi bi-geo-alt-fill"></i><span>Eastern Cape<br/>South Africa</span></div>
+        <div class="ft-ci"><i class="bi bi-clock-fill"></i><span>Open to collabs<br/>&amp; commissions</span></div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 creative-pages.org | Planned by Human, Perfected by AI</span>
+      <span>Eastern Cape, South Africa</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleMob() {
+      const m = document.getElementById('mobMenu');
+      const ic = document.getElementById('mico');
+      m.classList.toggle('open');
+      ic.className = m.classList.contains('open') ? 'bi bi-x-lg' : 'bi bi-list';
+    }
+
+    function toggleFaq(el) {
+      el.parentElement.classList.toggle('open');
+    }
+
+    const CONTACT_EMAIL = 'admin@creative-pages.org';
+
+    function sendMail(e) {
+      e.preventDefault();
+
+      const name   = document.getElementById('fname').value.trim();
+      const email  = document.getElementById('femail').value.trim();
+      const ptype  = document.querySelector('input[name="ptype"]:checked').value;
+      const budget = document.getElementById('fbudget').value;
+      const msg    = document.getElementById('fmsg').value.trim();
+
+      const subject = `New Project Enquiry — ${ptype}`;
+      const body =
+`Hi creative-pages.org,
+
+Name: ${name}
+Email: ${email}
+Project Type: ${ptype}
+Budget Range: ${budget}
+
+Message:
+${msg}
+
+— Sent via the creative-pages.org contact page`;
+
+      const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // Show a quick preview so the user sees what's about to happen
+      const preview = document.getElementById('previewBox');
+      const previewText = document.getElementById('previewText');
+      previewText.textContent = `To: ${CONTACT_EMAIL} — Subject: "${subject}". Your email app should open now.`;
+      preview.classList.add('show');
+
+      window.location.href = mailto;
+      return false;
+    }
+  </script>
+</body>
+</html>
