@@ -1,1 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SUNCO™ — Solar Solutions for the Discerning Roof</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+<style>
+  :root{
+    --sun:#ffb627; --sun-d:#e8941a; --sky:#4ec9d6; --navy:#0d2438; --navy-l:#163a54;
+    --cream:#fdf6e8; --orange:#ff6b4a; --grid:#1a4060; --shadow:rgba(13,36,56,0.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Space Grotesk',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden;}
+  h1,h2,h3,.serif{font-family:'DM Serif Display',serif;}
 
+  .tpl-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--navy);color:white;padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:0.78rem;}
+  .tpl-banner a{color:var(--sun);font-weight:700;text-decoration:none;}
+  .tpl-banner a:hover{text-decoration:underline;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;background:var(--cream);border-bottom:3px solid var(--navy);padding:0.9rem 1.5rem;display:flex;align-items:center;gap:1rem;}
+  .logo{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--navy);display:flex;align-items:center;gap:0.5rem;}
+  .logo .reg{font-size:0.6rem;vertical-align:super;}
+  .nav-links{list-style:none;display:flex;gap:0.2rem;margin-left:auto;align-items:center;}
+  .nav-links a{text-decoration:none;color:var(--navy);font-weight:700;font-size:0.78rem;padding:0.5rem 0.9rem;letter-spacing:0.03em;text-transform:uppercase;transition:background 0.2s;}
+  .nav-links a:hover{background:var(--sun);}
+  .nav-cta{background:var(--navy)!important;color:white!important;}
+
+  /* HERO */
+  .hero{margin-top:60px;min-height:90vh;position:relative;display:flex;align-items:center;overflow:hidden;background:linear-gradient(180deg, var(--sky) 0%, #aee0e6 55%, var(--cream) 100%);}
+  .sun-orb{position:absolute;top:8%;right:8%;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle, var(--sun) 0%, var(--sun-d) 70%);box-shadow:0 0 80px 20px rgba(255,182,39,0.5);}
+  .sun-orb::before{content:'';position:absolute;inset:-30px;border:2px dashed rgba(255,182,39,0.4);border-radius:50%;animation:spin 30s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .grid-floor{position:absolute;bottom:0;left:0;right:0;height:35%;background:
+    repeating-linear-gradient(0deg, transparent 0 38px, rgba(13,36,56,0.08) 38px 40px),
+    repeating-linear-gradient(90deg, transparent 0 38px, rgba(13,36,56,0.08) 38px 40px);
+    transform:perspective(300px) rotateX(60deg);transform-origin:bottom;}
+  .hero-content{position:relative;z-index:3;max-width:1080px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
+  .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--navy);color:var(--sun);border-radius:4px;padding:0.4rem 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.6rem;}
+  .hero h1{font-size:clamp(2.6rem,7vw,5.2rem);line-height:0.98;color:var(--navy);margin-bottom:1.2rem;max-width:700px;}
+  .hero h1 .accent{color:var(--orange);}
+  .hero p{font-size:1.05rem;color:var(--navy-l);line-height:1.7;max-width:480px;margin-bottom:2.2rem;}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 2.1rem;border-radius:4px;font-weight:700;font-size:0.88rem;text-decoration:none;text-transform:uppercase;letter-spacing:0.04em;transition:transform 0.2s,box-shadow 0.2s;}
+  .btn-solid{background:var(--navy);color:white;}
+  .btn-solid:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--orange);}
+  .btn-outline{background:transparent;color:var(--navy);border:2px solid var(--navy);}
+  .btn-outline:hover{background:var(--navy);color:white;}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+
+  /* TICKER */
+  .ticker{background:var(--navy);color:var(--sun);padding:0.6rem 0;overflow:hidden;white-space:nowrap;font-size:0.78rem;font-weight:700;letter-spacing:0.05em;}
+  .ticker-inner{display:inline-block;animation:scroll-left 22s linear infinite;}
+  @keyframes scroll-left{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* SECTIONS */
+  .section{padding:5.5rem 1.5rem;}
+  .section-inner{max-width:1080px;margin:0 auto;}
+  .eyebrow{display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:0.6rem;}
+  .sec-title{font-size:clamp(1.9rem,4vw,2.8rem);color:var(--navy);margin-bottom:0.8rem;}
+  .sec-desc{color:var(--navy-l);max-width:560px;line-height:1.7;font-size:0.95rem;}
+
+  /* PRODUCT GRID */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3rem;}
+  @media(max-width:760px){.product-grid{grid-template-columns:1fr;}}
+  .product{background:white;border:2px solid var(--navy);border-radius:8px;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+  .product:hover{transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--sun);}
+  .product-top{height:130px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:repeating-linear-gradient(45deg, var(--grid) 0 10px, var(--navy-l) 10px 20px);}
+  .product-body{padding:1.4rem 1.5rem;}
+  .product-sku{font-size:0.65rem;font-weight:700;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.4rem;}
+  .product h3{font-size:1.2rem;color:var(--navy);margin-bottom:0.5rem;}
+  .product p{font-size:0.82rem;color:var(--navy-l);line-height:1.6;margin-bottom:1rem;}
+  .product-price{font-weight:700;font-size:1.1rem;color:var(--navy);display:flex;align-items:center;justify-content:space-between;border-top:1px dashed var(--navy);padding-top:0.8rem;}
+  .product-price span{font-size:0.68rem;font-weight:400;color:var(--navy-l);}
+
+  /* STATS BANNER */
+  .stats-banner{background:var(--navy);padding:3.5rem 1.5rem;}
+  .stats-row{max-width:1000px;margin:0 auto;display:flex;justify-content:space-evenly;flex-wrap:wrap;gap:1.5rem;text-align:center;}
+  .stat-n{font-family:'DM Serif Display',serif;font-size:2.6rem;color:var(--sun);}
+  .stat-l{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-top:0.2rem;}
+
+  /* TESTIMONIAL — deadpan */
+  .testi{background:var(--sun);padding:5rem 1.5rem;}
+  .testi-inner{max-width:680px;margin:0 auto;text-align:center;}
+  .testi blockquote{font-size:1.4rem;color:var(--navy);line-height:1.5;margin-bottom:1.2rem;}
+  .testi cite{font-weight:700;font-size:0.85rem;color:var(--navy-l);font-style:normal;}
+
+  /* FAQ deadpan */
+  .faq-list{max-width:760px;margin:3rem auto 0;display:flex;flex-direction:column;gap:0.8rem;}
+  .faq-item{background:white;border:2px solid var(--navy);border-radius:6px;padding:1.2rem 1.5rem;}
+  .faq-item h4{font-size:0.95rem;margin-bottom:0.4rem;color:var(--navy);}
+  .faq-item p{font-size:0.85rem;color:var(--navy-l);line-height:1.6;}
+
+  footer{background:var(--navy);color:rgba(255,255,255,0.6);padding:3.5rem 1.5rem 5rem;text-align:center;}
+  footer .logo{justify-content:center;color:white;margin-bottom:0.8rem;}
+  footer p{font-size:0.8rem;max-width:440px;margin:0 auto;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="tpl-banner">
+  <span>☀️ This is a sample template from creative-pages.org</span>
+  <a href="../../projects.html">← Back to Projects</a>
+</div>
+
+<nav>
+  <div class="logo">☀️ SUNCO<span class="reg">™</span></div>
+  <ul class="nav-links">
+    <li><a href="#products">Panels</a></li>
+    <li><a href="#testi">Testimonials</a></li>
+    <li><a href="#faq" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="sun-orb"></div>
+  <div class="grid-floor"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="bi bi-sun-fill"></i> Now Harvesting Since 2024</div>
+    <h1>Your Roof Has<br/>Potential. <span class="accent">We Noticed.</span></h1>
+    <p>SUNCO™ converts ambient sunlight into a vague sense of accomplishment, and also electricity. Mostly electricity.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn btn-solid">View Panel Lineup <i class="bi bi-arrow-right"></i></a>
+      <a href="#faq" class="btn btn-outline">Frequently Asked</a>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <span class="ticker-inner">☀️ 100% RENEWABLE &nbsp;&nbsp;•&nbsp;&nbsp; 0% REGRETS &nbsp;&nbsp;•&nbsp;&nbsp; SUNCO™ IS A REGISTERED TRADEMARK OF FEELING GOOD ABOUT YOUR ROOF &nbsp;&nbsp;•&nbsp;&nbsp; ☀️ 100% RENEWABLE &nbsp;&nbsp;•&nbsp;&nbsp; 0% REGRETS &nbsp;&nbsp;•&nbsp;&nbsp; SUNCO™ IS A REGISTERED TRADEMARK OF FEELING GOOD ABOUT YOUR ROOF &nbsp;&nbsp;•&nbsp;&nbsp;</span>
+</div>
+
+<section class="section" id="products">
+  <div class="section-inner">
+    <span class="eyebrow">The Lineup</span>
+    <h2 class="sec-title">Panels for Every Personality</h2>
+    <p class="sec-desc">Three tiers. All of them convert sunlight into power. The differences are mostly vibes.</p>
+    <div class="product-grid">
+      <div class="product">
+        <div class="product-top">🔲</div>
+        <div class="product-body">
+          <div class="product-sku">SKU: SUN-100-BASIC</div>
+          <h3>The Modest One</h3>
+          <p>Does the job. Doesn't brag about it. Your neighbors won't even notice, which is sort of the point.</p>
+          <div class="product-price">From R8,400 <span>per panel*</span></div>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-top">⬛</div>
+        <div class="product-body">
+          <div class="product-sku">SKU: SUN-450-PRO</div>
+          <h3>The Overachiever</h3>
+          <p>20% more efficient and will let everyone know. Comes with a small plaque you can mount nowhere in particular.</p>
+          <div class="product-price">From R12,900 <span>per panel*</span></div>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-top">◼️</div>
+        <div class="product-body">
+          <div class="product-sku">SKU: SUN-900-MAX</div>
+          <h3>The Main Character</h3>
+          <p>Tracks the sun across the sky like it's personally offended when not facing it directly. Slightly dramatic. Very effective.</p>
+          <div class="product-price">From R21,600 <span>per panel*</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-banner">
+  <div class="stats-row">
+    <div><div class="stat-n">340W</div><div class="stat-l">Peak Output</div></div>
+    <div><div class="stat-n">25yr</div><div class="stat-l">Warranty*</div></div>
+    <div><div class="stat-n">0</div><div class="stat-l">Moving Parts**</div></div>
+    <div><div class="stat-n">∞</div><div class="stat-l">Sun (Supply)</div></div>
+  </div>
+</div>
+
+<section class="testi" id="testi">
+  <div class="testi-inner">
+    <blockquote>"I installed the panels mostly to see what would happen. My electricity bill went down. I have complicated feelings about this."</blockquote>
+    <cite>— Someone With a Roof, Verified Customer</cite>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="section-inner" style="text-align:center;">
+    <span class="eyebrow">Questions, Answered Honestly</span>
+    <h2 class="sec-title">Frequently Asked</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4>Does this actually work on cloudy days?</h4>
+        <p>Yes, just less. The sun is still up there. It's just being shy about it.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What's the * next to "25 year warranty"?</h4>
+        <p>Legal asked us to put it there. We're not totally sure why either.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What's the ** next to "0 Moving Parts"?</h4>
+        <p>There's a fan inside the inverter. It moves. We felt that deserved an asterisk too, for consistency.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I just buy one panel to see how I feel about it?</h4>
+        <p>You can. We respect the commitment issues. Start small. The sun isn't going anywhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">☀️ SUNCO™</div>
+  <p>A solar-themed parody template from creative-pages.org — planned by human, perfected by AI, mildly trademarked for comedic effect.</p>
+</footer>
+
+</body>
+</html>
