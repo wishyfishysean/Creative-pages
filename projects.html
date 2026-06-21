@@ -156,6 +156,29 @@
     .pc-link:hover { color: var(--rose); }
     .pc-link.off { color: var(--mid); pointer-events: none; }
 
+    /* ── TEMPLATE SHOWCASE STRIP ── */
+    .tpl-showcase{grid-column:1 / -1;margin-top:0.4rem;background:linear-gradient(135deg, var(--blush) 0%, var(--lavender) 100%);border-radius:22px;padding:2.2rem 2rem 2.4rem;}
+    @media(max-width:560px){.tpl-showcase{padding:1.8rem 1.3rem 2rem;}}
+    .tpl-showcase-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem;}
+    .tpl-showcase-hd h4{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:0.5rem;}
+    .tpl-showcase-hd p{font-size:0.8rem;color:var(--mid);margin-top:0.3rem;max-width:480px;}
+    .tpl-showcase-badge{display:inline-flex;align-items:center;gap:0.4rem;background:white;border-radius:50px;padding:0.32rem 0.9rem;font-size:0.66rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);box-shadow:0 3px 12px rgba(0,0,0,0.08);}
+    .tpl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+    @media(max-width:900px){.tpl-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:460px){.tpl-grid{grid-template-columns:1fr;}}
+    .tpl-card{background:white;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 5px 18px rgba(0,0,0,0.07);transition:transform 0.25s, box-shadow 0.25s;display:block;}
+    .tpl-card:hover{transform:translateY(-5px);box-shadow:0 14px 32px rgba(0,0,0,0.13);}
+    .tpl-card-vis{height:108px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative;overflow:hidden;}
+    .tpl-card-vis::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg, rgba(255,255,255,0.15), transparent 60%);}
+    .tpl-vis-forest{background:linear-gradient(160deg,#5c7a4f,#3e5435);}
+    .tpl-vis-caves{background:linear-gradient(160deg,#1c1c2e,#0a0a14);}
+    .tpl-vis-solar{background:linear-gradient(160deg,#4ec9d6,#ffb627);}
+    .tpl-vis-bugs{background:linear-gradient(160deg,#5c4a30,#1a1410);}
+    .tpl-card-body{padding:0.9rem 1rem 1.1rem;}
+    .tpl-card-name{font-family:'Playfair Display',serif;font-weight:700;font-size:0.92rem;color:var(--dark);margin-bottom:0.2rem;}
+    .tpl-card-tag{font-size:0.68rem;color:var(--mid);display:flex;align-items:center;gap:0.3rem;}
+    .tpl-card-tag i{color:var(--rose);}
+
     /* ── DARK GALLERY ROW (visual art) ── */
     .art-sec { padding: 4.5rem 0; background: var(--dark); }
     .art-hd { max-width: 1080px; margin: 0 auto 2.5rem; padding: 0 1.5rem; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
@@ -334,6 +357,47 @@
             <div class="pc-made"><i class="bi bi-cpu-fill"></i> Human-planned · AI-built</div>
             <span class="pc-link off">Sample Project</span>
           </div>
+        </div>
+      </div>
+
+      <!-- TEMPLATE SHOWCASE — 4 live preview templates under Neocities -->
+      <div class="tpl-showcase">
+        <div class="tpl-showcase-hd">
+          <div>
+            <h4><i class="bi bi-stars" style="color:var(--rose)"></i> Try the Neocities Templates</h4>
+            <p>Four full, clickable previews from the starter collection above — each fully built, fully weird, ready to adapt.</p>
+          </div>
+          <span class="tpl-showcase-badge"><i class="bi bi-eye-fill"></i> 4 Live Previews</span>
+        </div>
+        <div class="tpl-grid">
+          <a href="templates/forest/index.html" class="tpl-card">
+            <div class="tpl-card-vis tpl-vis-forest">🌲</div>
+            <div class="tpl-card-body">
+              <div class="tpl-card-name">The Understory</div>
+              <div class="tpl-card-tag"><i class="bi bi-arrow-up-right"></i> Forest · Whimsical</div>
+            </div>
+          </a>
+          <a href="templates/caves/index.html" class="tpl-card">
+            <div class="tpl-card-vis tpl-vis-caves">💎</div>
+            <div class="tpl-card-body">
+              <div class="tpl-card-name">Deep Hollow</div>
+              <div class="tpl-card-tag"><i class="bi bi-arrow-up-right"></i> Caves · Glowing</div>
+            </div>
+          </a>
+          <a href="templates/solar-panels/index.html" class="tpl-card">
+            <div class="tpl-card-vis tpl-vis-solar">☀️</div>
+            <div class="tpl-card-body">
+              <div class="tpl-card-name">SUNCO™</div>
+              <div class="tpl-card-tag"><i class="bi bi-arrow-up-right"></i> Solar · Deadpan</div>
+            </div>
+          </a>
+          <a href="templates/bug-exoskeletons/index.html" class="tpl-card">
+            <div class="tpl-card-vis tpl-vis-bugs">🪲</div>
+            <div class="tpl-card-body">
+              <div class="tpl-card-name">MOLT.</div>
+              <div class="tpl-card-tag"><i class="bi bi-arrow-up-right"></i> Bugs · Properly Weird</div>
+            </div>
+          </a>
         </div>
       </div>
 
