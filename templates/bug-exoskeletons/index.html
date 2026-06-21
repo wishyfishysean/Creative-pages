@@ -1,1 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MOLT. — a museum of what's left behind</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+<style>
+  :root{
+    --chitin:#3a2e1f; --chitin-l:#5c4a30; --amber:#c9853d; --amber-l:#e8b76a;
+    --bone:#e8e0cf; --paper:#f2ead8; --rust:#8a3a2a; --ink:#1a1410;
+    --shadow:rgba(26,20,16,0.2);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Cormorant',serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
+  .mono{font-family:'JetBrains Mono',monospace;}
 
+  .tpl-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--ink);color:var(--bone);padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:0.72rem;}
+  .tpl-banner a{color:var(--amber-l);font-weight:700;text-decoration:none;}
+  .tpl-banner a:hover{text-decoration:underline;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(242,234,216,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--chitin-l);padding:0.9rem 1.5rem;display:flex;align-items:center;gap:1rem;}
+  .logo{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.05rem;color:var(--ink);display:flex;align-items:center;gap:0.5rem;letter-spacing:0.04em;}
+  .logo .dot{color:var(--rust);}
+  .nav-links{list-style:none;display:flex;gap:0.2rem;margin-left:auto;}
+  .nav-links a{text-decoration:none;color:var(--chitin);font-weight:700;font-size:0.74rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.5rem 0.8rem;transition:color 0.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{color:var(--rust);}
+
+  /* HERO */
+  .hero{margin-top:60px;min-height:88vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--ink);}
+  .hatch-pattern{position:absolute;inset:0;opacity:0.06;background-image:repeating-linear-gradient(45deg, var(--bone) 0 1px, transparent 1px 14px);}
+  .specimen-outline{position:absolute;font-size:24rem;opacity:0.04;top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(1px);}
+  .hero-content{position:relative;z-index:3;text-align:center;padding:2rem;max-width:680px;}
+  .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--amber);color:var(--amber-l);font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.4rem 1rem;margin-bottom:1.8rem;}
+  .hero h1{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(2.6rem,7vw,5rem);font-weight:700;color:var(--bone);line-height:1.05;margin-bottom:1.3rem;}
+  .hero h1 .reg{font-style:normal;color:var(--amber);}
+  .hero p{color:#b8ac96;font-size:1.1rem;line-height:1.75;margin-bottom:2.3rem;}
+  .specimen-num{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.1em;margin-bottom:0.6rem;}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 2rem;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:1px solid var(--amber);transition:all 0.25s;}
+  .btn-fill{background:var(--amber);color:var(--ink);}
+  .btn-fill:hover{background:transparent;color:var(--amber-l);}
+
+  /* SPECIMEN GRID */
+  .section{padding:5.5rem 1.5rem;}
+  .section-inner{max-width:1040px;margin:0 auto;}
+  .eyebrow{display:block;font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--rust);margin-bottom:0.6rem;}
+  .sec-title{font-family:'Cormorant',serif;font-style:italic;font-size:clamp(1.9rem,4vw,2.9rem);font-weight:700;color:var(--ink);margin-bottom:0.9rem;}
+  .sec-desc{color:var(--chitin-l);max-width:560px;line-height:1.75;font-size:1.05rem;}
+
+  .specimen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem;}
+  @media(max-width:760px){.specimen-grid{grid-template-columns:1fr;}}
+  .specimen-card{background:var(--bone);border:1px solid var(--chitin-l);position:relative;padding:0;overflow:hidden;}
+  .specimen-tag{position:absolute;top:0.9rem;right:0.9rem;background:var(--ink);color:var(--amber-l);font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.05em;padding:0.2rem 0.6rem;z-index:2;}
+  .specimen-vis{height:140px;display:flex;align-items:center;justify-content:center;font-size:3.4rem;background:repeating-linear-gradient(135deg, #d8cbac 0 8px, #cfc09c 8px 16px);border-bottom:1px solid var(--chitin-l);}
+  .specimen-body{padding:1.6rem 1.5rem;}
+  .specimen-name{font-family:'Cormorant',serif;font-style:italic;font-weight:700;font-size:1.25rem;color:var(--ink);margin-bottom:0.3rem;}
+  .specimen-latin{font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:var(--rust);margin-bottom:0.8rem;letter-spacing:0.03em;}
+  .specimen-desc{font-size:0.92rem;color:var(--chitin-l);line-height:1.65;}
+
+  /* MOLTING LOG — timeline */
+  .molt-sec{background:var(--chitin);padding:5.5rem 1.5rem;}
+  .molt-sec .eyebrow{color:var(--amber-l);}
+  .molt-sec .sec-title{color:var(--bone);}
+  .molt-sec .sec-desc{color:#b8ac96;}
+  .molt-track{max-width:680px;margin:3rem auto 0;}
+  .molt-row{display:flex;gap:1.5rem;padding:1.4rem 0;border-bottom:1px dashed rgba(232,224,207,0.2);}
+  .molt-row:last-child{border-bottom:none;}
+  .molt-stage{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);min-width:70px;flex-shrink:0;padding-top:0.2rem;}
+  .molt-text h4{font-family:'Cormorant',serif;font-style:italic;color:var(--bone);font-size:1.15rem;margin-bottom:0.3rem;}
+  .molt-text p{font-size:0.92rem;color:#b8ac96;line-height:1.6;}
+
+  /* FIELD NOTES — quote */
+  .notes{max-width:680px;margin:0 auto;text-align:center;padding:5.5rem 1.5rem;}
+  .notes blockquote{font-family:'Cormorant',serif;font-style:italic;font-size:1.5rem;color:var(--ink);line-height:1.5;}
+  .notes cite{display:block;margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--rust);text-transform:uppercase;letter-spacing:0.08em;}
+
+  /* CATALOG STRIP */
+  .catalog-strip{background:var(--ink);padding:1.6rem 1.5rem;overflow:hidden;}
+  .catalog-row{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.06em;text-transform:uppercase;}
+
+  footer{background:var(--ink);color:#8a7d68;padding:3.5rem 1.5rem 5rem;text-align:center;border-top:1px solid var(--chitin-l);}
+  footer .logo{justify-content:center;color:var(--bone);margin-bottom:0.8rem;}
+  footer p{font-family:'JetBrains Mono',monospace;font-size:0.72rem;max-width:460px;margin:0 auto;line-height:1.8;}
+</style>
+</head>
+<body>
+
+<div class="tpl-banner">
+  <span>🪲 This is a sample template from creative-pages.org</span>
+  <a href="../../projects.html">← Back to Projects</a>
+</div>
+
+<nav>
+  <div class="logo">MOLT<span class="dot">.</span></div>
+  <ul class="nav-links">
+    <li><a href="#specimens">Specimens</a></li>
+    <li><a href="#molting">The Molting Log</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hatch-pattern"></div>
+  <div class="specimen-outline">🦂</div>
+  <div class="hero-content">
+    <div class="specimen-num mono">SPECIMEN ARCHIVE — EST. NO ONE REMEMBERS</div>
+    <div class="hero-badge"><i class="bi bi-bug"></i> Currently Cataloguing: 247 Exuviae</div>
+    <h1>What Gets Left<br/><span class="reg">Behind.</span></h1>
+    <p>MOLT. is a quiet archive of exoskeletons, shed casings, and the strange architecture insects leave behind when they outgrow themselves. Mildly unsettling. Deeply organized.</p>
+    <a href="#specimens" class="btn btn-fill">Enter the Archive <i class="bi bi-arrow-right"></i></a>
+  </div>
+</section>
+
+<div class="catalog-strip">
+  <div class="catalog-row">
+    <span>CATALOG NO. 0041–0288</span>
+    <span>·</span>
+    <span>HUMIDITY CONTROLLED</span>
+    <span>·</span>
+    <span>HANDLE WITH CARE</span>
+    <span>·</span>
+    <span>DO NOT TAP GLASS</span>
+  </div>
+</div>
+
+<section class="section" id="specimens">
+  <div class="section-inner">
+    <span class="eyebrow">The Collection</span>
+    <h2 class="sec-title">Selected Specimens</h2>
+    <p class="sec-desc">Each casing is catalogued, measured, and left exactly as it was found — empty, intact, and a little too well-preserved.</p>
+    <div class="specimen-grid">
+      <div class="specimen-card">
+        <span class="specimen-tag">№ 0112</span>
+        <div class="specimen-vis">🦗</div>
+        <div class="specimen-body">
+          <div class="specimen-name">The Fifth Instar</div>
+          <div class="specimen-latin mono">Gryllus shedicus</div>
+          <div class="specimen-desc">Found clinging to a fence post, perfectly hollow, perfectly intact. The legs still bend. We don't talk about that part.</div>
+        </div>
+      </div>
+      <div class="specimen-card">
+        <span class="specimen-tag">№ 0156</span>
+        <div class="specimen-vis">🐛</div>
+        <div class="specimen-body">
+          <div class="specimen-name">The Quiet Cocoon</div>
+          <div class="specimen-latin mono">Pupa silentium</div>
+          <div class="specimen-desc">Still sealed. We've chosen not to open it. Some specimens deserve their privacy, even posthumously.</div>
+        </div>
+      </div>
+      <div class="specimen-card">
+        <span class="specimen-tag">№ 0203</span>
+        <div class="specimen-vis">🦞</div>
+        <div class="specimen-body">
+          <div class="specimen-name">The Old Carapace</div>
+          <div class="specimen-latin mono">Crustaceus relictus</div>
+          <div class="specimen-desc">Larger than expected. Heavier than expected. We measured it twice. Both times we put it down quickly afterward.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="molt-sec" id="molting">
+  <div class="section-inner">
+    <span class="eyebrow">The Process</span>
+    <h2 class="sec-title">The Molting Log</h2>
+    <p class="sec-desc">A record of how a thing becomes a slightly larger version of itself, one uncomfortable stage at a time.</p>
+    <div class="molt-track">
+      <div class="molt-row">
+        <div class="molt-stage mono">STAGE 01</div>
+        <div class="molt-text">
+          <h4>The Splitting</h4>
+          <p>A seam opens along the back. There is no good way to describe this stage. We've tried several times.</p>
+        </div>
+      </div>
+      <div class="molt-row">
+        <div class="molt-stage mono">STAGE 02</div>
+        <div class="molt-text">
+          <h4>The Emergence</h4>
+          <p>What comes out is soft, pale, and unfinished — a draft of the final thing, still deciding on its shape.</p>
+        </div>
+      </div>
+      <div class="molt-row">
+        <div class="molt-stage mono">STAGE 03</div>
+        <div class="molt-text">
+          <h4>The Hardening</h4>
+          <p>Over several hours, the new exterior sets. This is the only stage that looks remotely peaceful.</p>
+        </div>
+      </div>
+      <div class="molt-row">
+        <div class="molt-stage mono">STAGE 04</div>
+        <div class="molt-text">
+          <h4>The Leaving</h4>
+          <p>The old shell stays exactly where it was — a perfect outline of something that used to be there, and now isn't. That's what we collect.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="notes">
+  <blockquote>"It's not the bug we keep. It's the shape it stopped needing."</blockquote>
+  <cite>— Field Note, Catalog Entry 0203</cite>
+</div>
+
+<footer>
+  <div class="logo">MOLT.</div>
+  <p>[ AN ENTOMOLOGY-THEMED TEMPLATE FROM CREATIVE-PAGES.ORG ] — PLANNED BY HUMAN, PERFECTED BY AI, EXAMINED BY NO ONE WHO SLEPT WELL AFTERWARD.</p>
+</footer>
+
+</body>
+</html>
