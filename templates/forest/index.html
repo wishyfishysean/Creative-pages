@@ -1,1 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Understory — a forest template</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+<style>
+  :root{
+    --moss:#5c7a4f; --moss-d:#3e5435; --fern:#7fa06b; --bark:#4a3527;
+    --lichen:#c9d9a8; --mushroom:#e8c4a0; --cream:#f4f0e3; --dirt:#2e2419;
+    --sun:#f0d896; --shadow:rgba(46,36,25,0.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--dirt);overflow-x:hidden;}
 
+  /* TEMPLATE BANNER */
+  .tpl-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--dirt);color:white;padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:0.78rem;}
+  .tpl-banner a{color:var(--lichen);font-weight:700;text-decoration:none;}
+  .tpl-banner a:hover{text-decoration:underline;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(244,240,227,0.92);backdrop-filter:blur(10px);border-bottom:3px solid var(--moss);padding:0.9rem 1.5rem;display:flex;align-items:center;gap:1rem;}
+  .logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1.2rem;color:var(--moss-d);display:flex;align-items:center;gap:0.5rem;}
+  .nav-links{list-style:none;display:flex;gap:0.3rem;margin-left:auto;}
+  .nav-links a{text-decoration:none;color:var(--bark);font-weight:700;font-size:0.82rem;padding:0.4rem 0.8rem;border-radius:50px;transition:background 0.2s;}
+  .nav-links a:hover{background:var(--lichen);}
+
+  /* HERO */
+  .hero{margin-top:64px;min-height:90vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
+    background:radial-gradient(ellipse at top, #c4d9a0 0%, #8fa86f 35%, #5c7a4f 70%, #3e5435 100%);}
+  .hero-fog{position:absolute;inset:0;background:linear-gradient(to bottom, transparent 0%, rgba(244,240,227,0.5) 100%);}
+  .canopy{position:absolute;top:0;left:0;right:0;height:140px;
+    background: radial-gradient(circle at 10% 0%, var(--moss-d) 0 60px, transparent 61px),
+                radial-gradient(circle at 30% -10%, var(--fern) 0 90px, transparent 91px),
+                radial-gradient(circle at 55% 0%, var(--moss-d) 0 70px, transparent 71px),
+                radial-gradient(circle at 78% -5%, var(--fern) 0 85px, transparent 86px),
+                radial-gradient(circle at 95% 0%, var(--moss-d) 0 65px, transparent 66px);
+    opacity:0.85;}
+  .firefly{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--sun);box-shadow:0 0 12px 4px var(--sun);animation:drift 8s ease-in-out infinite;}
+  @keyframes drift{0%,100%{transform:translate(0,0);opacity:0.3;}50%{transform:translate(20px,-30px);opacity:1;}}
+  .hero-content{position:relative;z-index:3;text-align:center;padding:2rem;max-width:680px;}
+  .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(244,240,227,0.9);border-radius:50px;padding:0.4rem 1.1rem;font-size:0.74rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--moss-d);margin-bottom:1.4rem;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,7vw,4.6rem);font-weight:900;color:var(--cream);line-height:1.05;margin-bottom:1rem;text-shadow:0 4px 18px rgba(46,36,25,0.4);}
+  .hero h1 em{font-style:italic;color:var(--sun);}
+  .hero p{color:rgba(244,240,227,0.92);font-size:1.05rem;line-height:1.7;margin-bottom:2rem;text-shadow:0 2px 10px rgba(0,0,0,0.3);}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:0.92rem;text-decoration:none;transition:transform 0.2s, box-shadow 0.2s;}
+  .btn-light{background:var(--cream);color:var(--moss-d);}
+  .btn-light:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.25);}
+
+  /* WHO LIVES HERE */
+  .section{padding:5rem 1.5rem;}
+  .section-inner{max-width:1000px;margin:0 auto;}
+  .eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--moss-d);margin-bottom:0.5rem;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:var(--bark);margin-bottom:0.8rem;}
+  .sec-desc{color:#6b5d4a;max-width:560px;line-height:1.7;}
+
+  .creature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem;}
+  @media(max-width:760px){.creature-grid{grid-template-columns:1fr;}}
+  .creature-card{background:white;border-radius:22px;padding:2rem 1.6rem;text-align:center;box-shadow:0 6px 24px var(--shadow);border:2px solid var(--lichen);transition:transform 0.25s;}
+  .creature-card:hover{transform:translateY(-6px) rotate(-1deg);}
+  .creature-emoji{font-size:3rem;margin-bottom:1rem;}
+  .creature-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:var(--moss-d);margin-bottom:0.5rem;}
+  .creature-desc{font-size:0.85rem;color:#6b5d4a;line-height:1.6;}
+
+  /* MOSSY DIVIDER */
+  .divider{height:60px;background:var(--moss);position:relative;overflow:hidden;}
+  .divider::before{content:'';position:absolute;top:-1px;left:0;right:0;height:30px;
+    background:repeating-linear-gradient(90deg, var(--cream) 0 18px, transparent 18px 36px);
+    clip-path:polygon(0 0,5% 100%,10% 0,15% 100%,20% 0,25% 100%,30% 0,35% 100%,40% 0,45% 100%,50% 0,55% 100%,60% 0,65% 100%,70% 0,75% 100%,80% 0,85% 100%,90% 0,95% 100%,100% 0,100% 0,0 0);}
+
+  /* THE GROVE — gallery */
+  .grove{background:var(--moss-d);padding:5rem 1.5rem;}
+  .grove .eyebrow{color:var(--lichen);}
+  .grove .sec-title{color:var(--cream);}
+  .grove .sec-desc{color:rgba(244,240,227,0.7);}
+  .grove-grid{max-width:1000px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem;}
+  @media(max-width:700px){.grove-grid{grid-template-columns:1fr;}}
+  .grove-card{background:rgba(244,240,227,0.08);border:1px solid rgba(244,240,227,0.15);border-radius:18px;padding:1.8rem;}
+  .grove-icon{font-size:1.8rem;margin-bottom:0.8rem;}
+  .grove-card h3{font-family:'Playfair Display',serif;color:var(--lichen);font-size:1.1rem;margin-bottom:0.5rem;}
+  .grove-card p{color:rgba(244,240,227,0.65);font-size:0.85rem;line-height:1.65;}
+
+  /* MUSHROOM QUOTE */
+  .mush-quote{max-width:680px;margin:0 auto;text-align:center;padding:0 1.5rem 5rem;}
+  .mush-quote blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;color:var(--bark);line-height:1.5;}
+  .mush-quote cite{display:block;margin-top:1rem;font-size:0.78rem;font-weight:700;color:var(--moss);text-transform:uppercase;letter-spacing:0.08em;}
+
+  /* FOOTER */
+  footer{background:var(--bark);color:rgba(244,240,227,0.7);padding:3rem 1.5rem 5rem;text-align:center;}
+  footer .logo{justify-content:center;color:var(--cream);margin-bottom:0.8rem;}
+  footer p{font-size:0.82rem;max-width:420px;margin:0 auto 1.5rem;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="tpl-banner">
+  <span>🌿 This is a sample template from creative-pages.org</span>
+  <a href="../../projects.html">← Back to Projects</a>
+</div>
+
+<nav>
+  <div class="logo">🌲 The Understory</div>
+  <ul class="nav-links">
+    <li><a href="#grove">The Grove</a></li>
+    <li><a href="#creatures">Residents</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-fog"></div>
+  <div class="canopy"></div>
+  <div id="fireflies"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🍄 Est. whenever the moss decided</div>
+    <h1>Welcome to the<br/><em>Understory</em></h1>
+    <p>A small, damp corner of the internet for forest things — moss notes, mushroom gossip, and whatever the ferns are up to this week.</p>
+    <a href="#grove" class="btn btn-light">Step Into the Grove <i class="bi bi-arrow-down"></i></a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="creatures">
+  <div class="section-inner">
+    <span class="eyebrow">Who Lives Here</span>
+    <h2 class="sec-title">The Residents</h2>
+    <p class="sec-desc">Everyone in the understory has a job. Mostly that job is "exist quietly and look nice," but a few take it further.</p>
+    <div class="creature-grid">
+      <div class="creature-card">
+        <div class="creature-emoji">🍄</div>
+        <div class="creature-name">The Mushroom Council</div>
+        <div class="creature-desc">Convenes after rain. Decisions are slow, spore-based, and binding only if everyone agrees, which they never do.</div>
+      </div>
+      <div class="creature-card">
+        <div class="creature-emoji">🦔</div>
+        <div class="creature-name">Hedgehog (Unaffiliated)</div>
+        <div class="creature-desc">Does not attend council meetings. Has opinions anyway. Mostly about acorns.</div>
+      </div>
+      <div class="creature-card">
+        <div class="creature-emoji">🐌</div>
+        <div class="creature-name">The Slow Mail Service</div>
+        <div class="creature-desc">Delivers messages between tree stumps. Estimated delivery: eventually. Tracking not available.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grove" id="grove">
+  <div class="section-inner">
+    <span class="eyebrow">The Grove</span>
+    <h2 class="sec-title">Notes From the Canopy</h2>
+    <p class="sec-desc">A small log of things that happened, are happening, or might happen depending on the weather.</p>
+    <div class="grove-grid">
+      <div class="grove-card">
+        <div class="grove-icon">🌧️</div>
+        <h3>It rained. Everyone is thrilled.</h3>
+        <p>The moss has never looked better. The mushroom council convened twice this week, which is a record.</p>
+      </div>
+      <div class="grove-card">
+        <div class="grove-icon">🪵</div>
+        <h3>New stump discovered near the creek</h3>
+        <p>Surveyors (one beetle, very thorough) report excellent moss potential. Future site of something, probably.</p>
+      </div>
+      <div class="grove-card">
+        <div class="grove-icon">🦋</div>
+        <h3>Butterfly migration update</h3>
+        <p>They're not actually migrating. They just like that one patch of sun by the fallen log. Can't blame them.</p>
+      </div>
+      <div class="grove-card">
+        <div class="grove-icon">🌰</div>
+        <h3>Acorn dispute resolved (mostly)</h3>
+        <p>The hedgehog and the squirrel have reached an understanding. The understanding is that they will not discuss it further.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="mush-quote">
+  <blockquote>"Grow slow. Stay damp. Trust the moss."</blockquote>
+  <cite>— Ancient Understory Proverb, probably</cite>
+</div>
+
+<footer>
+  <div class="logo">🌲 The Understory</div>
+  <p>A forest-themed template from creative-pages.org — planned by human, perfected by AI, approved by absolutely no mushrooms.</p>
+</footer>
+
+<script>
+  const wrap = document.getElementById('fireflies');
+  for(let i=0;i<14;i++){
+    const f=document.createElement('div');
+    f.className='firefly';
+    f.style.cssText=`left:${Math.random()*100}%;top:${20+Math.random()*60}%;animation-delay:${Math.random()*8}s;animation-duration:${6+Math.random()*5}s;`;
+    wrap.appendChild(f);
+  }
+</script>
+</body>
+</html>
